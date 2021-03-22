@@ -1,0 +1,29 @@
+-Socket là 1 loại file đặc biệt có thể đi ra khỏi hệ thống ->Lập trình file
+-Socket là file point-to-point: đi ra khỏi đầu ống
+Thư viện C++ thì là #include <sys/socket.h>
+Gồm: Tạo ra hàm: int socket(int domain, int type, int protocol) -->thành công thì ra file fd
++Domain: define chung 1 về pt giao tiếp (Ipv4, TCP,...) ->Khi ra ngoài ht hay trung chuyển trong ht
++Type: Định nghĩa cách truyền dữ liệu
++Protocol: chuẩn giao tiếp
+VÍ DỤ: dò trên linux manual page 
++domain: AF_UNIX ->Trong hệ thống local thôi
++type: SOCK_STREAM: đẩy liên tục / SOCK_DGRAM: truyền từng
+-Mọi socket gửi ra khỏi ht đều phải convert về Little Endian (chuẩn order dữ liệu)
+của network: uint32_ t htonl(unint32_t_hostint32) và uint16_t ntohs(uint16_t netint16)
+-Hàm inet_addr("192.168.0.0") chuyển từ string về chuỗi net
+-struct sockaddr_in: chứa ip, port, addr
+
+-Gán địa chị cho socket (bind):	Sau khi gán địa chỉ thì ghi data xuống socketfile, data sẽ
+dc đóng gói kèm địa chỉ đó: int bind(int sockfd, const struct sockaddr* addr, socklen_t len)
+với sockfd: socket tạo ban nãy, addr địa chỉ socket đã khởi tạo, length=chiều dài của socket này
+
+-Thiết lập kết nối:
++Từ client: int connect(int sockfd, const struct sockaddr* addr, socklen_t len)
+-->Xin sv khởi tạo
++Từ sv: int listen(int sockfd, int backlog), socket mới để nghe
+
+-Phản hồi: gọi hàm accept, tạo ra socket mới chuyên dùng để p2p: connectfd=accept(listenfd,addr,null)
+không xài nữa thì close(connectfd)
+-Còn bên client: if (connect(socketfd,addr,...)) thành công thì đọc được file (read), close() khi ko dùng nữa
+
+https://www.youtube.com/watch?v=-Fs6wAV7tEw 38:51 Hướng dẫn tạo chatbox
