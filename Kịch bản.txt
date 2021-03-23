@@ -1,0 +1,11 @@
+KỊCH BẢN (7 giao diện) +1 bìa
+-Kết nối (1GD)
+-Đăng nhập: Cho phía client nhập tài khoản, phía server nhận, check xem có hợp lệ không
+=>Đúng thì vào menu, sai thì cho nhập lại
+-Menu (2): Tra cứu sách theo ID và theo Name (1GD)
+=>Nếu không tồn tại thì thông báo lỗi, cho nhập lại
+=>Đúng thì xuất: 4 thông tin (ID, Tên, TG, Năm) (1GD)
+-Hiện thêm 4 chức năng: (4GD) gồm: Xem, tải, liệt kê theo tác giả, liệt kê theo loại
++Nếu tra cứu thêm: Nhập ID để tra cứu -->Nếu hợp lệ thì quay lại số Menu(2)
+-Thoát: Có 1 nút X ở trên, bấm vô thì tắt (Thông báo exit thành công) - Server
+
