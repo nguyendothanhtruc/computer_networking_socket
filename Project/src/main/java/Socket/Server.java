@@ -11,7 +11,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Server {
     private ServerSocket server = null;
@@ -85,16 +87,28 @@ public class Server {
     }
     public static void main(String[] args) throws IOException, SQLServerException {
         //Set up database
+
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setUser("sa");
-        ds.setPassword("123");
-        ds.setServerName("DESKTOP-IJHRRIK\\SQLEXPRESS");
-        ds.setPortNumber(1433);
-        ds.setDatabaseName("DB_QLDA_19127078");
+        ds.setPassword("1");
+        ds.setServerName("MSI");
+        ds.setPortNumber(1432);
+        ds.setDatabaseName("Online_Library");
         try (Connection connection = ds.getConnection())
         {
             System.out.println("Connected database");
             System.out.println(connection.getCatalog());
+
+            //Query selection
+            Statement stmt = connection.createStatement();
+            ResultSet rs= stmt.executeQuery("Select * from account");
+
+            //Extract data, next() = cursor
+            while (rs.next())
+            {
+            System.out.println(rs.getString(1));
+            System.out.println(rs.getString(2));
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
