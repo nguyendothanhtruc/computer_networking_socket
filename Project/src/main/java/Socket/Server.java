@@ -1,5 +1,8 @@
 package Socket;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -7,6 +10,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class Server {
     private ServerSocket server = null;
@@ -78,8 +83,22 @@ public class Server {
         socket.close();
         System.out.println("Connection closed: " + socket);
     }
-    public static void main(String[] args) throws IOException
-    {
+    public static void main(String[] args) throws IOException, SQLServerException {
+        //Set up database
+        SQLServerDataSource ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("123");
+        ds.setServerName("DESKTOP-IJHRRIK\\SQLEXPRESS");
+        ds.setPortNumber(1433);
+        ds.setDatabaseName("DB_QLDA_19127078");
+        try (Connection connection = ds.getConnection())
+        {
+            System.out.println("Connected database");
+            System.out.println(connection.getCatalog());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         Server server = new Server(9999);
         server.login_User();
     }
