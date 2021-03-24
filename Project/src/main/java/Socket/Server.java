@@ -90,9 +90,9 @@ public class Server {
 
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setUser("sa");
-        ds.setPassword("1");
-        ds.setServerName("MSI");
-        ds.setPortNumber(1432);
+        ds.setPassword("123");
+        ds.setServerName("DESKTOP-IJHRRIK\\SQLEXPRESS");
+        ds.setPortNumber(1433);
         ds.setDatabaseName("Online_Library");
         try (Connection connection = ds.getConnection())
         {
