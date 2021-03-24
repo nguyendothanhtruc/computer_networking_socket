@@ -34,15 +34,51 @@ public class Services
         }
     }
     public void Register ()
-    {
+    {}
+    public void Look_up() throws IOException {
+        out.writeUTF("LOOK UP MENU \n 1. By ID \n 2. By Name \n Option:" );
+        String op = "";
+        Boolean stop = false;
+        while(!stop)
+        {
+            op = in.readUTF();
+            switch(op)
+            {
+                case "1":
+                    stop = true;
+                    break;
+                case "2":
+                    stop = true;
+                    break;
+                default: out.writeUTF("Invalid option!");
+                out.writeUTF("Re-enter option: ");
+            }
+        }
 
     }
-    public void Look_up()
-    {}
-    public void List_books()
-    {}
+    public void List_books() throws IOException {
+        out.writeUTF("LIST BOOKS MENU \n 1. By Type \n 2. By Author \n Option:" );
+        String op = "";
+        Boolean stop = false;
+        while(!stop)
+        {
+            op = in.readUTF();
+            switch(op)
+            {
+                case "1":
+                    stop = true;
+                    break;
+                case "2":
+                    stop = true;
+                    break;
+                default: out.writeUTF("Invalid option!");
+                    out.writeUTF("Re-enter option: ");
+            }
+        }
+    }
     public void Download()
     {}
-    public void View_books()
-    {}
+    public void View() throws IOException {
+        out.writeUTF("VIEW BOOK");
+    }
 }

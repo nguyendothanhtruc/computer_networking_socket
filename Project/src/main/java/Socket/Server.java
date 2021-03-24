@@ -21,7 +21,7 @@ public class Server {
         System.out.println("Waiting for clients....");
     }
 
-    public void actions() throws IOException
+    public void login_User() throws IOException
     {
         socket = server.accept(); //Return a socket connecting to socket of clients
         System.out.println("A client connected");
@@ -30,6 +30,12 @@ public class Server {
         output = new DataOutputStream(socket.getOutputStream());
         Services service = new Services(socket, input, output);
         service.Login();
+        output.writeUTF("Login successfully! + \n");
+
+        //Move to menu
+        menu(service);
+
+
         disconnect();
 
         /*String options = "";
@@ -40,6 +46,32 @@ public class Server {
         }
 */
     }
+    public void menu(Services service) throws IOException {
+        service.Look_up();
+        output.writeUTF("Menu options: + \n 1. View book \n 2. Download \n 3. List books \n Option: ");
+        Boolean stop = false;
+        String op = "";
+        while(!stop)
+        {
+            op = input.readUTF(); //Read input from client
+            switch (op)
+            {
+                case "1": service.View();
+                    stop = true;
+                    break;
+                case "2": service.Download();
+                    stop = true;
+                    break;
+                case "3": service.List_books();
+                    stop = true;
+                    break;
+                default: output.writeUTF("Invalid option!");
+                    output.writeUTF("Re-enter option: ");
+            }
+        }
+
+
+    }
     public void disconnect() throws IOException {
         input.close();
         output.close();
@@ -49,6 +81,6 @@ public class Server {
     public static void main(String[] args) throws IOException
     {
         Server server = new Server(9999);
-        server.actions();
+        server.login_User();
     }
 }
