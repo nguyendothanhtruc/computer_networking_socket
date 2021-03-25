@@ -31,6 +31,7 @@ public class Services
             System.out.println(password);
             //isCorrected = checkAccount(username, password);
             isCorrected = true;
+            out.writeBoolean(isCorrected);
         }
     }
     public void Register ()

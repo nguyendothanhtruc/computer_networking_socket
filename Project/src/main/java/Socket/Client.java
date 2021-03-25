@@ -1,5 +1,6 @@
 package Socket;
 
+import javax.security.auth.login.LoginContext;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -27,9 +28,10 @@ public class Client
             // sends output to the socket
             output    = new DataOutputStream(socket.getOutputStream());
             // string to read message from input
-            String line = "";
+            String line ="";
             // takes input from terminal
             Scanner in  = new Scanner(System.in);
+
             // keep reading until "Exit" is input
             while (!line.equals("Exit"))
             {
@@ -42,7 +44,9 @@ public class Client
                     System.out.println(input.readUTF()); //Password
                     line = in.nextLine();
                     output.writeUTF(line);
-                    line = in.nextLine();
+                    line = in.nextLine(); //Enter to continue
+                    boolean LoginSuccess=input.readBoolean();
+                    if(LoginSuccess) System.out.println("OK");
                 }
                 catch(IOException i)
                 {
