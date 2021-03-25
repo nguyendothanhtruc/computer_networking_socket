@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.SQLException;
 
 public class Services
 {
@@ -17,7 +18,7 @@ public class Services
         in = dis;
         out = dos;
     }
-    public void Login() throws IOException {
+    public void Login() throws IOException, SQLException {
         String username, password;
         Boolean isCorrected = false;
         while (!isCorrected) {
@@ -29,8 +30,8 @@ public class Services
             password = in.readUTF();
             System.out.println(username);
             System.out.println(password);
-            //isCorrected = checkAccount(username, password);
-            isCorrected = true;
+            DataHandler dataHandler = new DataHandler();
+            isCorrected = dataHandler.checkPassword(username, password);
             out.writeBoolean(isCorrected);
         }
     }

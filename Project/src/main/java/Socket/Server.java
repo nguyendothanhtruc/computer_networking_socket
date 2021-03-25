@@ -20,6 +20,7 @@ public class Server {
     private Socket socket = null;
     private DataInputStream input = null;
     private DataOutputStream output = null;
+    private DataHandler dataHandler;
 
     //Establish a connection between server and clients
     public Server(int port) throws IOException {
@@ -28,8 +29,7 @@ public class Server {
         System.out.println("Waiting for clients....");
     }
 
-    public void login_User() throws IOException
-    {
+    public void login_User() throws IOException, SQLException {
         socket = server.accept(); //Return a socket connecting to socket of clients
         System.out.println("A client connected");
         //Take input from client:
@@ -37,7 +37,7 @@ public class Server {
         output = new DataOutputStream(socket.getOutputStream());
         Services service = new Services(socket, input, output);
         service.Login();
-        output.writeUTF("Login successfully! + \n");
+        output.writeUTF("Login successfully! \n");
 
         //Move to menu
         menu(service);
@@ -87,8 +87,6 @@ public class Server {
     }
     public static void main(String[] args) throws IOException, SQLException {
         //Set up database
-        DataHandler dataHandler = new DataHandler("sa", "123", "DESKTOP-IJHRRIK\\SQLEXPRESS", 1433);
-        dataHandler.checkPassword("truc","123");
         Server server = new Server(9999);
         server.login_User();
     }

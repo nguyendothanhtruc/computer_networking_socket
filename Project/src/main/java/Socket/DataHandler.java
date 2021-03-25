@@ -8,11 +8,14 @@ public class DataHandler
 {
     private SQLServerDataSource ds;
     private Connection connection;
-    public DataHandler(String user, String password, String server_name, int port)
+    private String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
+  //private String server_name = "MSI";
+    private int port = 1433;//1432
+    public DataHandler()
     {
         ds = new SQLServerDataSource();
-        ds.setUser(user);
-        ds.setPassword(password);
+        ds.setUser("sa");
+        ds.setPassword("1");
         ds.setServerName(server_name);
         ds.setPortNumber(port);
         ds.setDatabaseName("Online_Library");
@@ -23,12 +26,10 @@ public class DataHandler
         PreparedStatement preparedStatement= connection.prepareStatement("Select password from account where username = ?");
         preparedStatement.setString(1,u);
         ResultSet rs = preparedStatement.executeQuery();
-        rs.next();
-        if (rs.getString("password") == p )
-        {
-            System.out.println("true");
-            return true;
-        }
+        String pass = "";
+        if (!rs.next()) return false;
+        else pass = rs.getString("password");
+        if (pass.equals(p)) return true;
         return false;
     }
 }
