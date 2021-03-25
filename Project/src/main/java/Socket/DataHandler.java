@@ -8,9 +8,10 @@ public class DataHandler
 {
     private SQLServerDataSource ds;
     private Connection connection;
-    private String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
-  //private String server_name = "MSI";
-    private int port = 1433;//1432
+    //private String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
+    private String server_name = "MSI";
+    //private int port = 1433;
+    private int port = 1432;
     public DataHandler()
     {
         ds = new SQLServerDataSource();

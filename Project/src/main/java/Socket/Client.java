@@ -33,7 +33,8 @@ public class Client
             Scanner in  = new Scanner(System.in);
 
             // keep reading until "Exit" is input
-            while (!line.equals("Exit"))
+            boolean LoginSuccess=false;
+            while (!LoginSuccess)
             {
                 try
                 {
@@ -45,8 +46,12 @@ public class Client
                     line = in.nextLine();
                     output.writeUTF(line);
                     line = in.nextLine(); //Enter to continue
-                    boolean LoginSuccess=input.readBoolean();
-                    if(LoginSuccess) System.out.println("OK");
+                    LoginSuccess=input.readBoolean();
+                    if(LoginSuccess) {
+                        System.out.println(input.readUTF());
+                        break;
+                    }
+                    else System.out.println("Failed to login you noob");
                 }
                 catch(IOException i)
                 {
