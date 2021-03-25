@@ -85,34 +85,10 @@ public class Server {
         socket.close();
         System.out.println("Connection closed: " + socket);
     }
-    public static void main(String[] args) throws IOException, SQLServerException {
+    public static void main(String[] args) throws IOException, SQLException {
         //Set up database
-
-        SQLServerDataSource ds = new SQLServerDataSource();
-        ds.setUser("sa");
-        ds.setPassword("123");
-        ds.setServerName("DESKTOP-IJHRRIK\\SQLEXPRESS");
-        ds.setPortNumber(1433);
-        ds.setDatabaseName("Online_Library");
-        try (Connection connection = ds.getConnection())
-        {
-            System.out.println("Connected database");
-            System.out.println(connection.getCatalog());
-
-            //Query selection
-            Statement stmt = connection.createStatement();
-            ResultSet rs= stmt.executeQuery("Select * from account");
-
-            //Extract data, next() = cursor
-            while (rs.next())
-            {
-            System.out.println(rs.getString(1));
-            System.out.println(rs.getString(2));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
+        DataHandler dataHandler = new DataHandler("sa", "123", "DESKTOP-IJHRRIK\\SQLEXPRESS", 1433);
+        dataHandler.checkPassword("truc","123");
         Server server = new Server(9999);
         server.login_User();
     }
