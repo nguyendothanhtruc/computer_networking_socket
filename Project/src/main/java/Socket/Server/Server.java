@@ -22,15 +22,15 @@ public class Server {
         server = new ServerSocket(port,1, InetAddress.getByName("localhost"));
         System.out.println("Server started");
         System.out.println("Waiting for clients....");
+
+        //Take input from client:
+        input = new DataInputStream(socket.getInputStream());
+        output = new DataOutputStream(socket.getOutputStream());
     }
 
     public void login_User() throws IOException, SQLException {
         socket = server.accept(); //Return a socket connecting to socket of clients
         System.out.println("A client connected");
-
-        //Take input from client:
-        input = new DataInputStream(socket.getInputStream());
-        output = new DataOutputStream(socket.getOutputStream());
 
         Services service = new Services(socket, input, output);
 
