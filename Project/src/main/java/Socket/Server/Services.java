@@ -1,4 +1,6 @@
-package Socket;
+package Socket.Server;
+
+import Socket.Server.DataHandler;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

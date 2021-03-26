@@ -1,4 +1,4 @@
-package Socket;
+package Socket.Server;
 
 public class Book
 {

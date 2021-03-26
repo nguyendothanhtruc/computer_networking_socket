@@ -1,6 +1,5 @@
-package Socket;
+package Socket.Client;
 
-import javax.security.auth.login.LoginContext;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

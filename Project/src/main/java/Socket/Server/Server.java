@@ -1,7 +1,6 @@
-package Socket;
+package Socket.Server;
 
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
+import Socket.Server.DataHandler;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,11 +8,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Server {
     private ServerSocket server = null;

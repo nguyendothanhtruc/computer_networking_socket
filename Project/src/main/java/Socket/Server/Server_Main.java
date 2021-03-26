@@ -1,4 +1,6 @@
-package Socket;
+package Socket.Server;
+
+import Socket.Server.Server;
 
 import java.io.IOException;
 import java.sql.SQLException;

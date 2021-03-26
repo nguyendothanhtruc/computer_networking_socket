@@ -1,4 +1,4 @@
-package Socket;
+package Socket.Server;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
