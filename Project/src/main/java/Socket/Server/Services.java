@@ -50,6 +50,10 @@ public class Services
             password = in.readUTF();
             confirm = in.readUTF();
 
+            System.out.println(username);
+            System.out.println(password);
+            System.out.println(confirm);
+
             if (!password.equals(confirm)) out.writeBoolean(Regis_Success);
             else
             {
