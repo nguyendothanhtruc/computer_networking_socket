@@ -9,3 +9,24 @@ KỊCH BẢN (7 giao diện) +1 bìa
 +Nếu tra cứu thêm: Nhập ID để tra cứu -->Nếu hợp lệ thì quay lại số Menu(2)
 -Thoát: Có 1 nút X ở trên, bấm vô thì tắt (Thông báo exit thành công) - Server
 
+
+CHI TIET
+Kết nối: TB thành công
+->Server nhận 1/2: Login/Regis (1,2: string)
+1. SV nhận user/pass; trả về bool thành công/thất bại
+2. SV nhận user/pass/confirm; trả về bool 1/0
+
+3. SV bắt buộc xem sách: 1/2: Xem theo ID/Name, nhận string
+->SV trả về 5 thông tin của sách
+->CLient hiển thị các tính năng khác
+
+4.Server nhận menu 1/2/3:
+1.Xem sách: SV Nhận 1/2: Xem theo ID/Name, sau đó nhận string (ID hoặc Name)
+2.Tải: SV gửi nội dung sách (gửi file PDF), trúc tạo sẵn 5 file PDF <3
+3.Tra cứu thêm: SV nhận 1/2: Kiếm theo theo thể loại/tác giả (search từ db)
+-->Trả về: số cuốn tìm ra N, thông tin mỗi cuốn (Book) - list Book;
+-->Client in ra N dòng ID/Name sách
+
+
+5.Kick client ra, đóng socket.
+
