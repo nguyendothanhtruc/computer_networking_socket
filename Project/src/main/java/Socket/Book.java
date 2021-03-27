@@ -1,4 +1,5 @@
-package Socket.Server;
+package Socket;
+
 
 public class Book
 {
@@ -8,3 +9,4 @@ public class Book
     private int year;
     private String type;
 }
+//constructor Book(string)

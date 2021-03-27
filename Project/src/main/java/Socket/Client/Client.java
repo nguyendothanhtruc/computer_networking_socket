@@ -1,9 +1,9 @@
 package Socket.Client;
 
+import java.awt.print.Book;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.SyncFailedException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -95,7 +95,7 @@ public class Client {
                 System.out.println(i);
             }
         }
-       // in.close(); //Closer scanner
+        // in.close(); //Closer scanner
     }
 
     //Create new account - send user/pass/confirm to server
@@ -132,35 +132,54 @@ public class Client {
         }
     }
 
+    //Input a line to view a book by name/id
     public void ViewBook() throws IOException {
         System.out.println("VIEW BOOK");
 
-        String book_name="";
-        Scanner in=new Scanner(System.in);
+        String Book_name = "";
 
-        book_name=in.nextLine();
-        book_name=Searching_Type("F_ID","F_Name",book_name);
+        Book_name = Searching_Type("F_ID", "F_Name");
+        //output.writeUTF(Book_name); -->Send the content's of search part to sv
 
-
+        //Book myBook=new Book(input.readUTF());
     }
+
     //Returns type of book-searching: 1-Search by type1; 2-Search by type2 to server
-    public String Searching_Type(String type1, String type2, String input) throws IOException {
-        //SYNTAX: TYPE1=F_ID; TYPE2=F_Name OR TYPE1=TYPE; TYPE2=AUTHOR
+    public String Searching_Type(String type1, String type2) throws IOException {
+        //SYNTAX: TYPE1=F_ID; TYPE2=F_Name OR TYPE1=Type; TYPE2=Author
 
-        //Presentation
-        String header;
+        //Input the data to search
+        String GetDataString;
+        Scanner in = new Scanner(System.in);
 
-        String Option = ""; //Buffer-holder
+        //F_X part, Name part
+        String BookHeader, BookContent = null;
+
+        String direction_flag = ""; //Get_type
         Boolean isFound = false; //Stop-flag
-        Scanner in = new Scanner(System.in); //IO scanner
 
         //Loop until type of searching is found
         while (!isFound) {
-            Option = in.next();
-            switch (Option) {
+            //Get data
+            GetDataString = in.nextLine();
+
+            //Execute string - split
+            int pos = GetDataString.indexOf(" ");
+            BookHeader = GetDataString.substring(0, pos); //Get the F_X part
+
+            BookContent= GetDataString.substring(pos + 1, GetDataString.length()); //Get the name/ID part
+
+            /*TEST SPLIT
+            System.out.println("H:" +BookHeader);
+            System.out.println("S:" +BookContent);
+            System.out.println("Str: "+GetDataString.length());
+            */
+            if (BookHeader.equals(type1)) direction_flag = "1";
+            else if (BookHeader.equals(type2)) direction_flag = "2";
+            else direction_flag = "3";
+
+            switch (direction_flag) {
                 case "1":
-                    isFound = true;
-                    break;
                 case "2":
                     isFound = true;
                     break;
@@ -169,9 +188,10 @@ public class Client {
                     System.out.println("Re-enter option: ");
             }
         }
-        in.close();
-        output.writeUTF(Option); //Send the search-option to server
-        return Option;
+
+        output.writeUTF(direction_flag); //Send the search-option to server
+
+        return BookContent;
     }
 
     //Close client-connection
