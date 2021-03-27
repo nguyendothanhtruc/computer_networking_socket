@@ -55,7 +55,7 @@ public class Client {
 
                 LoginSuccess = input.readBoolean(); //Receive login_flag from sv
                 //Check if Login_success
-                if (LoginSuccess) System.out.println(input.readUTF());
+                if (LoginSuccess) System.out.println("Login successfully! \n");
                 else System.out.println("Failed to login you noob");
 
             } catch (IOException i) {
@@ -66,7 +66,7 @@ public class Client {
     }
 
     public void menu() throws IOException {
-
+        //List_book=Tra cuu them
         System.out.println("Menu options: \n 1. View book \n 2. Download \n 3. List books \n Option: ");
         Boolean stop = false;
         String op = "";
@@ -91,10 +91,14 @@ public class Client {
     }
 
     //Returns type of book-searching: 1-Search by type1; 2-Search by type2 to server
-    public String Book_Searching_Type(String type1, String type2) throws IOException {
-        //SYNTAX: TYPE1=ID; TYPE2=NAME OR TYPE1=TYPE; TYPE2=AUTHOR
-        System.out.println("LIST BOOKS MENU \n");
-        String temp = "1. " + type1;
+    public String Searching_Type(String Menu,String type1, String type2) throws IOException {
+        //SYNTAX: TYPE1=ID; TYPE2=NAME OR TYPE1=TYPE; TYPE2=AUTHOR OR TYPE1=LOGIN; TYPE2=REGISTER
+
+        //Presentation
+        String temp;
+        temp=Menu;
+        System.out.println(Menu);
+        temp = "1. " + type1;
         System.out.println(temp);
 
         temp = "2. " + type2;
@@ -120,6 +124,7 @@ public class Client {
             }
         }
         in.close();
+        output.writeUTF(Option); //Send the search-option to server
         return Option;
     }
 
