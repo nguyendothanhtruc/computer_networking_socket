@@ -3,6 +3,7 @@ package Socket.Client;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.SyncFailedException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -48,8 +49,6 @@ public class Client {
                 Option = in.nextLine();
                 switch (Option) {
                     case "1":
-                        isFound = true;
-                        break;
                     case "2":
                         isFound = true;
                         break;
@@ -133,34 +132,20 @@ public class Client {
         }
     }
 
-    public void menu() throws IOException {
-        //List_book=Tra cuu them
-        System.out.println("Menu options: \n 1. View book \n 2. Download \n 3. List books \n Option: ");
-        Boolean stop = false;
-        String op = "";
-        while (!stop) {
-            Scanner in = new Scanner(System.in);
-            op = in.nextLine(); //Read input from client
-            switch (op) {
-                /*case "1": service.View();
-                    stop = true;
-                    break;
-                case "2": service.Download();
-                    stop = true;
-                    break;
-                case "3": service.List_books();
-                    stop = true;
-                    break;
-                default:
-                    System.out.println("Invalid option!");
-                    System.out.println("Re-enter option: ");*/
-            }
-        }
-    }
+    public void ViewBook() throws IOException {
+        System.out.println("VIEW BOOK");
 
+        String book_name="";
+        Scanner in=new Scanner(System.in);
+
+        book_name=in.nextLine();
+        book_name=Searching_Type("F_ID","F_Name",book_name);
+
+
+    }
     //Returns type of book-searching: 1-Search by type1; 2-Search by type2 to server
     public String Searching_Type(String type1, String type2, String input) throws IOException {
-        //SYNTAX: TYPE1=ID; TYPE2=NAME OR TYPE1=TYPE; TYPE2=AUTHOR
+        //SYNTAX: TYPE1=F_ID; TYPE2=F_Name OR TYPE1=TYPE; TYPE2=AUTHOR
 
         //Presentation
         String header;

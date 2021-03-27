@@ -20,6 +20,7 @@ public class Client_main {
                 }
             }
         } while (!direction_flag.equals("1"));
+
         //Forced menu: View book
         direction_flag = "1";
 
