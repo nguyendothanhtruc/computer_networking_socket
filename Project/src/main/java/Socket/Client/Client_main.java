@@ -13,6 +13,7 @@ public class Client_main {
             switch (direction_flag) {
                 case "1": {
                     client.Login();
+                    break;
                 }
                 case "2": {
                     client.Register();
