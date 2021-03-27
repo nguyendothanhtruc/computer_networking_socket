@@ -33,8 +33,43 @@ public class Client {
         }
     }
 
+    //First menu: 1-2 Regis/Login
+    public String SignUpForm() throws IOException {
+        System.out.println("SIGN IN FORM");
+        System.out.println("1. Login");
+        System.out.println("2. Register");
+
+        Scanner in = new Scanner(System.in);
+        String Option = "";
+        boolean isFound = false;
+
+        try {
+            while (!isFound) {
+                Option = in.nextLine();
+                switch (Option) {
+                    case "1":
+                        isFound = true;
+                        break;
+                    case "2":
+                        isFound = true;
+                        break;
+                    default:
+                        System.out.println("Invalid option!");
+                        System.out.println("Re-enter option: ");
+                }
+            }
+            output.writeUTF(Option); //Send the search-option to server
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //in.close();
+        }
+        return Option;
+    }
+
     //Login into the system - send user/pass to server
-    void Login() {
+    public void Login() {
 
         //String to read from server
         String line = "";
@@ -44,7 +79,7 @@ public class Client {
         boolean LoginSuccess = false;
         while (!LoginSuccess) {
             try {
-                System.out.println("Login: ");
+                System.out.println("LOGIN");
                 System.out.println("Username: ");
                 line = in.nextLine();
                 output.writeUTF(line); //Send username
@@ -63,6 +98,11 @@ public class Client {
             }
         }
         in.close(); //Closer scanner
+    }
+
+    //Create new account - send user/pass/confirm to server
+    public void Register() {
+
     }
 
     public void menu() throws IOException {
@@ -91,18 +131,11 @@ public class Client {
     }
 
     //Returns type of book-searching: 1-Search by type1; 2-Search by type2 to server
-    public String Searching_Type(String Menu,String type1, String type2) throws IOException {
-        //SYNTAX: TYPE1=ID; TYPE2=NAME OR TYPE1=TYPE; TYPE2=AUTHOR OR TYPE1=LOGIN; TYPE2=REGISTER
+    public String Searching_Type(String type1, String type2, String input) throws IOException {
+        //SYNTAX: TYPE1=ID; TYPE2=NAME OR TYPE1=TYPE; TYPE2=AUTHOR
 
         //Presentation
-        String temp;
-        temp=Menu;
-        System.out.println(Menu);
-        temp = "1. " + type1;
-        System.out.println(temp);
-
-        temp = "2. " + type2;
-        System.out.println(temp);
+        String header;
 
         String Option = ""; //Buffer-holder
         Boolean isFound = false; //Stop-flag
