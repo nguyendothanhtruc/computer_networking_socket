@@ -1,6 +1,7 @@
 package Socket.Server;
 
 import Socket.Server.DataHandler;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -36,9 +37,11 @@ public class Services
         }
     }
 
-    public void Register () throws IOException {
+    public void Register () throws IOException, SQLException {
         String username, password, confirm;
         Boolean Regis_Success = false;
+
+        DataHandler dataHandler = new DataHandler();
 
         while (!Regis_Success)
         {
@@ -50,8 +53,9 @@ public class Services
             if (!password.equals(confirm)) out.writeBoolean(Regis_Success);
             else
             {
-                Regis_Success = true;
+                Regis_Success = dataHandler.Register(username, password);
 
+                out.writeBoolean(Regis_Success);
             }
         }
     }

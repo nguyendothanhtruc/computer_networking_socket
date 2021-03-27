@@ -1,12 +1,12 @@
 package Socket.Server;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.sql.*;
 
 public class DataHandler {
     private SQLServerDataSource ds;
-    private Connection connection;
 
     private String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
     private int port = 1433;
@@ -24,7 +24,7 @@ public class DataHandler {
     }
 
     public Boolean checkPassword(String u, String p) throws SQLException {
-        connection = ds.getConnection();
+        Connection connection = ds.getConnection();
 
         String sql = "SELECT password FROM account WHERE username = ?";
 
@@ -35,10 +35,46 @@ public class DataHandler {
 
         String pass = "";
 
-        if (!rs.next()) return false;
+        if (!rs.next()) //Account don't exist
+        {
+            connection.close();
+            return false;
+        }
         else pass = rs.getString("password");
 
-        if (pass.equals(p)) return true;
+        if (pass.equals(p))
+        {
+            connection.close();
+            return true;
+        }
+        connection.close(); //Wrong password
         return false;
+    }
+
+    public Boolean Register(String u, String p) throws SQLException {
+        Connection connection = ds.getConnection();
+
+        PreparedStatement statement = null;
+
+        String isExisted = "SELECT username FROM account where username = ?";
+        statement = connection.prepareStatement(isExisted);
+        statement.setString(1,u);
+
+        ResultSet rs = statement.executeQuery();
+
+        if (rs.next()) //Username was used
+        {
+            connection.close();
+            return false;
+        }
+
+        String insert = "INSERT INTO account" + "VALUES (?,?)";
+        statement = connection.prepareStatement(insert);
+        statement.setString(1,u);
+        statement.setString(2,p);
+        statement.executeUpdate();
+
+        connection.close();
+        return true;
     }
 }

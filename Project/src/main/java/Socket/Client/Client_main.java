@@ -18,7 +18,7 @@ public class Client_main {
                     client.Register();
                 }
             }
-        } while (direction_flag != "1");
+        } while (!direction_flag.equals("1"));
         //Forced menu: View book
         direction_flag = "1";
 

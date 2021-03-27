@@ -35,14 +35,17 @@ public class Server {
         Services service = new Services(socket, input, output);
 
         //Receive 1: Login, 2: Register
-        String op = input.readUTF();
-
-        switch(op)
+        String op = "";
+        do
         {
-            case "1": service.Login();
-            break;
-            default: service.Register();
-        }
+            op = input.readUTF();
+            switch(op)
+            {
+                case "1": service.Login();
+                    break;
+                default: service.Register();
+            }
+        } while (!op.equals("1"));
     }
 
     public void Disconnect() throws IOException {
