@@ -23,19 +23,38 @@ public class Services
     public void Login() throws IOException, SQLException {
         String username, password;
         Boolean isCorrected = false;
+
         while (!isCorrected) {
-            // Ask user account
+            // Receive user account
             username = in.readUTF();
             password = in.readUTF();
 
             DataHandler dataHandler = new DataHandler();
+
             isCorrected = dataHandler.checkPassword(username, password);
             out.writeBoolean(isCorrected);
         }
     }
 
-    public void Register ()
-    {}
+    public void Register () throws IOException {
+        String username, password, confirm;
+        Boolean Regis_Success = false;
+
+        while (!Regis_Success)
+        {
+            //Receive user account
+            username = in.readUTF();
+            password = in.readUTF();
+            confirm = in.readUTF();
+
+            if (!password.equals(confirm)) out.writeBoolean(Regis_Success);
+            else
+            {
+                Regis_Success = true;
+
+            }
+        }
+    }
     public void Look_up()
     {}
     public void List_books()

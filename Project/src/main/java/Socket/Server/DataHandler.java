@@ -7,10 +7,13 @@ import java.sql.*;
 public class DataHandler {
     private SQLServerDataSource ds;
     private Connection connection;
-    //private String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
-    private String server_name = "MSI";
-    //private int port = 1433;
-    private int port = 1432;
+
+    private String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
+    private int port = 1433;
+
+    //private String server_name = "MSI";
+    //private int port = 1432;
+
     public DataHandler() {
         ds = new SQLServerDataSource();
         ds.setUser("sa");
@@ -23,7 +26,9 @@ public class DataHandler {
     public Boolean checkPassword(String u, String p) throws SQLException {
         connection = ds.getConnection();
 
-        PreparedStatement preparedStatement = connection.prepareStatement("Select password from account where username = ?");
+        String sql = "SELECT password FROM account WHERE username = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, u);
 
         ResultSet rs = preparedStatement.executeQuery();
@@ -32,6 +37,7 @@ public class DataHandler {
 
         if (!rs.next()) return false;
         else pass = rs.getString("password");
+
         if (pass.equals(p)) return true;
         return false;
     }
