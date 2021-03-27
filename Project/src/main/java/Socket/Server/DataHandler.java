@@ -8,11 +8,11 @@ import java.sql.*;
 public class DataHandler {
     private SQLServerDataSource ds;
 
-    //private String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
-    //private int port = 1433;
+    private String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
+    private int port = 1433;
 
-    private String server_name = "MSI";
-    private int port = 1432;
+    //private String server_name = "MSI";
+    //private int port = 1432;
 
     public DataHandler() {
         ds = new SQLServerDataSource();
@@ -68,12 +68,13 @@ public class DataHandler {
             return false;
         }
 
-        String insert = "INSERT INTO account" + "VALUES (?,?)";
-        statement = connection.prepareStatement(insert);
+        String insert = "INSERT INTO account(username, password) VALUES (?,?)";
+        statement = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1,u);
         statement.setString(2,p);
-        statement.executeUpdate();
 
+        int rowAffected = statement.executeUpdate();
+        System.out.println(rowAffected);
         connection.close();
         return true;
     }
