@@ -13,6 +13,8 @@ public class Server_Main
 
         server.SignIn_Form();
 
+        server.View_books();
+
         server.Disconnect();
     }
 }

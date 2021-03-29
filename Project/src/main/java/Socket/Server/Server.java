@@ -5,6 +5,7 @@ import Socket.Server.DataHandler;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,6 +16,7 @@ public class Server {
     private Socket socket = null;
     private DataInputStream input = null;
     private DataOutputStream output = null;
+    private ObjectOutputStream oos = null;
     private DataHandler dataHandler;
 
     //Establish a connection between server and clients
@@ -26,13 +28,14 @@ public class Server {
         socket = server.accept(); //Return a socket connecting to socket of clients
         System.out.println("A client connected");
 
-        //Take input from client:
+        //Communicate with client:
         input = new DataInputStream(socket.getInputStream());
         output = new DataOutputStream(socket.getOutputStream());
+        oos = new ObjectOutputStream(output);
     }
 
     public void SignIn_Form() throws IOException, SQLException {
-        Services service = new Services(socket, input, output);
+        Services service = new Services(socket, input, output,oos);
 
         //Receive 1: Login, 2: Register
         String op = "";
@@ -46,6 +49,17 @@ public class Server {
                 default: service.Register();
             }
         } while (!op.equals("1"));
+    }
+
+    public void View_books() throws IOException, SQLException {
+        Services service = new Services(socket, input, output, oos);
+
+        //Receive 1: View by ID, 2: by Name
+        //String op = input.readUTF();
+        //String Search_key = input.readUTF();
+        String op = "1";
+        String Search_key = "1";
+        service.View(op, Search_key);
     }
 
     public void Disconnect() throws IOException {
