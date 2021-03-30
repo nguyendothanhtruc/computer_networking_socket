@@ -3,8 +3,10 @@ package Socket.Server;
 import Socket.Book;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import com.sun.net.httpserver.Authenticator;
 
 import java.sql.*;
+import java.util.List;
 
 public class DataHandler {
     private SQLServerDataSource ds;
@@ -98,14 +100,14 @@ public class DataHandler {
             switch (option)
             {
                 case "1":
-                    System.out.println("Client views book by ID");
+                    System.out.println("by ID");
                     sql = "SELECT * FROM book where id = ?";
                     pstmt = connection.prepareStatement(sql);
                     int id = Integer.parseInt(Search_key);
                     pstmt.setInt(1, id);
                     break;
                 default:
-                    System.out.println("Client views book by name");
+                    System.out.println("by Name");
                     sql = "SELECT * FROM book where name = ?";
                     pstmt = connection.prepareStatement(sql);
                     pstmt.setString(1,Search_key);
@@ -133,5 +135,42 @@ public class DataHandler {
         return true;
     }
 
+    public Boolean List_Book(String option, String Search_key, List<Book> books) {
+
+        Boolean Success = false;
+        try {
+            Connection connection = ds.getConnection();
+            String sql;
+
+            switch (option) {
+                case "1": //By Type
+                    sql = "SELECT * FROM book WHERE type = ?";
+                    break;
+                default: //By Author
+                    sql = "SELECT * FROM book WHERE author = ?";
+            }
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, Search_key);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next())
+            {
+                int ID = rs.getInt("ID");
+                String name = rs.getString("name");
+                String author = rs.getString("author");
+                int year = rs.getInt("year");
+                String type = rs.getString("type");
+                Book newBook = new Book(ID, name, author, year, type);
+                books.add(newBook);
+                Success = true;
+            }
+
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return Success;
+    }
 }
 

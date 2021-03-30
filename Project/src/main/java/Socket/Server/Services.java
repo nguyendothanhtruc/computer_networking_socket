@@ -2,26 +2,26 @@ package Socket.Server;
 
 import Socket.Book;
 
-import Socket.Server.DataHandler;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Services extends Thread {
-    private DataInputStream in = null; //Take message from client
-    private DataOutputStream out = null; //Print on client terminal
-    private ObjectOutputStream oos = null;
+    final DataInputStream in; //Take message from client
+    final DataOutputStream out; //Print on client terminal
+    final ObjectOutputStream oos;
     private String username;
+    private List<String> Clients;
     final Socket socket;
 
     // Constructor
-    public Services(Socket s) throws IOException {
+    public Services(Socket s, List<String> c) throws IOException {
         socket = s;
+        Clients = c;
 
         //Communicate with client:
         in = new DataInputStream(socket.getInputStream());
@@ -41,10 +41,12 @@ public class Services extends Thread {
 
             DataHandler dataHandler = new DataHandler();
 
-            isCorrected = dataHandler.checkPassword(username, password);
+            if (!Clients.contains(username)) isCorrected = dataHandler.checkPassword(username, password);
+
             out.writeBoolean(isCorrected);
         }
         System.out.println("User: " + username + " logins successfully! \n");
+        Clients.add(username);
     }
 
     public void Register() throws IOException, SQLException {
@@ -60,8 +62,11 @@ public class Services extends Thread {
 
             password = in.readUTF();
 
+<<<<<<< Updated upstream
             confirm = in.readUTF();
 
+=======
+>>>>>>> Stashed changes
             if (!password.equals(confirm)) {
                 System.out.println("Registers unsuccessfully!");
                 out.writeBoolean(Regis_Success);
@@ -76,22 +81,21 @@ public class Services extends Thread {
 
     public void SignIn_Form() throws IOException, SQLException {
         //Receive 1: Login, 2: Register
-        String op = "";
+        String op;
         do {
             op = in.readUTF();
-            switch (op) {
-                case "1":
-                    Login();
-                    break;
-                default:
-                    Register();
-            }
+            if (op.equals("1"))
+                Login();
+            else
+                Register();
+
         } while (!op.equals("1"));
     }
 
-    public Boolean View() throws IOException {
+    public void Look_up() throws IOException {
         DataHandler dataHandler = new DataHandler();
         Boolean isFound = false;
+        System.out.println("User: " + username + " looks up books");
         while (!isFound) {
             //Receive 1: View by ID, 2: by Name
             String option = in.readUTF();
@@ -109,36 +113,76 @@ public class Services extends Thread {
                     found.display();
                 }
 
-            } catch (SQLException | IOException throwables) {
-                throwables.printStackTrace();
-                System.out.println("Error in View");
+            } catch (SQLException | IOException throwable) {
+                throwable.printStackTrace();
+                System.out.println("Error in Look-up");
             }
         }
-        return isFound;
     }
 
-    public void Look_up() {
+    public void View() {
     }
 
     public void List_books() {
+        System.out.println("User: " + username + " lists books");
+
+        String option, search_key;
+        DataHandler dataHandler = new DataHandler();
+
+        try {
+            List<Book> books = new ArrayList<Book>();
+            Boolean Success = false;
+
+            while (!Success)
+            {
+                option = in.readUTF();
+                search_key = in.readUTF();
+                //option = "1";
+                //search_key = "Computer Science";
+
+                Success = dataHandler.List_Book(option,search_key, books);
+
+                out.writeBoolean(Success);
+
+                if(Success)
+                {
+                    oos.writeObject(books);
+                    System.out.println("There are " + books.size() + " books found");
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error in List_books");
+        }
+
     }
 
-    public void Download() {
-    }
+    public void Download() {}
 
-    public void Main_Menu() {
+    public void Main_Menu() throws IOException {
+        //String option = in.readUTF();
+        String option = "3";
 
+        switch (option) {
+            case "1":
+                View();
+                break;
+            case "2":
+                Download();
+                break;
+            default:
+                List_books();
+        }
     }
 
     public void Menu() {
         try {
             SignIn_Form();
-            View();
-            //Main_Menu();
-        } catch (IOException e) {
+            Look_up();
+            Main_Menu();
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
 
     }

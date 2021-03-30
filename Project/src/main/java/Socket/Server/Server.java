@@ -4,24 +4,27 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Server {
     private ServerSocket server = null;
     private Socket socket = null;
-    private DataHandler dataHandler;
+    private List<String> clients;
+
 
     //Establish a connection between server and clients
     public Server(int port) throws IOException {
         server = new ServerSocket(port, 1, InetAddress.getByName("localhost"));
         System.out.println("Server started");
         System.out.println("Waiting for clients.... \n ");
+        clients = new ArrayList<String>();
     }
 
     public void Connect() throws IOException
     {
 
-        while (true)
+        while (server.isBound() && !server.isClosed())
         {
             socket = null;
             try {
@@ -32,7 +35,7 @@ public class Server {
                 System.out.println("Assigning new thread for this client \n");
 
                 // create a new thread object
-                Services ClientHandler = new Services(socket);
+                Services ClientHandler = new Services(socket, clients);
 
                 // Invoking the start() method
                 ClientHandler.start();
