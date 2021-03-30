@@ -11,10 +11,8 @@ public class Server_Main
         //Set up database
         Server server = new Server(9999);
 
-        server.SignIn_Form();
+        server.Connect();
 
-        server.View_books();
 
-        server.Disconnect();
     }
 }
