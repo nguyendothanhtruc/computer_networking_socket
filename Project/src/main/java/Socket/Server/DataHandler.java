@@ -9,11 +9,11 @@ import java.sql.*;
 public class DataHandler {
     private SQLServerDataSource ds;
 
-   private String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
-    private int port = 1433;
+   //private String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
+    //private int port = 1433;
 
-    //private String server_name = "MSI";
-    //private int port = 1432;
+    private String server_name = "MSI";
+    private int port = 1432;
 
     public DataHandler() {
         ds = new SQLServerDataSource();

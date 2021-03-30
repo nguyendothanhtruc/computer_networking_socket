@@ -52,14 +52,6 @@
           <verticalTextPosition value="0"/>
         </properties>
       </component>
-      <component id="c77e2" class="javax.swing.JTextField" binding="Text_Username">
-        <constraints>
-          <grid row="2" column="2" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
-            <preferred-size width="400" height="30"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
       <component id="bdbce" class="javax.swing.JPasswordField" binding="Pass_Password">
         <constraints>
           <grid row="7" column="2" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
@@ -120,6 +112,14 @@
         <border type="none"/>
         <children/>
       </grid>
+      <component id="c77e2" class="javax.swing.JTextField" binding="Text_Username">
+        <constraints>
+          <grid row="2" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="400" height="30"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
     </children>
   </grid>
 </form>
