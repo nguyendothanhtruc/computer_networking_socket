@@ -1,9 +1,12 @@
 package Socket.Client;
 
-import java.awt.print.Book;
+
+import Socket.Book;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -13,6 +16,7 @@ public class Client {
     private Socket socket = null;
     private DataInputStream input = null;
     private DataOutputStream output = null;
+    private ObjectInputStream objectInputStream = null;
 
     // constructor to put ip address and port
     Client(String address, int port) throws IOException {
@@ -24,6 +28,7 @@ public class Client {
 
             input = new DataInputStream(socket.getInputStream());
             output = new DataOutputStream(socket.getOutputStream());
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
             //Init IO stream
 
         } catch (UnknownHostException u) {
@@ -133,15 +138,26 @@ public class Client {
     }
 
     //Input a line to view a book by name/id
-    public void ViewBook() throws IOException {
-        System.out.println("VIEW BOOK");
+    public void ViewBook() throws IOException, ClassNotFoundException {
 
-        String Book_name = "";
+        Boolean isFound = false;
+        while (!isFound) {
+            System.out.println("VIEW BOOK");
 
-        Book_name = Searching_Type("F_ID", "F_Name");
-        //output.writeUTF(Book_name); -->Send the content's of search part to sv
+            String Book_name = "";
 
-        //Book myBook=new Book(input.readUTF());
+            Book_name = Searching_Type("F_ID", "F_Name");
+            output.writeUTF(Book_name);
+            isFound = input.readBoolean();
+
+            if (isFound) {
+                Book myBook = (Book) objectInputStream.readObject();
+                myBook.display();
+                objectInputStream.close();
+            }
+        }
+
+        // List<Message> listOfMessages = (List<Message>) objectInputStream.readObject();
     }
 
     //Returns type of book-searching: 1-Search by type1; 2-Search by type2 to server
@@ -160,20 +176,18 @@ public class Client {
 
         //Loop until type of searching is found
         while (!isFound) {
-            //Get data
             GetDataString = in.nextLine();
 
-            //Execute string - split
             int pos = GetDataString.indexOf(" ");
             BookHeader = GetDataString.substring(0, pos); //Get the F_X part
 
-            BookContent= GetDataString.substring(pos + 1, GetDataString.length()); //Get the name/ID part
+            BookContent = GetDataString.substring(pos + 1, GetDataString.length()); //Get the name/ID part
 
-            /*TEST SPLIT
+           /*TEST SPLIT
             System.out.println("H:" +BookHeader);
             System.out.println("S:" +BookContent);
-            System.out.println("Str: "+GetDataString.length());
-            */
+            System.out.println("Str: "+GetDataString.length()); */
+
             if (BookHeader.equals(type1)) direction_flag = "1";
             else if (BookHeader.equals(type2)) direction_flag = "2";
             else direction_flag = "3";

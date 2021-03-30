@@ -31,7 +31,7 @@ public class Server {
         //Communicate with client:
         input = new DataInputStream(socket.getInputStream());
         output = new DataOutputStream(socket.getOutputStream());
-        oos = new ObjectOutputStream(output);
+        oos = new ObjectOutputStream(socket.getOutputStream());
     }
 
     public void SignIn_Form() throws IOException, SQLException {
@@ -55,14 +55,15 @@ public class Server {
         Services service = new Services(socket, input, output, oos);
 
         //Receive 1: View by ID, 2: by Name
-        //String op = input.readUTF();
-        //String Search_key = input.readUTF();
-        String op = "1";
-        String Search_key = "1";
+        String op = input.readUTF();
+        String Search_key = input.readUTF();
+        //String op = "1";
+       // String Search_key = "1";
         service.View(op, Search_key);
     }
 
     public void Disconnect() throws IOException {
+        oos.close();
         input.close();
         output.close();
         socket.close();
