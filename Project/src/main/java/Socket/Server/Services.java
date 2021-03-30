@@ -57,12 +57,10 @@ public class Services extends Thread {
         while (!Regis_Success) {
             //Receive user account
             username = in.readUTF();
-            password = in.readUTF();
-            confirm = in.readUTF();
 
-            System.out.println(username);
-            System.out.println(password);
-            System.out.println(confirm);
+            password = in.readUTF();
+
+            confirm = in.readUTF();
 
             if (!password.equals(confirm)) {
                 System.out.println("Registers unsuccessfully!");

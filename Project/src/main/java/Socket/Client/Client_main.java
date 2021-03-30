@@ -26,7 +26,7 @@ public class Client_main {
         //Forced menu: View book
         direction_flag = "1";
         client.ViewBook();
-        client.MainMenu();
+        //client.MainMenu();
 
         // client.Disconnect();
     }
