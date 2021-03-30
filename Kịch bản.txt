@@ -21,8 +21,10 @@ Kết nối: TB thành công
 ->SV trả về 5 thông tin của sách
 ->CLient hiển thị các tính năng khác
 
+3.5 Bắt buộc xem sách
+
 4.Server nhận menu 1/2/3:
-1.Xem sách: SV Nhận 1/2: Xem theo ID/Name, sau đó nhận string (ID hoặc Name) ->trả 0/1
+1.Xem sách khác: SV Nhận 1/2: Xem theo ID/Name, sau đó nhận string (ID hoặc Name) ->trả 0/1 + sách
 2.Tải: SV gửi nội dung sách (gửi file PDF), trúc tạo sẵn 5 file PDF <3
 3.Tra cứu thêm: SV nhận 1/2: Kiếm theo theo thể loại/tác giả (search từ db)
 -->Trả về: số cuốn tìm ra N, thông tin mỗi cuốn (Book) - list Book;

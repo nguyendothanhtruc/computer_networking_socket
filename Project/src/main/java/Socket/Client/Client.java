@@ -156,8 +156,43 @@ public class Client {
                 objectInputStream.close();
             }
         }
+    }
 
-        // List<Message> listOfMessages = (List<Message>) objectInputStream.readObject();
+    //The menu includes 3 other functions:
+    public void MainMenu() throws IOException {
+
+        System.out.println("FUNCTIONS: ");
+        System.out.println("1. View book's content");
+        System.out.println("2. Download book");
+        System.out.println("3. Look up more");
+
+        String option = "";
+        Scanner in = new Scanner(System.in);
+        while (true) {
+            option = in.nextLine();
+            switch (option) {
+                case "1": {
+                    output.writeUTF(option);
+                    //client.ViewContent();
+                    break;
+                }
+
+                case "2": {
+                    System.out.println("kek");
+                    output.writeUTF(option);
+                    //client.Download();
+                    break;
+                }
+                case "3": {
+                    System.out.println("kekk");
+                    output.writeUTF(option);
+                    //client.LookUp();
+                    break;
+                }
+                default:
+                    System.out.println("Invalid, input again");
+            }
+        }
     }
 
     //Returns type of book-searching: 1-Search by type1; 2-Search by type2 to server

@@ -2,9 +2,11 @@ package Socket.Client;
 
 import java.io.IOException;
 
+
 public class Client_main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Client client = new Client("127.0.0.1", 9999);
+
 
         //First menu:
         String direction_flag = "";
@@ -24,7 +26,7 @@ public class Client_main {
         //Forced menu: View book
         direction_flag = "1";
         client.ViewBook();
-       // client.MainMenu();
+        client.MainMenu();
 
         // client.Disconnect();
     }
