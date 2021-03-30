@@ -59,14 +59,9 @@ public class Services extends Thread {
         while (!Regis_Success) {
             //Receive user account
             username = in.readUTF();
-
             password = in.readUTF();
-
-<<<<<<< Updated upstream
             confirm = in.readUTF();
 
-=======
->>>>>>> Stashed changes
             if (!password.equals(confirm)) {
                 System.out.println("Registers unsuccessfully!");
                 out.writeBoolean(Regis_Success);
