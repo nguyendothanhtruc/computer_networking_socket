@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class Register extends JFrame {
+
+    public static JFrame frame;
+    //JFrame
     private JPanel RootPanel;
     private JLabel JLabel_SignUp;
     private JButton Button_OK;
@@ -53,7 +56,7 @@ public class Register extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 boolean RegisSuccess = false;
-                while (!RegisSuccess) {
+                if (!RegisSuccess) {
                     try {
 
                         output.writeUTF(Text_Username.getText());
@@ -68,6 +71,9 @@ public class Register extends JFrame {
                         //Check if Login_success
                         if (RegisSuccess) {
                             JOptionPane.showMessageDialog(null, "Register successfully");
+                            frame.setVisible(false);
+                            input.close();
+                            output.close();
                         } else {
                             JOptionPane.showMessageDialog(null, "Failed to register");
                         }
@@ -80,31 +86,16 @@ public class Register extends JFrame {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public JFrame Register_GUI() throws IOException {
 
-        Client client = new Client("localhost", 9999);
-        String direction_flag = "";
-        do {
-            direction_flag = client.SignUpForm(); //LOOP UNTIL LOGIN SUCCESSFULLY
-            switch (direction_flag) {
-                case "1": {
-                    client.Login();
-                    break;
-                }
-                case "2": {
-                    JFrame frame = new JFrame("SignUp");
-                    Register reg = new Register(client.getSocket());
-                    //Add cac thanh phan trong RootPanel vao
-                    frame.setContentPane(reg.RootPanel);
-                    //Tat khi bam exit
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    frame.pack();
-                    frame.setVisible(true);
-
-                    break;
-                }
-            }
-        } while (!direction_flag.equals("1"));
+        frame = new JFrame("SignUp");
+        frame.setContentPane(this.RootPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        return frame;
 
     }
+
+    ;
 }

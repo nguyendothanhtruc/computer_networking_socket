@@ -7,6 +7,7 @@ public class Client_main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Client client = new Client("127.0.0.1", 9999);
 
+        Register register=new Register(client.getSocket());
 
         //First menu:
         String direction_flag = "";
@@ -18,7 +19,8 @@ public class Client_main {
                     break;
                 }
                 case "2": {
-                    client.Register();
+                    register.frame=register.Register_GUI();
+                    //client.Register();
                 }
             }
         } while (!direction_flag.equals("1"));
@@ -30,5 +32,7 @@ public class Client_main {
 
         // client.Disconnect();
     }
+
+
 }
 
