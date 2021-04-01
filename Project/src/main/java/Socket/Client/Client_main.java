@@ -8,9 +8,10 @@ public class Client_main {
         Client client = new Client("127.0.0.1", 9999);
 
         //First menu:
-        FirstMenu firstMenu = new FirstMenu(client.getSocket());
+        boolean received = false;
+        FirstMenu firstMenu= new FirstMenu(client.getSocket());
 
-        String direction_flag = firstMenu.getOption();
+        String direction_flag = firstMenu.getChoose();
         do{
             FirstMenu.FirstMenu_Run(client.getSocket());
             switch (direction_flag) {
