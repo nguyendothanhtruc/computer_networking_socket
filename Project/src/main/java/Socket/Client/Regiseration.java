@@ -9,6 +9,11 @@ import java.net.Socket;
 
 class Registration extends JFrame {
 
+    //Socket
+    private  Socket socket = null;
+    private DataInputStream input = null;
+    private DataOutputStream output = null;
+
     //JFrame
     private keeptoo.KGradientPanel Apply;
     private javax.swing.JLabel Confirm;
@@ -23,17 +28,26 @@ class Registration extends JFrame {
     private javax.swing.JLabel jLabel1;
     private keeptoo.KGradientPanel kGradientPanel1;
 
-    //Socket
-    private static Socket socket = null;
-    private DataInputStream input = null;
-    private DataOutputStream output = null;
 
 
     public Registration(Socket socket) throws IOException {
-        Registration.socket = socket;
+        this.socket = socket;
         input = new DataInputStream(socket.getInputStream());
         output = new DataOutputStream(socket.getOutputStream());
         initComponents();
+    }
+
+    public static void Regist_run(Socket socket) throws IOException {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Registration registration = new Registration(socket);
+                    registration.setVisible(true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void initComponents() {
@@ -210,7 +224,6 @@ class Registration extends JFrame {
         pack();
     }// </editor-fold>
 
-
     private void OKActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         output.writeUTF(TextUsername.getText());
         output.writeUTF(String.valueOf(PasswordHidden.getPassword()));
@@ -228,20 +241,6 @@ class Registration extends JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Failed to register");
         }
-    }
-
-
-    public static void Regist_run(Socket socket) throws IOException {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Registration registration = new Registration(socket);
-                    registration.setVisible(true);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 }
 

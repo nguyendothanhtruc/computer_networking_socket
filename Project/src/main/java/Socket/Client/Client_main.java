@@ -8,9 +8,11 @@ public class Client_main {
         Client client = new Client("127.0.0.1", 9999);
 
         //First menu:
-        String direction_flag = "";
-        do {
-            direction_flag = client.SignUpForm(); //LOOP UNTIL LOGIN SUCCESSFULLY
+        FirstMenu firstMenu = new FirstMenu(client.getSocket());
+
+        String direction_flag = firstMenu.getOption();
+        do{
+            FirstMenu.FirstMenu_Run(client.getSocket());
             switch (direction_flag) {
                 case "1": {
                     client.Login();
