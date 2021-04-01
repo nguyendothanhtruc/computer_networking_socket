@@ -11,11 +11,11 @@ import java.util.List;
 public class DataHandler {
     private SQLServerDataSource ds;
 
-   //private String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
-    //private int port = 1433;
+   private String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
+    private int port = 1433;
 
-    private String server_name = "MSI";
-    private int port = 1432;
+    //private String server_name = "MSI";
+    //private int port = 1432;
 
     public DataHandler() {
         ds = new SQLServerDataSource();
@@ -72,9 +72,10 @@ public class DataHandler {
                 return false;
             }
             String insert = "INSERT INTO account(username, password) VALUES (?,?)";
-            statement = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement(insert);
             statement.setString(1, u);
             statement.setString(2, p);
+            statement.executeQuery();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
