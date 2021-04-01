@@ -50,7 +50,7 @@ public class Client {
             System.out.println(i);
         }
     }
-
+/*
     //First menu: 1-2 Regis/Login
     public String SignUpForm() throws IOException {
         System.out.println("SIGN IN FORM");
@@ -82,7 +82,7 @@ public class Client {
 
         return Option;
     }
-
+*/
     //Login into the system - send user/pass to server
     public void Login() {
 

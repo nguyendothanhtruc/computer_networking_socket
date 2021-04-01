@@ -76,9 +76,6 @@ public class DataHandler {
             statement.setString(1, u);
             statement.setString(2, p);
 
-            int rowAffected = statement.executeUpdate();
-            System.out.println(rowAffected);
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {

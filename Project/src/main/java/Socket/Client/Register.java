@@ -9,8 +9,9 @@ import java.net.Socket;
 
 class Registration extends JFrame {
 
+
     //Socket
-    private  Socket socket = null;
+    private Socket socket = null;
     private DataInputStream input = null;
     private DataOutputStream output = null;
 
@@ -28,6 +29,7 @@ class Registration extends JFrame {
     private javax.swing.JLabel jLabel1;
     private keeptoo.KGradientPanel kGradientPanel1;
 
+    private static Object lock = new Object();
 
 
     public Registration(Socket socket) throws IOException {
@@ -38,15 +40,25 @@ class Registration extends JFrame {
     }
 
     public static void RunReg(Socket socket) throws IOException {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        //java.awt.EventQueue.invokeLater(new Runnable() {
+           // public void run() {
                 try {
-                    new Registration(socket).setVisible(true);
-                } catch (IOException e) {
+                    Registration registration = new Registration(socket);
+                    registration.setVisible(true);
+                    registration.waitForInputs();
+
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
-        });
+            //}
+       // });
+    }
+
+    public void waitForInputs() throws InterruptedException {
+        synchronized (this) {
+            // Make the current thread waits until a notify or an interrupt
+            wait();
+        }
     }
 
     private void initComponents() {
@@ -224,21 +236,27 @@ class Registration extends JFrame {
     }// </editor-fold>
 
     private void OKActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
+
         output.writeUTF(TextUsername.getText());
         output.writeUTF(String.valueOf(PasswordHidden.getPassword()));
         output.writeUTF(String.valueOf(ConfirmHidden.getPassword()));
-       // output.flush();
+        output.flush();
 
         boolean RegisSuccess = false;
         RegisSuccess = input.readBoolean(); //Receive regis_flag from sv
+
         //Check if Login_success
         if (RegisSuccess) {
             JOptionPane.showMessageDialog(null, "Register successfully");
             this.setVisible(false);
-
+            synchronized (this) {
+                // Release the waiting threads
+                notifyAll();
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Failed to register");
         }
+
     }
 }
 

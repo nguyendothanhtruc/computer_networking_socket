@@ -1,7 +1,6 @@
 package Socket.Server;
 
 import Socket.Book;
-//import Socket.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -66,12 +65,13 @@ public class Services extends Thread {
 
             if (!password.equals(confirm)) {
                 System.out.println("Registers unsuccessfully!");
-                out.writeBoolean(Regis_Success);
+                out.writeBoolean(false);
+
             } else {
                 Regis_Success = dataHandler.Register(username, password);
-                System.out.println("User: " + username + " registers successfully! \n");
                 out.writeBoolean(Regis_Success); //Gui ve ham regis cua client xu ly
-                out.writeUTF("2"); //Gui ve client_main xu ly
+                if (Regis_Success) System.out.println("User: " + username + " registers successfully! \n");
+                else System.out.println("Failed to register");
             }
         }
 
@@ -83,7 +83,6 @@ public class Services extends Thread {
         do {
             op = in.readUTF();
             out.writeUTF(op);
-            System.out.println(op);
             if (op.equals("1"))
                 Login();
             else
@@ -133,19 +132,17 @@ public class Services extends Thread {
             List<Book> books = new ArrayList<Book>();
             Boolean Success = false;
 
-            while (!Success)
-            {
+            while (!Success) {
                 option = in.readUTF();
                 search_key = in.readUTF();
                 //option = "1";
                 //search_key = "Computer Science";
 
-                Success = dataHandler.List_Book(option,search_key, books);
+                Success = dataHandler.List_Book(option, search_key, books);
 
                 out.writeBoolean(Success);
 
-                if(Success)
-                {
+                if (Success) {
                     oos.writeObject(books);
                     System.out.println("There are " + books.size() + " books found");
                 }
@@ -158,7 +155,8 @@ public class Services extends Thread {
 
     }
 
-    public void Download() {}
+    public void Download() {
+    }
 
     public void Main_Menu() throws IOException {
         String option = in.readUTF();

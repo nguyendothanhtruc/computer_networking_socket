@@ -1,7 +1,9 @@
 package Socket.Client;
 
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -11,6 +13,7 @@ public class FirstMenu extends JFrame {
     //Socket
     private static Socket socket = null;
     private DataOutputStream output = null;
+
 
     //JFrame
     private javax.swing.JLabel ByTrucPA;
@@ -127,8 +130,7 @@ public class FirstMenu extends JFrame {
                                 .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
         );
-        Picture.setIcon(new javax.swing.ImageIcon(String.valueOf(getClass().getClassLoader().getResource("D:\\MMT_Socket\\Project\\src\\main\\java\\Socket\\Client")))); // NOI18N
-
+        Picture.setIcon(new ImageIcon("Picture1.png"));
 
         ByTrucPA.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
         ByTrucPA.setText("BY TRUC & PA");
@@ -207,20 +209,23 @@ public class FirstMenu extends JFrame {
 
     }
 
+
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         this.setVisible(false);
         output.writeUTF("1");
 
     }
     public void run(Socket socket) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+       // java.awt.EventQueue.invokeLater(new Runnable() {
+         //   public void run() {
                 try {
                     new FirstMenu(socket).setVisible(true);
+
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
-        });
+           // }
+       // });
 
 }}

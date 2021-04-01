@@ -24,13 +24,11 @@ public class Client_main {
                     break;
                 }
                 case "2": {
-                    Registration registration= new Registration(client.getSocket());
+                    Registration registration = new Registration(client.getSocket());
                     registration.RunReg(client.getSocket());
-                    direction_flag="3";
-                    direction_flag=input.readUTF();
-                    System.out.println(direction_flag);
                     break;
                 }
+
                 default:
                     System.out.println("ERROR flag");
             }
