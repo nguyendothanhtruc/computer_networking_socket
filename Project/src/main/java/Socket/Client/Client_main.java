@@ -20,7 +20,8 @@ public class Client_main {
 
             switch (direction_flag) {
                 case "1": {
-                    client.Login();
+                    Login login=new Login(client.getSocket());
+                    login.RunLogin(client.getSocket());
                     break;
                 }
                 case "2": {

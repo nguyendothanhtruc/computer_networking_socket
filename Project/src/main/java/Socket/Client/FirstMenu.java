@@ -1,9 +1,7 @@
 package Socket.Client;
 
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -202,30 +200,26 @@ public class FirstMenu extends JFrame {
         pack();
     }// </editor-fold>
 
-
     private void NewAccountPerformed(java.awt.event.ActionEvent evt) throws IOException {
         this.setVisible(false);
         output.writeUTF("2");
-
     }
-
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         this.setVisible(false);
         output.writeUTF("1");
+    }
+
+    public void run(Socket socket) {
+        // java.awt.EventQueue.invokeLater(new Runnable() {
+        //   public void run() {
+        try {
+            new FirstMenu(socket).setVisible(true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // }
+        // });
 
     }
-    public void run(Socket socket) {
-       // java.awt.EventQueue.invokeLater(new Runnable() {
-         //   public void run() {
-                try {
-                    new FirstMenu(socket).setVisible(true);
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-           // }
-       // });
-
-}}
+}

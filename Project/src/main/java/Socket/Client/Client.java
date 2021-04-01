@@ -50,39 +50,7 @@ public class Client {
             System.out.println(i);
         }
     }
-/*
-    //First menu: 1-2 Regis/Login
-    public String SignUpForm() throws IOException {
-        System.out.println("SIGN IN FORM");
-        System.out.println("1. Login");
-        System.out.println("2. Register");
 
-        Scanner in = new Scanner(System.in);
-        String Option = "";
-        boolean isFound = false;
-
-        try {
-            while (!isFound) {
-                Option = in.nextLine();
-                switch (Option) {
-                    case "1":
-                    case "2":
-                        isFound = true;
-                        break;
-                    default:
-                        System.out.println("Invalid option!");
-                        System.out.println("Re-enter option: ");
-                }
-            }
-            output.writeUTF(Option); //Send the search-option to server
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return Option;
-    }
-*/
     //Login into the system - send user/pass to server
     public void Login() {
 

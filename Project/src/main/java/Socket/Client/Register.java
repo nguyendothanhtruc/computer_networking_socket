@@ -8,8 +8,6 @@ import java.net.Socket;
 
 
 class Registration extends JFrame {
-
-
     //Socket
     private Socket socket = null;
     private DataInputStream input = null;
@@ -41,17 +39,17 @@ class Registration extends JFrame {
 
     public static void RunReg(Socket socket) throws IOException {
         //java.awt.EventQueue.invokeLater(new Runnable() {
-           // public void run() {
-                try {
-                    Registration registration = new Registration(socket);
-                    registration.setVisible(true);
-                    registration.waitForInputs();
+        // public void run() {
+        try {
+            Registration registration = new Registration(socket);
+            registration.setVisible(true);
+            registration.waitForInputs();
 
-                } catch (IOException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-            //}
-       // });
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        //}
+        // });
     }
 
     public void waitForInputs() throws InterruptedException {
@@ -233,7 +231,7 @@ class Registration extends JFrame {
         );
 
         pack();
-    }// </editor-fold>
+    }
 
     private void OKActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
 
