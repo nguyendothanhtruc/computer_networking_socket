@@ -1,5 +1,9 @@
 package Socket.Client;
 
+import Socket.Client.GUI.FirstMenu;
+import Socket.Client.GUI.Login;
+import Socket.Client.GUI.Registration;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 
