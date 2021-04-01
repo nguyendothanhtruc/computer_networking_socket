@@ -2,20 +2,18 @@ package Socket.Server;
 
 import Socket.Book;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-import com.sun.net.httpserver.Authenticator;
 
 import java.sql.*;
 import java.util.List;
 
 public class DataHandler {
-    private SQLServerDataSource ds;
+    final SQLServerDataSource ds;
 
-    //private String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
-    //private int port = 1433;
+    final String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
+    final int port = 1433;
 
-    private String server_name = "MSI";
-    private int port = 1432;
+    //final String server_name = "MSI";
+    //final int port = 1432;
 
     public DataHandler() {
         ds = new SQLServerDataSource();
@@ -26,11 +24,9 @@ public class DataHandler {
         ds.setDatabaseName("Online_Library");
     }
 
-    public Boolean checkPassword(String u, String p) throws SQLException
-    {
-        Connection connection = ds.getConnection();
+    public Boolean checkPassword(String u, String p){
 
-        try {
+        try (Connection connection = ds.getConnection()) {
             String sql = "SELECT password FROM account WHERE username = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -38,7 +34,7 @@ public class DataHandler {
 
             ResultSet rs = preparedStatement.executeQuery();
 
-            String pass = "";
+            String pass;
 
             if (!rs.next()) //Account don't exist
                 return false;
@@ -46,20 +42,16 @@ public class DataHandler {
 
             if (pass.equals(p)) return true;
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } finally {
-            connection.close();
+        } catch (SQLException troubles) {
+            troubles.printStackTrace();
         }
         return false; //Wrong password
     }
 
-    public Boolean Register(String u, String p) throws SQLException
-    {
-        Connection connection = ds.getConnection();
+    public Boolean Register(String u, String p){
 
-        PreparedStatement statement = null;
-        try {
+        try (Connection connection = ds.getConnection()) {
+            PreparedStatement statement;
             String isExisted = "SELECT username FROM account where username = ?";
             statement = connection.prepareStatement(isExisted);
             statement.setString(1, u);
@@ -77,47 +69,39 @@ public class DataHandler {
             statement.setString(2, p);
             statement.executeQuery();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } finally {
-            connection.close();
+        } catch (SQLException troubles) {
+            troubles.printStackTrace();
         }
         return true;
     }
 
-    public Boolean find_Book(String option, String Search_key, Book found) throws SQLException
-    {
-        Connection connection = ds.getConnection();
+    public Boolean find_Book(String option, String Search_key, Book found) throws SQLException {
 
-        try
-        {
-            String sql = "";
-            PreparedStatement pstmt = null;
-            ResultSet rs = null;
+        try (Connection connection = ds.getConnection()) {
+            String sql;
+            PreparedStatement stmt;
+            ResultSet rs;
 
-            switch (option)
-            {
-                case "1":
-                    System.out.println("by ID");
-                    sql = "SELECT * FROM book where id = ?";
-                    pstmt = connection.prepareStatement(sql);
-                    int id = Integer.parseInt(Search_key);
-                    pstmt.setInt(1, id);
-                    break;
-                default:
-                    System.out.println("by Name");
-                    sql = "SELECT * FROM book where name = ?";
-                    pstmt = connection.prepareStatement(sql);
-                    pstmt.setString(1,Search_key);
+            if (option.equals("1")) {
+
+                System.out.println("by ID");
+                sql = "SELECT * FROM book where id = ?";
+                stmt = connection.prepareStatement(sql);
+                int id = Integer.parseInt(Search_key);
+                stmt.setInt(1, id);
+
+            } else {
+                System.out.println("by Name");
+                sql = "SELECT * FROM book where name = ?";
+                stmt = connection.prepareStatement(sql);
+                stmt.setString(1, Search_key);
             }
 
-            rs = pstmt.executeQuery();
+            rs = stmt.executeQuery();
             if (!rs.next()) {
                 System.out.println("Book not found!");
                 return false; //Not found
-            }
-            else
-            {
+            } else {
                 int ID = rs.getInt("ID");
                 String name = rs.getString("name");
                 String author = rs.getString("author");
@@ -127,8 +111,6 @@ public class DataHandler {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            connection.close();
         }
         return true;
     }
@@ -140,20 +122,17 @@ public class DataHandler {
             Connection connection = ds.getConnection();
             String sql;
 
-            switch (option) {
-                case "1": //By Type
-                    sql = "SELECT * FROM book WHERE type = ?";
-                    break;
-                default: //By Author
-                    sql = "SELECT * FROM book WHERE author = ?";
-            }
+            if (option.equals("1"))
+                sql = "SELECT * FROM book WHERE type = ?";
+            else
+                sql = "SELECT * FROM book WHERE author = ?";
+
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, Search_key);
 
             ResultSet rs = preparedStatement.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 int ID = rs.getInt("ID");
                 String name = rs.getString("name");
                 String author = rs.getString("author");
@@ -165,8 +144,8 @@ public class DataHandler {
             }
 
             connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException troubles) {
+            troubles.printStackTrace();
         }
         return Success;
     }
