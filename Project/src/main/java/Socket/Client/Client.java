@@ -51,59 +51,12 @@ public class Client {
         }
     }
 
-    //Login into the system - send user/pass to server
-    public void Login() {
-
-        //String to read from server
-        String line = "";
-        Scanner in = new Scanner(System.in);
-
-        //Try to login until LoginSuccess
-        boolean LoginSuccess = false;
-        while (!LoginSuccess) {
-            try {
-                System.out.println("LOGIN");
-                System.out.println("Username: ");
-                line = in.nextLine();
-                output.writeUTF(line); //Send username
-
-                System.out.println("Password: ");
-                line = in.nextLine();
-                output.writeUTF(line); //Send password
-
-                LoginSuccess = input.readBoolean(); //Receive login_flag from sv
-                //Check if Login_success
-                if (LoginSuccess) System.out.println("Login successfully! \n");
-                else System.out.println("Failed to login you noob");
-
-            } catch (IOException i) {
-                System.out.println(i);
-            }
-        }
-        // in.close(); //Closer scanner
-    }
-
     //Input a line to view a book by name/id
-    public void ViewBook() throws IOException, ClassNotFoundException {
+    public void getBook() throws IOException, ClassNotFoundException {
 
-        Boolean isFound = false;
-        while (!isFound) {
-            System.out.println("VIEW BOOK");
-
-            String Book_name = "";
-
-            Book_name = Searching_Type("F_ID", "F_Name");
-            output.writeUTF(Book_name);
-            isFound = input.readBoolean();
-
-            if (isFound) {
-                Book myBook = (Book) objectInputStream.readObject();
-                myBook.display();
-                objectInputStream.close();
-            }
-        }
-
-        // List<Message> listOfMessages = (List<Message>) objectInputStream.readObject();
+        Book myBook = (Book) objectInputStream.readObject();
+        myBook.display();
+        objectInputStream.close();
     }
 
     //Returns type of book-searching: 1-Search by type1; 2-Search by type2 to server

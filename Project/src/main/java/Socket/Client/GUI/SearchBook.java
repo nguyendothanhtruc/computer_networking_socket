@@ -1,8 +1,16 @@
 package Socket.Client.GUI;
 
 import javax.swing.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 
-class SearchBook extends JFrame {
+public class SearchBook extends javax.swing.JFrame {
+    //Socket
+    private Socket socket = null;
+    private DataInputStream input = null;
+    private DataOutputStream output = null;
     //JFrame
     private javax.swing.JLabel BookSearching;
     private javax.swing.JLabel FrogPic;
@@ -11,12 +19,15 @@ class SearchBook extends JFrame {
     private javax.swing.JButton Search;
     private javax.swing.JLabel Syntax;
     private javax.swing.JTextField jTextField1;
-    public SearchBook() {
+
+    public SearchBook(Socket socket) throws IOException {
+        this.socket = socket;
+        input = new DataInputStream(socket.getInputStream());
+        output = new DataOutputStream(socket.getOutputStream());
         initComponents();
     }
 
     private void initComponents() {
-
         jTextField1 = new javax.swing.JTextField();
         MainPanel = new keeptoo.KGradientPanel();
         Syntax = new javax.swing.JLabel();
@@ -24,6 +35,7 @@ class SearchBook extends JFrame {
         Insert = new javax.swing.JTextField();
         BookSearching = new javax.swing.JLabel();
         FrogPic = new javax.swing.JLabel();
+        javax.swing.JLabel byTrucPA = new javax.swing.JLabel();
 
         jTextField1.setText("jTextField1");
 
@@ -46,7 +58,11 @@ class SearchBook extends JFrame {
         Search.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchActionPerformed(evt);
+                try {
+                    SearchActionPerformed(evt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -62,7 +78,10 @@ class SearchBook extends JFrame {
         BookSearching.setText("BOOK SEARCHING");
 
         FrogPic.setIcon(new ImageIcon("giaosu.png"));
-        //FrogPic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/mavenproject1/giaosu.png"))); // NOI18N
+
+        byTrucPA.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        byTrucPA.setForeground(new java.awt.Color(255, 255, 255));
+        byTrucPA.setText("By Truc & PA");
 
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
         MainPanel.setLayout(MainPanelLayout);
@@ -71,7 +90,7 @@ class SearchBook extends JFrame {
                         .addComponent(BookSearching, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Syntax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(MainPanelLayout.createSequentialGroup()
-                                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(MainPanelLayout.createSequentialGroup()
                                                 .addGap(107, 107, 107)
                                                 .addComponent(FrogPic)
@@ -80,7 +99,9 @@ class SearchBook extends JFrame {
                                         .addGroup(MainPanelLayout.createSequentialGroup()
                                                 .addGap(97, 97, 97)
                                                 .addComponent(Insert, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(109, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                                .addComponent(byTrucPA)
+                                .addGap(20, 20, 20))
         );
         MainPanelLayout.setVerticalGroup(
                 MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,46 +112,94 @@ class SearchBook extends JFrame {
                                 .addComponent(Syntax, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Insert, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(53, 53, 53)
                                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(MainPanelLayout.createSequentialGroup()
-                                                .addGap(53, 53, 53)
-                                                .addComponent(FrogPic))
+                                                .addComponent(FrogPic)
+                                                .addGap(0, 0, Short.MAX_VALUE))
                                         .addGroup(MainPanelLayout.createSequentialGroup()
-                                                .addGap(44, 44, 44)
-                                                .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                                .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(byTrucPA)
+                                                .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                       // .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(MainPanel, 700, 700, 700)
-
+                        .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        //.addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(MainPanel, 500, 500, 500)
+                        .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>
 
-    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+    public void waitForInputs() throws InterruptedException {
+        synchronized (this) {
+            // Make the current thread waits until a notify or an interrupt
+            wait();
+        }
     }
 
-    public static void main(String args[]) {
+    private void SearchActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
+        String input = Insert.getText();
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SearchBook().setVisible(true);
+        System.out.println(input);
+
+        String BookHeader, BookContent = null;
+        String direction_flag = ""; //Get_type
+
+        //Loop until type of searching is found
+        int pos = input.indexOf(" ");
+        BookHeader = input.substring(0, pos); //Get the F_X part
+
+        BookContent = input.substring(pos + 1, input.length()); //Get the name/ID part
+
+        System.out.println("H:" + BookHeader);
+        System.out.println("S:" + BookContent);
+        System.out.println("Str: " + input.length());
+
+        if (BookHeader.equals("F_ID")) direction_flag = "1";
+        else if (BookHeader.equals("F_Name")) direction_flag = "2";
+        else System.out.println("ERROR Search");
+
+        output.writeUTF(direction_flag); //Send the search-option to server
+
+        switch (direction_flag) {
+            case "1" -> {
+                JOptionPane.showMessageDialog(null, "Searching by ID");
+                this.setVisible(false);
+                synchronized (this) {
+                    notifyAll();
+                }
             }
-        });
+            case "2" -> {
+                JOptionPane.showMessageDialog(null, "Searching by Name");
+                this.setVisible(false);
+                synchronized (this) {
+                    notifyAll();
+                }
+            }
+            default -> System.out.println("Error search book");
+        }
     }
 
+    public void RunSB(Socket socket) {
+
+        try {
+            SearchBook searchBook = new SearchBook(socket);
+            searchBook.setVisible(true);
+            searchBook.waitForInputs();
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
 }

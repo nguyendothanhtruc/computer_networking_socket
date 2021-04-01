@@ -29,15 +29,12 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jTextField1 = new javax.swing.JTextField();
         MainPanel = new keeptoo.KGradientPanel();
-        OnlineLibrary = new javax.swing.JLabel();
-        LoginBackground = new javax.swing.JPanel();
-        Login = new javax.swing.JButton();
-        RegisBackground = new javax.swing.JPanel();
-        Regis = new javax.swing.JButton();
-        Picture = new javax.swing.JLabel();
+        Syntax = new javax.swing.JLabel();
+        Search = new javax.swing.JButton();
+        Insert = new javax.swing.JTextField();
+        BookSearching = new javax.swing.JLabel();
+        FrogPic = new javax.swing.JLabel();
         ByTrucPA = new javax.swing.JLabel();
-        HCMUS = new javax.swing.JLabel();
-        SocketP = new javax.swing.JLabel();
 
         jTextField1.setText("jTextField1");
 
@@ -46,130 +43,80 @@ public class NewJFrame extends javax.swing.JFrame {
         MainPanel.setkEndColor(new java.awt.Color(0, 51, 204));
         MainPanel.setkStartColor(new java.awt.Color(255, 102, 255));
 
-        OnlineLibrary.setFont(new java.awt.Font("iCiel Panton Black", 0, 48)); // NOI18N
-        OnlineLibrary.setForeground(new java.awt.Color(255, 255, 255));
-        OnlineLibrary.setText("ONLINE LIBRARY");
+        Syntax.setFont(new java.awt.Font("Calibri", 2, 24)); // NOI18N
+        Syntax.setForeground(new java.awt.Color(0, 51, 102));
+        Syntax.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Syntax.setText("SYNTAX: F_ID <content> OR F_Name <content>");
 
-        LoginBackground.setBackground(new java.awt.Color(255, 255, 255));
-
-        Login.setBackground(new java.awt.Color(102, 153, 255));
-        Login.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
-        Login.setForeground(new java.awt.Color(255, 255, 255));
-        Login.setText("New account");
-        Login.setBorder(null);
-        Login.setBorderPainted(false);
-        Login.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Login.addActionListener(new java.awt.event.ActionListener() {
+        Search.setBackground(new java.awt.Color(102, 153, 255));
+        Search.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
+        Search.setForeground(new java.awt.Color(255, 255, 255));
+        Search.setText("S E A R C H");
+        Search.setBorder(null);
+        Search.setBorderPainted(false);
+        Search.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginActionPerformed(evt);
+                SearchActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout LoginBackgroundLayout = new javax.swing.GroupLayout(LoginBackground);
-        LoginBackground.setLayout(LoginBackgroundLayout);
-        LoginBackgroundLayout.setHorizontalGroup(
-            LoginBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LoginBackgroundLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        LoginBackgroundLayout.setVerticalGroup(
-            LoginBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LoginBackgroundLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        Insert.setFont(new java.awt.Font("Tahoma", 2, 36)); // NOI18N
+        Insert.setForeground(new java.awt.Color(0, 0, 153));
+        Insert.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Insert.setText("Insert your book here");
+        Insert.setBorder(javax.swing.BorderFactory.createMatteBorder(4, 0, 4, 0, new java.awt.Color(120, 120, 255)));
 
-        RegisBackground.setBackground(new java.awt.Color(255, 255, 255));
+        BookSearching.setFont(new java.awt.Font("iCiel Panton Black", 0, 48)); // NOI18N
+        BookSearching.setForeground(new java.awt.Color(255, 255, 255));
+        BookSearching.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        BookSearching.setText("BOOK SEARCHING");
 
-        Regis.setBackground(new java.awt.Color(102, 153, 255));
-        Regis.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
-        Regis.setForeground(new java.awt.Color(255, 255, 255));
-        Regis.setText("Login");
-        Regis.setBorder(null);
-        Regis.setBorderPainted(false);
-        Regis.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Regis.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegisActionPerformed(evt);
-            }
-        });
+        FrogPic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/mavenproject1/giaosu.png"))); // NOI18N
 
-        javax.swing.GroupLayout RegisBackgroundLayout = new javax.swing.GroupLayout(RegisBackground);
-        RegisBackground.setLayout(RegisBackgroundLayout);
-        RegisBackgroundLayout.setHorizontalGroup(
-            RegisBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RegisBackgroundLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Regis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        RegisBackgroundLayout.setVerticalGroup(
-            RegisBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RegisBackgroundLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Regis, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        Picture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/mavenproject1/Picture1.png"))); // NOI18N
-
-        ByTrucPA.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
-        ByTrucPA.setText("BY TRUC & PA");
-
-        HCMUS.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
-        HCMUS.setForeground(new java.awt.Color(255, 255, 255));
-        HCMUS.setText("HCMUS - 19CLC5");
-
-        SocketP.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
-        SocketP.setText("SOCKET PROGRAMMING");
+        ByTrucPA.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        ByTrucPA.setForeground(new java.awt.Color(255, 255, 255));
+        ByTrucPA.setText("By Truc & PA");
 
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
         MainPanel.setLayout(MainPanelLayout);
         MainPanelLayout.setHorizontalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(BookSearching, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Syntax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(MainPanelLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ByTrucPA)
-                    .addComponent(Picture)
-                    .addComponent(HCMUS)
-                    .addComponent(SocketP))
-                .addGap(32, 32, 32)
-                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
-                        .addComponent(LoginBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(RegisBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(40, 40, 40))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(OnlineLibrary, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81))
+                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(MainPanelLayout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(FrogPic)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(MainPanelLayout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addComponent(Insert, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(ByTrucPA)
+                .addGap(20, 20, 20))
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MainPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(OnlineLibrary)
-                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(BookSearching, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Syntax, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Insert, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
+                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(MainPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                        .addComponent(HCMUS)
-                        .addGap(18, 18, 18)
-                        .addComponent(SocketP)
-                        .addGap(18, 18, 18)
+                        .addComponent(FrogPic)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(MainPanelLayout.createSequentialGroup()
+                        .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ByTrucPA)
-                        .addGap(26, 26, 26)
-                        .addComponent(Picture, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(MainPanelLayout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(RegisBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(LoginBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -186,13 +133,9 @@ public class NewJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
+    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_LoginActionPerformed
-
-    private void RegisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RegisActionPerformed
+    }//GEN-LAST:event_SearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -230,16 +173,13 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BookSearching;
     private javax.swing.JLabel ByTrucPA;
-    private javax.swing.JLabel HCMUS;
-    private javax.swing.JButton Login;
-    private javax.swing.JPanel LoginBackground;
+    private javax.swing.JLabel FrogPic;
+    private javax.swing.JTextField Insert;
     private keeptoo.KGradientPanel MainPanel;
-    private javax.swing.JLabel OnlineLibrary;
-    private javax.swing.JLabel Picture;
-    private javax.swing.JButton Regis;
-    private javax.swing.JPanel RegisBackground;
-    private javax.swing.JLabel SocketP;
+    private javax.swing.JButton Search;
+    private javax.swing.JLabel Syntax;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

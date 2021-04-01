@@ -11,8 +11,6 @@ public class FirstMenu extends JFrame {
     //Socket
     private static Socket socket = null;
     private DataOutputStream output = null;
-
-
     //JFrame
     private javax.swing.JLabel ByTrucPA;
     private javax.swing.JLabel HCMUS;
