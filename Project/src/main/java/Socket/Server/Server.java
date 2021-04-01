@@ -23,8 +23,9 @@ public class Server {
 
     public void Connect() throws IOException
     {
-
-        while (server.isBound() && !server.isClosed())
+        Boolean f = false;
+        //while (server.isBound() && !server.isClosed())
+        while(!f)
         {
             socket = null;
             try {
@@ -39,6 +40,7 @@ public class Server {
 
                 // Invoking the start() method
                 ClientHandler.start();
+                f = true;
 
             } catch (IOException e) {
                 socket.close();
