@@ -36,7 +36,7 @@ public class Client_main {
 
         } while(!direction_flag.equals("1"));
 
-        client.Disconnect();
+        //client.Disconnect();
 
     }
 

@@ -172,8 +172,8 @@ class Login extends JFrame {
     }
 
     public static void RunLogin(Socket socket) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        //java.awt.EventQueue.invokeLater(new Runnable() {
+           // public void run() {
                 try {
                     Login login= new Login(socket);
                     login.setVisible(true);
@@ -181,19 +181,21 @@ class Login extends JFrame {
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
-        });
+           // }
+        //});
     }
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
 
+        //Gui username-pass
         output.writeUTF(usernameInput.getText());
         output.writeUTF(String.valueOf(jPasswordField1.getPassword()));
         output.flush();
 
+        //Doc kq
         boolean LoginSuccess = false;
         LoginSuccess = input.readBoolean(); //Receive regis_flag from sv
 
-        //Check if Login_success
+        //Print kq
         if (LoginSuccess) {
             JOptionPane.showMessageDialog(null, "Login successfully");
             this.setVisible(false);
