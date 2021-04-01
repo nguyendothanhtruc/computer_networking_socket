@@ -41,8 +41,7 @@ class Registration extends JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Registration registration = new Registration(socket);
-                    registration.setVisible(true);
+                    new Registration(socket).setVisible(true);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

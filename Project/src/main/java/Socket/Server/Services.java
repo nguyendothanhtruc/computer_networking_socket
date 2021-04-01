@@ -81,6 +81,8 @@ public class Services extends Thread {
         String op;
         do {
             op = in.readUTF();
+            out.writeBoolean(true);
+            System.out.println(op);
             if (op.equals("1"))
                 Login();
             else
@@ -158,8 +160,8 @@ public class Services extends Thread {
     public void Download() {}
 
     public void Main_Menu() throws IOException {
-        //String option = in.readUTF();
-        String option = "3";
+        String option = in.readUTF();
+        //String option = "3";
 
         switch (option) {
             case "1":

@@ -2,10 +2,6 @@ package Socket.Client;
 
 
 import javax.swing.*;
-import Socket.Client.Client;
-
-import java.io.DataInput;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -16,13 +12,8 @@ public class FirstMenu extends JFrame {
     //Socket
     private static Socket socket = null;
     private DataOutputStream output = null;
-    public DataInputStream input=null;
 
-    public String getChoose() {
-        return choose;
-    }
-
-    private String choose="";
+    public String choose;
 
     //JFrame
     private javax.swing.JLabel ByTrucPA;
@@ -36,27 +27,11 @@ public class FirstMenu extends JFrame {
     private javax.swing.JPanel RegisBackground;
     private javax.swing.JLabel SocketP;
     private javax.swing.JTextField jTextField1;
-    public FirstMenu(Socket socket) throws IOException {
+
+    public FirstMenu(Socket socket, DataOutputStream output) throws IOException {
         this.socket = socket;
-        input = new DataInputStream(socket.getInputStream());
-        output = new DataOutputStream(socket.getOutputStream());
+        this.output = output;
         initComponents();
-    }
-
-    public static void FirstMenu_Run(Socket socket) throws IOException {
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-
-                    FirstMenu firstMenu = new FirstMenu(socket);
-                    firstMenu.setVisible(true);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     private void initComponents() throws IOException {
@@ -228,25 +203,19 @@ public class FirstMenu extends JFrame {
         pack();
     }// </editor-fold>
 
+    //REGIST
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
-        output.writeUTF("1");
-        choose="1";
-        boolean escape=input.readBoolean();
-        if (!escape)  JOptionPane.showMessageDialog(null, "ERROR1");
+        choose = "2";
         this.setVisible(false);
-        input.close();
-        output.close();
+        output.writeUTF(choose);
+
     }
-
+    //LOGIN
     private void RegisActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
-        output.writeUTF("2");
-
-        choose="2";
-        boolean escape=input.readBoolean();
-        if (!escape)  JOptionPane.showMessageDialog(null, "ERROR2");
+        choose = "1";
         this.setVisible(false);
-        input.close();
-        output.close();
+        output.writeUTF(choose);
+
     }
 
 

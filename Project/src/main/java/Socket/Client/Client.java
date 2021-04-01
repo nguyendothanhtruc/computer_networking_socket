@@ -19,6 +19,13 @@ public class Client {
         return socket;
     }
 
+    public DataInputStream getInput() {
+        return input;
+    }
+    public DataOutputStream getOutput() {
+        return output;
+    }
+
     private DataInputStream input = null;
     private DataOutputStream output = null;
     private ObjectInputStream objectInputStream = null;
