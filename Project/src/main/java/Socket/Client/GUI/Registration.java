@@ -1,4 +1,4 @@
-package Socket.Client;
+package Socket.Client.GUI;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 
-class Registration extends JFrame {
+public class Registration extends JFrame {
     //Socket
     private Socket socket = null;
     private DataInputStream input = null;
@@ -224,10 +224,12 @@ class Registration extends JFrame {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(kGradientPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
         );
 
         pack();

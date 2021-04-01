@@ -1,4 +1,4 @@
-package Socket.Client;
+package Socket.Client.GUI;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -6,7 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-class Login extends JFrame {
+public class Login extends JFrame {
     //Socket
     private Socket socket = null;
     private DataOutputStream output = null;

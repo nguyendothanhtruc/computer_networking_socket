@@ -1,4 +1,4 @@
-package Socket.Client;
+package Socket.Client.GUI;
 
 
 import javax.swing.*;
