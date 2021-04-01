@@ -13,6 +13,7 @@ KỊCH BẢN (7 giao diện) +1 bìa
 CHI TIET
 Kết nối: TB thành công
 ->Server nhận 1/2: Login/Regis (1,2: string)
+SV trả về thành công 1/0
 1. SV nhận user/pass; trả về bool thành công/thất bại
 2. SV nhận user/pass/confirm; trả về bool 1/0
 
