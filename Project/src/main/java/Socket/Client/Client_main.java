@@ -1,13 +1,11 @@
 package Socket.Client;
 
 import java.io.IOException;
-
+import Socket.Client.Registration;
 
 public class Client_main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Client client = new Client("127.0.0.1", 9999);
-
-        Register register=new Register(client.getSocket());
 
         //First menu:
         String direction_flag = "";
@@ -19,8 +17,8 @@ public class Client_main {
                     break;
                 }
                 case "2": {
-                    register.frame=register.Register_GUI();
-                    //client.Register();
+                    Registration registration= new Registration(client.getSocket());
+                    registration.Regist_run(client.getSocket());
                 }
             }
         } while (!direction_flag.equals("1"));

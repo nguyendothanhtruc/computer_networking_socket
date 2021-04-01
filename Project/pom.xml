@@ -18,7 +18,16 @@
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
             <version>9.2.1.jre15</version>
+
+        </dependency>
+
+        <dependency>
+            <groupId>kGradientPanel</groupId>
+            <artifactId>kGradientPanel</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/kGradientPanel.jar</systemPath>
         </dependency>
     </dependencies>
+
 
 </project>

@@ -6,8 +6,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class Regist {
-}
 
 class Registration extends JFrame {
 
@@ -32,7 +30,7 @@ class Registration extends JFrame {
 
 
     public Registration(Socket socket) throws IOException {
-        this.socket = socket;
+        Registration.socket = socket;
         input = new DataInputStream(socket.getInputStream());
         output = new DataOutputStream(socket.getOutputStream());
         initComponents();
@@ -227,40 +225,24 @@ class Registration extends JFrame {
             this.setVisible(false);
             input.close();
             output.close();
-            System.out.println("ok");
         } else {
             JOptionPane.showMessageDialog(null, "Failed to register");
         }
     }
 
 
-    public static void main(String args[]) throws IOException {
-
-        Client client = new Client("127.0.0.1", 9999);
-
-        //First menu:
-        String direction_flag = "";
-        do {
-            direction_flag = client.SignUpForm(); //LOOP UNTIL LOGIN SUCCESSFULLY
-            switch (direction_flag) {
-                case "1": {
-                    client.Login();
-                    break;
-                }
-                case "2": {
-
-                    java.awt.EventQueue.invokeLater(new Runnable() {
-                        public void run() {
-                            try {
-                                Registration registration = new Registration(client.getSocket());
-                                registration.setVisible(true);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
+    public static void Regist_run(Socket socket) throws IOException {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Registration registration = new Registration(socket);
+                    registration.setVisible(true);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
-        } while (!direction_flag.equals("1"));
+        });
     }
 }
+
+
