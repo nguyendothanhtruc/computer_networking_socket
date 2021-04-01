@@ -30,7 +30,7 @@ public class Services extends Thread {
         oos = new ObjectOutputStream(out);
     }
 
-    public void Login() throws IOException, SQLException {
+    public void Login() throws IOException{
         String password;
         Boolean isCorrected = false;
         System.out.println("Client logins: ");
@@ -50,7 +50,7 @@ public class Services extends Thread {
         Clients.add(username);
     }
 
-    public void Register() throws IOException, SQLException {
+    public void Register() throws IOException{
         String password, confirm;
         Boolean Regis_Success = false;
         System.out.println("Client registers: ");
@@ -64,7 +64,7 @@ public class Services extends Thread {
             confirm = in.readUTF();
 
             if (!password.equals(confirm)) {
-                System.out.println("Registers unsuccessfully!");
+                System.out.println("Failed to register");
                 out.writeBoolean(false);
 
             } else {
@@ -129,14 +129,12 @@ public class Services extends Thread {
         DataHandler dataHandler = new DataHandler();
 
         try {
-            List<Book> books = new ArrayList<Book>();
+            List<Book> books = new ArrayList<>();
             Boolean Success = false;
 
             while (!Success) {
                 option = in.readUTF();
                 search_key = in.readUTF();
-                //option = "1";
-                //search_key = "Computer Science";
 
                 Success = dataHandler.List_Book(option, search_key, books);
 
@@ -163,14 +161,9 @@ public class Services extends Thread {
         //String option = "3";
 
         switch (option) {
-            case "1":
-                View();
-                break;
-            case "2":
-                Download();
-                break;
-            default:
-                List_books();
+            case "1" -> View();
+            case "2" -> Download();
+            default -> List_books();
         }
     }
 
