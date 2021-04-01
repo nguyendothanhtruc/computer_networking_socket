@@ -2,24 +2,21 @@ package Socket.Client;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-import Socket.Client.Registration;
 
 public class Client_main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Client client = new Client("127.0.0.1", 9999);
 
+        //Tao co dieu huong
+        String direction_flag="3";
         DataInputStream input= client.getInput();
 
-        //First menu:
-
-        String direction_flag=null;
-
         do{
-            FirstMenu firstMenu= new FirstMenu(client.getSocket(),client.getOutput());
-            FirstMenu.FirstMenu_Run(client.getSocket(),client.getOutput());
-            boolean StepOver=input.readBoolean();
-            direction_flag= firstMenu.choose;
-            System.out.println(direction_flag);
+            //Chay Menu: Login-Regis
+            FirstMenu firstMenu= new FirstMenu(client.getSocket());
+            firstMenu.run(client.getSocket());
+            //Nhan gia tri 1-2
+            direction_flag= input.readUTF();
 
             switch (direction_flag) {
                 case "1": {
@@ -28,20 +25,21 @@ public class Client_main {
                 }
                 case "2": {
                     Registration registration= new Registration(client.getSocket());
-                    registration.Regist_run(client.getSocket());
+                    registration.RunReg(client.getSocket());
+                    direction_flag="3";
+                    direction_flag=input.readUTF();
+                    System.out.println(direction_flag);
+                    break;
                 }
+                default:
+                    System.out.println("ERROR flag");
             }
 
-        }  while(direction_flag!="1");
+        } while(!direction_flag.equals("1"));
 
-        //Forced menu: View book
+        client.Disconnect();
 
-        //client.ViewBook();
-        //client.MainMenu();
-
-        // client.Disconnect();
     }
-
 
 }
 

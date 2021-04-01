@@ -8,29 +8,26 @@ import java.net.Socket;
 
 
 public class FirstMenu extends JFrame {
-
     //Socket
     private static Socket socket = null;
     private DataOutputStream output = null;
 
-    public String choose;
-
     //JFrame
     private javax.swing.JLabel ByTrucPA;
     private javax.swing.JLabel HCMUS;
-    private javax.swing.JButton Login;
-    private javax.swing.JPanel LoginBackground;
+    private javax.swing.JButton NewAccount;
+    private javax.swing.JPanel NABackground;
     private keeptoo.KGradientPanel MainPanel;
     private javax.swing.JLabel OnlineLibrary;
     private javax.swing.JLabel Picture;
-    private javax.swing.JButton Regis;
-    private javax.swing.JPanel RegisBackground;
+    private javax.swing.JButton Login;
+    private javax.swing.JPanel LoginBackground;
     private javax.swing.JLabel SocketP;
     private javax.swing.JTextField jTextField1;
 
-    public FirstMenu(Socket socket, DataOutputStream output) throws IOException {
+    public FirstMenu(Socket socket) throws IOException {
         this.socket = socket;
-        this.output = output;
+        output = new DataOutputStream(socket.getOutputStream());
         initComponents();
     }
 
@@ -39,10 +36,10 @@ public class FirstMenu extends JFrame {
         jTextField1 = new javax.swing.JTextField();
         MainPanel = new keeptoo.KGradientPanel();
         OnlineLibrary = new javax.swing.JLabel();
+        NABackground = new javax.swing.JPanel();
+        NewAccount = new javax.swing.JButton();
         LoginBackground = new javax.swing.JPanel();
         Login = new javax.swing.JButton();
-        RegisBackground = new javax.swing.JPanel();
-        Regis = new javax.swing.JButton();
         Picture = new javax.swing.JLabel();
         ByTrucPA = new javax.swing.JLabel();
         HCMUS = new javax.swing.JLabel();
@@ -59,12 +56,48 @@ public class FirstMenu extends JFrame {
         OnlineLibrary.setForeground(new java.awt.Color(255, 255, 255));
         OnlineLibrary.setText("ONLINE LIBRARY");
 
+        NABackground.setBackground(new java.awt.Color(255, 255, 255));
+
+        NewAccount.setBackground(new java.awt.Color(102, 153, 255));
+        NewAccount.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
+        NewAccount.setForeground(new java.awt.Color(255, 255, 255));
+        NewAccount.setText("New account");
+        NewAccount.setBorder(null);
+        NewAccount.setBorderPainted(false);
+        NewAccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        NewAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    NewAccountPerformed(evt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        javax.swing.GroupLayout LoginBackgroundLayout = new javax.swing.GroupLayout(NABackground);
+        NABackground.setLayout(LoginBackgroundLayout);
+        LoginBackgroundLayout.setHorizontalGroup(
+                LoginBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LoginBackgroundLayout.createSequentialGroup()
+                                .addContainerGap(14, Short.MAX_VALUE)
+                                .addComponent(NewAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+        );
+        LoginBackgroundLayout.setVerticalGroup(
+                LoginBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LoginBackgroundLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(NewAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+        );
+
         LoginBackground.setBackground(new java.awt.Color(255, 255, 255));
 
         Login.setBackground(new java.awt.Color(102, 153, 255));
         Login.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
         Login.setForeground(new java.awt.Color(255, 255, 255));
-        Login.setText("New account");
+        Login.setText("Login");
         Login.setBorder(null);
         Login.setBorderPainted(false);
         Login.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -78,56 +111,20 @@ public class FirstMenu extends JFrame {
             }
         });
 
-        javax.swing.GroupLayout LoginBackgroundLayout = new javax.swing.GroupLayout(LoginBackground);
-        LoginBackground.setLayout(LoginBackgroundLayout);
-        LoginBackgroundLayout.setHorizontalGroup(
-                LoginBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LoginBackgroundLayout.createSequentialGroup()
-                                .addContainerGap(14, Short.MAX_VALUE)
-                                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-        );
-        LoginBackgroundLayout.setVerticalGroup(
-                LoginBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LoginBackgroundLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-        );
-
-        RegisBackground.setBackground(new java.awt.Color(255, 255, 255));
-
-        Regis.setBackground(new java.awt.Color(102, 153, 255));
-        Regis.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
-        Regis.setForeground(new java.awt.Color(255, 255, 255));
-        Regis.setText("Login");
-        Regis.setBorder(null);
-        Regis.setBorderPainted(false);
-        Regis.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Regis.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    RegisActionPerformed(evt);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        javax.swing.GroupLayout RegisBackgroundLayout = new javax.swing.GroupLayout(RegisBackground);
-        RegisBackground.setLayout(RegisBackgroundLayout);
+        javax.swing.GroupLayout RegisBackgroundLayout = new javax.swing.GroupLayout(LoginBackground);
+        LoginBackground.setLayout(RegisBackgroundLayout);
         RegisBackgroundLayout.setHorizontalGroup(
                 RegisBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RegisBackgroundLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(Regis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addContainerGap())
         );
         RegisBackgroundLayout.setVerticalGroup(
                 RegisBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RegisBackgroundLayout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Regis, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
         );
         Picture.setIcon(new javax.swing.ImageIcon(String.valueOf(getClass().getClassLoader().getResource("D:\\MMT_Socket\\Project\\src\\main\\java\\Socket\\Client")))); // NOI18N
@@ -157,9 +154,9 @@ public class FirstMenu extends JFrame {
                                 .addGap(32, 32, 32)
                                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
-                                                .addComponent(LoginBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(NABackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 0, Short.MAX_VALUE))
-                                        .addComponent(RegisBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(LoginBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(40, 40, 40))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPanelLayout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -183,9 +180,9 @@ public class FirstMenu extends JFrame {
                                                 .addComponent(Picture, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(MainPanelLayout.createSequentialGroup()
                                                 .addGap(64, 64, 64)
-                                                .addComponent(RegisBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(45, 45, 45)
                                                 .addComponent(LoginBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(45, 45, 45)
+                                                .addComponent(NABackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 0, Short.MAX_VALUE))))
         );
 
@@ -203,20 +200,27 @@ public class FirstMenu extends JFrame {
         pack();
     }// </editor-fold>
 
-    //REGIST
+
+    private void NewAccountPerformed(java.awt.event.ActionEvent evt) throws IOException {
+        this.setVisible(false);
+        output.writeUTF("2");
+
+    }
+
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
-        choose = "2";
         this.setVisible(false);
-        output.writeUTF(choose);
+        output.writeUTF("1");
 
     }
-    //LOGIN
-    private void RegisActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
-        choose = "1";
-        this.setVisible(false);
-        output.writeUTF(choose);
+    public void run(Socket socket) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    new FirstMenu(socket).setVisible(true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
-    }
-
-
-}
+}}

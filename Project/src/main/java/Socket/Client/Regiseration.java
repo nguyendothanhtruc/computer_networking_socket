@@ -37,7 +37,7 @@ class Registration extends JFrame {
         initComponents();
     }
 
-    public static void Regist_run(Socket socket) throws IOException {
+    public static void RunReg(Socket socket) throws IOException {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -227,7 +227,7 @@ class Registration extends JFrame {
         output.writeUTF(TextUsername.getText());
         output.writeUTF(String.valueOf(PasswordHidden.getPassword()));
         output.writeUTF(String.valueOf(ConfirmHidden.getPassword()));
-        output.flush();
+       // output.flush();
 
         boolean RegisSuccess = false;
         RegisSuccess = input.readBoolean(); //Receive regis_flag from sv
@@ -235,8 +235,7 @@ class Registration extends JFrame {
         if (RegisSuccess) {
             JOptionPane.showMessageDialog(null, "Register successfully");
             this.setVisible(false);
-            input.close();
-            output.close();
+
         } else {
             JOptionPane.showMessageDialog(null, "Failed to register");
         }

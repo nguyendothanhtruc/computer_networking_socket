@@ -115,40 +115,6 @@ public class Client {
         // in.close(); //Closer scanner
     }
 
-    //Create new account - send user/pass/confirm to server
-    public void Register() {/*
-        //String to read from server
-        String line = "";
-        Scanner in = new Scanner(System.in);
-
-        //Try to regis until RegisSuccess
-        boolean RegisSuccess = false;
-        while (!RegisSuccess) {
-            try {
-                System.out.println("REGISTER");
-                System.out.println("Username: ");
-                line = in.nextLine();
-                output.writeUTF(line); //Send username
-
-                System.out.println("Password: ");
-                line = in.nextLine();
-                output.writeUTF(line); //Send password
-
-                System.out.println("Confirm password: ");
-                line = in.nextLine();
-                output.writeUTF(line); //Send re-password
-
-                RegisSuccess = input.readBoolean(); //Receive login_flag from sv
-                //Check if Login_success
-                if (RegisSuccess) System.out.println("Register successfully! \n");
-                else System.out.println("Failed to register you noob");
-
-            } catch (IOException i) {
-                System.out.println(i);
-            }
-        }*/
-    }
-
     //Input a line to view a book by name/id
     public void ViewBook() throws IOException, ClassNotFoundException {
 

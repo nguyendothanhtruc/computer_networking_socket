@@ -70,7 +70,8 @@ public class Services extends Thread {
             } else {
                 Regis_Success = dataHandler.Register(username, password);
                 System.out.println("User: " + username + " registers successfully! \n");
-                out.writeBoolean(Regis_Success);
+                out.writeBoolean(Regis_Success); //Gui ve ham regis cua client xu ly
+                out.writeUTF("2"); //Gui ve client_main xu ly
             }
         }
 
@@ -81,7 +82,7 @@ public class Services extends Thread {
         String op;
         do {
             op = in.readUTF();
-            out.writeBoolean(true);
+            out.writeUTF(op);
             System.out.println(op);
             if (op.equals("1"))
                 Login();
