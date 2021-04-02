@@ -19,6 +19,8 @@ public class Server_GUI extends JFrame {
     private javax.swing.JLabel Title;
     private javax.swing.JScrollPane jScrollPane1;
 
+    private static Object lock = new Object();
+
     public Server_GUI(Server s) {
         server = s;
         initComponents();
@@ -132,22 +134,37 @@ public class Server_GUI extends JFrame {
 
     private void DISCONNECTActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        server.Disconnect();
+        JOptionPane.showMessageDialog(null,"OK");
+        //server.setAlive(false);
+        //server.Disconnect();
     }
 
     private void CONNECTActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        try {
-            server.Connect();
-        } catch (IOException e) {
-            e.printStackTrace();
+        server.setAlive(true);
+        JOptionPane.showMessageDialog(null,"Server is online");
+        synchronized (this) {
+            // Release the waiting threads
+            notifyAll();
         }
     }
 
-
+    public void waitForInputs() throws InterruptedException {
+        synchronized (this) {
+            // Make the current thread waits until a notify or an interrupt
+            wait();
+        }
+    }
     public void Run()
     {
-        new Server_GUI(server).setVisible(true);
+        try {
+            Server_GUI server_gui=new Server_GUI(server);
+            server_gui.setVisible(true);
+            server_gui.waitForInputs();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
