@@ -146,30 +146,33 @@ public class SearchBook extends javax.swing.JFrame {
     }
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
-        String input = Insert.getText();
-
-        System.out.println(input);
+        String searchContent = Insert.getText();
 
         String BookHeader, BookContent = null;
         String direction_flag = ""; //Get_type
 
         //Loop until type of searching is found
-        int pos = input.indexOf(" ");
-        BookHeader = input.substring(0, pos); //Get the F_X part
+        int pos = searchContent.indexOf(" ");
+        BookHeader = searchContent.substring(0, pos); //Get the F_X part
 
-        BookContent = input.substring(pos + 1, input.length()); //Get the name/ID part
-
+        BookContent = searchContent.substring(pos + 1, searchContent.length()); //Get the name/ID part
+        /*
         System.out.println("H:" + BookHeader);
         System.out.println("S:" + BookContent);
-        System.out.println("Str: " + input.length());
+        System.out.println("Str: " + searchContent.length());*/
 
         if (BookHeader.equals("F_ID")) direction_flag = "1";
         else if (BookHeader.equals("F_Name")) direction_flag = "2";
-        else System.out.println("ERROR Search");
 
         output.writeUTF(direction_flag); //Send the search-option to server
+        System.out.println(direction_flag);
+        output.writeUTF(BookContent);
 
-        switch (direction_flag) {
+        Boolean isReturn=input.readBoolean();
+        System.out.println(isReturn);
+
+        if(isReturn)
+        { switch (direction_flag) {
             case "1" -> {
                 JOptionPane.showMessageDialog(null, "Searching by ID");
                 this.setVisible(false);
@@ -186,6 +189,8 @@ public class SearchBook extends javax.swing.JFrame {
             }
             default -> System.out.println("Error search book");
         }
+    }
+        else  JOptionPane.showMessageDialog(null, "Book not found");
     }
 
     public void RunSB(Socket socket) {
