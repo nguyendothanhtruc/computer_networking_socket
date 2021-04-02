@@ -1,8 +1,8 @@
 package Socket.Client;
 
-import Socket.Client.GUI.SearchBook;
 
 import java.io.IOException;
+
 
 public class Client_main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -10,7 +10,8 @@ public class Client_main {
 
         Client_Services services = new Client_Services(client);
         services.Run();
-        client.Disconnect();
+
+        //client.Disconnect();
 
     }
 

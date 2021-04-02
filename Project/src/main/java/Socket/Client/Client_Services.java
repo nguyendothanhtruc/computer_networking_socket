@@ -2,10 +2,7 @@ package Socket.Client;
 
 import Socket.Book;
 import Socket.Client.Client;
-import Socket.Client.GUI.FirstMenu;
-import Socket.Client.GUI.Login;
-import Socket.Client.GUI.Registration;
-import Socket.Client.GUI.SearchBook;
+import Socket.Client.GUI.*;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -50,7 +47,8 @@ public class Client_Services {
 
     public void getBook(ObjectInputStream OIS) throws IOException, ClassNotFoundException {
         Book myBook = (Book) OIS.readObject();
-        myBook.display();
+        BookInfo bookInfo = new BookInfo(myBook);
+        bookInfo.RunBI();
         OIS.close();
     }
 

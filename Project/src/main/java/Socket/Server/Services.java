@@ -109,7 +109,6 @@ public class Services extends Thread {
 
                 if (isFound) {
                     oos.writeObject(found);
-                    found.display();
                 }
 
             } catch (SQLException | IOException throwable) {
