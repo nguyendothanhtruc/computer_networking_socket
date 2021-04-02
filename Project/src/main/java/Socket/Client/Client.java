@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 
 public class Client {
     // initialize socket and input output streams
@@ -22,13 +21,14 @@ public class Client {
     public DataInputStream getInput() {
         return input;
     }
-    public DataOutputStream getOutput() {
-        return output;
+
+    public ObjectInputStream getOIS() {
+        return OIS;
     }
 
     private DataInputStream input = null;
     private DataOutputStream output = null;
-    private ObjectInputStream objectInputStream = null;
+    private ObjectInputStream OIS = null;
 
     Client(String address, int port) throws IOException {
         try {
@@ -37,7 +37,7 @@ public class Client {
 
             input = new DataInputStream(socket.getInputStream());
             output = new DataOutputStream(socket.getOutputStream());
-            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            OIS = new ObjectInputStream(socket.getInputStream());
 
         } catch (UnknownHostException u) {
             System.out.println(u);
@@ -46,15 +46,7 @@ public class Client {
             System.out.println(i);
         }
     }
-    //Input a line to view a book by name/id
-    public void getBook() throws IOException, ClassNotFoundException {
 
-        Book myBook = (Book) objectInputStream.readObject();
-        myBook.display();
-        objectInputStream.close();
-    }
-
-    //Close client-connection
     public void Disconnect() {
 
         try {

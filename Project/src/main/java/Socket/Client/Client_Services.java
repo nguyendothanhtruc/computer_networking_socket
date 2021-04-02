@@ -1,19 +1,22 @@
 package Socket.Client;
 
+import Socket.Book;
 import Socket.Client.Client;
 import Socket.Client.GUI.FirstMenu;
 import Socket.Client.GUI.Login;
 import Socket.Client.GUI.Registration;
+import Socket.Client.GUI.SearchBook;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 
 public class Client_Services {
     private Client client;
 
-    Client_Services(Client client){
-        this.client=client;
+    Client_Services(Client client) {
+        this.client = client;
     }
 
     public void SignIn() throws IOException {
@@ -44,8 +47,22 @@ public class Client_Services {
         } while (!command.equals("1"));
 
     }
-    public void Run() throws IOException {
+
+    public void getBook(ObjectInputStream OIS) throws IOException, ClassNotFoundException {
+        Book myBook = (Book) OIS.readObject();
+        myBook.display();
+        OIS.close();
+    }
+
+    public void FindBook() throws IOException, ClassNotFoundException {
+        SearchBook searchBook = new SearchBook(client.getSocket());
+        searchBook.RunSB(client.getSocket());
+        getBook(client.getOIS());
+    }
+
+    public void Run() throws IOException, ClassNotFoundException {
         SignIn();
+        FindBook();
 
     }
 }

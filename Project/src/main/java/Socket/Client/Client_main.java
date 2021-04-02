@@ -10,9 +10,6 @@ public class Client_main {
 
         Client_Services services = new Client_Services(client);
         services.Run();
-        SearchBook searchBook=new SearchBook(client.getSocket());
-        searchBook.RunSB(client.getSocket());
-        client.getBook();
         client.Disconnect();
 
     }
