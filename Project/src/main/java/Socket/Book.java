@@ -27,4 +27,11 @@ public class Book implements Serializable
         year = y;
         type = t;
     }
+    public String convertBook()
+    {
+        return ("ID: "+ID+"\n"+"Name: "+name
+            +"\n"+"Author: "+author+"\n"+"Year published: "+year
+            +"\n"+"Category: "+type).toString();
+
+    }
 }

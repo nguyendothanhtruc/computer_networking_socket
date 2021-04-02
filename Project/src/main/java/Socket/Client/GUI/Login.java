@@ -10,7 +10,7 @@ public class Login extends JFrame {
     //Socket
     private Socket socket = null;
     private DataOutputStream output = null;
-    private DataInputStream input=null;
+    private DataInputStream input = null;
 
     //JFrame
     private javax.swing.JLabel ByTrucPA;
@@ -28,7 +28,7 @@ public class Login extends JFrame {
     public Login(Socket socket) throws IOException {
         this.socket = socket;
         output = new DataOutputStream(socket.getOutputStream());
-        input= new DataInputStream(socket.getInputStream());
+        input = new DataInputStream(socket.getInputStream());
         initComponents();
     }
 
@@ -55,9 +55,9 @@ public class Login extends JFrame {
         username.setForeground(new java.awt.Color(102, 102, 255));
         username.setText("Username:");
 
-        usernameInput.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        usernameInput.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         usernameInput.setForeground(new java.awt.Color(0, 0, 0));
-        usernameInput.setText("Enter username");
+        usernameInput.setText("Enter_username");
         usernameInput.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(102, 102, 255)));
 
 
@@ -164,6 +164,7 @@ public class Login extends JFrame {
 
         pack();
     }
+
     public void waitForInputs() throws InterruptedException {
         synchronized (this) {
             wait();
@@ -171,14 +172,15 @@ public class Login extends JFrame {
     }
 
     public static void RunLogin(Socket socket) {
-                try {
-                    Login login= new Login(socket);
-                    login.setVisible(true);
-                    login.waitForInputs();
-                } catch (IOException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+        try {
+            Login login = new Login(socket);
+            login.setVisible(true);
+            login.waitForInputs();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         output.writeUTF(usernameInput.getText());
         output.writeUTF(String.valueOf(jPasswordField1.getPassword()));
@@ -200,4 +202,6 @@ public class Login extends JFrame {
         }
 
     }
+
+
 }

@@ -145,15 +145,11 @@ public class BookInfo extends JFrame {
         );
 
         pack();
-    }// </editor-fold>
+    }
 
     public void RunBI(){
+        Content.setText("<html>" + myBook.convertBook().replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>") + "</html>");
         frame.setVisible(true);
-        String printline=("ID: "+myBook.ID+"\n"+"Name: "+myBook.name
-        +"\n"+"Author: "+myBook.author+"\n"+"Year published: "+myBook.year
-        +"\n"+"Category: "+myBook.type);
-        Content.setText("<html>" + printline.replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>") + "</html>");
-        //frame.setVisible(true);
     }
 
 }

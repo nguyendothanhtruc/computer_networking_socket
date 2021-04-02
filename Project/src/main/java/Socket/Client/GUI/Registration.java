@@ -1,6 +1,7 @@
 package Socket.Client.GUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -35,9 +36,10 @@ public class Registration extends JFrame {
         initComponents();
     }
 
-    public static void RunReg(Socket socket) throws IOException {
+    public void RunReg(Socket socket) throws IOException {
         try {
             Registration registration = new Registration(socket);
+
             registration.setVisible(true);
             registration.waitForInputs();
 
@@ -218,13 +220,13 @@ public class Registration extends JFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 
+
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(kGradientPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 
         );
-
         pack();
     }
 
