@@ -201,23 +201,20 @@ public class FirstMenu extends JFrame {
     private void NewAccountPerformed(java.awt.event.ActionEvent evt) throws IOException {
         this.setVisible(false);
         output.writeUTF("2");
+        this.dispose();
     }
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         this.setVisible(false);
         output.writeUTF("1");
+        this.dispose();
     }
 
     public void run(Socket socket) {
-        // java.awt.EventQueue.invokeLater(new Runnable() {
-        //   public void run() {
         try {
             new FirstMenu(socket).setVisible(true);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // }
-        // });
-
     }
 }

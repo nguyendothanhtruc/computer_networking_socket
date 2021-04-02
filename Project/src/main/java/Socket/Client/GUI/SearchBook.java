@@ -140,7 +140,6 @@ public class SearchBook extends javax.swing.JFrame {
 
     public void waitForInputs() throws InterruptedException {
         synchronized (this) {
-            // Make the current thread waits until a notify or an interrupt
             wait();
         }
     }
@@ -151,21 +150,15 @@ public class SearchBook extends javax.swing.JFrame {
         String BookHeader, BookContent = null;
         String direction_flag = ""; //Get_type
 
-        //Loop until type of searching is found
         int pos = searchContent.indexOf(" ");
         BookHeader = searchContent.substring(0, pos); //Get the F_X part
 
         BookContent = searchContent.substring(pos + 1, searchContent.length()); //Get the name/ID part
-        /*
-        System.out.println("H:" + BookHeader);
-        System.out.println("S:" + BookContent);
-        System.out.println("Str: " + searchContent.length());*/
 
         if (BookHeader.equals("F_ID")) direction_flag = "1";
         else if (BookHeader.equals("F_Name")) direction_flag = "2";
 
         output.writeUTF(direction_flag); //Send the search-option to server
-        System.out.println(direction_flag);
         output.writeUTF(BookContent);
 
         Boolean isReturn=input.readBoolean();
@@ -179,6 +172,7 @@ public class SearchBook extends javax.swing.JFrame {
                 synchronized (this) {
                     notifyAll();
                 }
+                this.dispose();
             }
             case "2" -> {
                 JOptionPane.showMessageDialog(null, "Searching by Name");
@@ -186,6 +180,7 @@ public class SearchBook extends javax.swing.JFrame {
                 synchronized (this) {
                     notifyAll();
                 }
+                this.dispose();
             }
             default -> System.out.println("Error search book");
         }
@@ -203,8 +198,5 @@ public class SearchBook extends javax.swing.JFrame {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-
     }
-
-
 }
