@@ -43,7 +43,7 @@ public class Client_main {
         SearchBook searchBook=new SearchBook(client.getSocket());
         searchBook.RunSB(client.getSocket());
         client.getBook();
-        //client.Disconnect();
+        client.Disconnect();
 
     }
 

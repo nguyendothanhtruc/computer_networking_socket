@@ -23,7 +23,7 @@ public class Server {
     }
 
     public void Connect() throws IOException {
-
+        System.out.println("HEHEHEHEHE");
         while (server.isBound() && !server.isClosed()) {
             Socket socket = null;
             try {
@@ -45,6 +45,18 @@ public class Server {
                 server.close();
                 System.out.println("Connection closed: " + socket);
                 e.printStackTrace();
+            }
+        }
+    }
+
+    public void Disconnect()
+    {
+        if (!server.isClosed()) {
+            try {
+                server.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+
             }
         }
     }
