@@ -40,6 +40,7 @@ public class Registration extends JFrame {
         try {
             this.setVisible(true);
             this.waitForInputs();
+            this.dispose();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -225,6 +226,7 @@ public class Registration extends JFrame {
 
         );
         pack();
+        setLocationRelativeTo(null);
     }
 
     private void OKActionPerformed(java.awt.event.ActionEvent evt) throws IOException {

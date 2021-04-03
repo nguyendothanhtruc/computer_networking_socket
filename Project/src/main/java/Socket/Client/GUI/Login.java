@@ -163,6 +163,7 @@ public class Login extends JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }
 
     public void waitForInputs() throws InterruptedException {

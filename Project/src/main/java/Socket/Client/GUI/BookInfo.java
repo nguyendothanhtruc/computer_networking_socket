@@ -167,7 +167,9 @@ public class BookInfo extends JFrame {
                         .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+
         pack();
+        setLocationRelativeTo(null);
     }
 
     public void waitForInputs() throws InterruptedException {
@@ -205,6 +207,7 @@ public class BookInfo extends JFrame {
         frame.setVisible(true);
         try {
             this.waitForInputs();
+            this.dispose();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -136,7 +136,8 @@ public class SearchBook extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>
+        setLocationRelativeTo(null);
+    }
 
     public void waitForInputs() throws InterruptedException {
         synchronized (this) {
@@ -191,9 +192,10 @@ public class SearchBook extends javax.swing.JFrame {
     public void RunSB(Socket socket) {
 
         try {
-            SearchBook searchBook = new SearchBook(socket);
-            searchBook.setVisible(true);
-            searchBook.waitForInputs();
+            new SearchBook(socket);
+            this.setVisible(true);
+            this.waitForInputs();
+
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

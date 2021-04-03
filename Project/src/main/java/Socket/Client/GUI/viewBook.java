@@ -101,14 +101,15 @@ public class viewBook extends JFrame {
         );
 
         pack();
-    }// </editor-fold>
-
+        setLocationRelativeTo(null);
+    }
 
     public void RunvB() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     new viewBook(bookName,filePath).setVisible(true);
+
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(viewBook.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {

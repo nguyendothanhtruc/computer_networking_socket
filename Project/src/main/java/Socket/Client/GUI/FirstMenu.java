@@ -196,7 +196,8 @@ public class FirstMenu extends JFrame {
         );
 
         pack();
-    }// </editor-fold>
+        setLocationRelativeTo(null);
+    }
 
     private void NewAccountPerformed(java.awt.event.ActionEvent evt) throws IOException {
         this.setVisible(false);
@@ -212,7 +213,10 @@ public class FirstMenu extends JFrame {
 
     public void run() {
         try {
+
             new FirstMenu(socket).setVisible(true);
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
