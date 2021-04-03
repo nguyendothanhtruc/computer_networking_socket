@@ -1,18 +1,17 @@
 package Socket.Server;
 
-import Socket.Server.GUI.Server_GUI;
+import Socket.Server.GUI.ServerGUI;
 
 import java.io.IOException;
 
 public class Server_Main
 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         //Set up database
         Server server = new Server(9999);
 
-        Server_GUI server_gui = new Server_GUI(server);
-
-        server_gui.Run();
+        ServerGUI sGUI=new ServerGUI(server);
+        sGUI.Run();
         server.run();
     }
 }

@@ -23,14 +23,13 @@ public class Server {
     //Establish a connection between server and clients
     public Server(int port) throws IOException {
         server = new ServerSocket(port, 1, InetAddress.getByName("localhost"));
-        System.out.println("Server started");
-        System.out.println("Waiting for clients.... \n ");
-
         clients = new ArrayList<>();
         Alive = false;
     }
 
     public void Connect() throws IOException {
+        System.out.println("Server started");
+        System.out.println("Waiting for clients.... \n ");
         while (server.isBound() && !server.isClosed()) {
             Socket socket = null;
             try {
@@ -59,7 +58,6 @@ public class Server {
     public void run()
     {
         try {
-            System.out.println(Alive);
             if(Alive)
             Connect();
         } catch (IOException e) {
