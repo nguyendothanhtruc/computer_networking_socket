@@ -3,17 +3,20 @@ package Socket.Server;
 import Socket.Book;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class DataHandler {
     final SQLServerDataSource ds;
 
-   // final String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
-   // final int port = 1433;
+   final String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
+   final int port = 1433;
 
-    final String server_name = "MSI";
-    final int port = 1432;
+    //final String server_name = "MSI";
+    //final int port = 1432;
 
     public DataHandler() {
         ds = new SQLServerDataSource();
