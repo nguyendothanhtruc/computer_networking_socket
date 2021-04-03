@@ -171,12 +171,11 @@ public class Login extends JFrame {
         }
     }
 
-    public static void RunLogin(Socket socket) {
+    public  void RunLogin() {
         try {
-            Login login = new Login(socket);
-            login.setVisible(true);
-            login.waitForInputs();
-        } catch (IOException | InterruptedException e) {
+            this.setVisible(true);
+            this.waitForInputs();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

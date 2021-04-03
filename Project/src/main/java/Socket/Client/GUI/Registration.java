@@ -36,14 +36,12 @@ public class Registration extends JFrame {
         initComponents();
     }
 
-    public void RunReg(Socket socket) throws IOException {
+    public void RunReg() throws IOException {
         try {
-            Registration registration = new Registration(socket);
+            this.setVisible(true);
+            this.waitForInputs();
 
-            registration.setVisible(true);
-            registration.waitForInputs();
-
-        } catch (IOException | InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -87,7 +85,6 @@ public class Registration extends JFrame {
         Username.setText("Username:");
 
         TextUsername.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        //TextUsername.setForeground(new java.awt.Color(204, 204, 204));
         TextUsername.setForeground(new java.awt.Color(0, 0, 0));
         TextUsername.setText("Enter username");
         TextUsername.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(102, 102, 255)));

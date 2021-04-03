@@ -3,8 +3,13 @@ package Socket.Client.GUI;
 import Socket.Book;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 public class BookInfo extends JFrame {
+    //return option
+    public String cmd;
+    //Book
     private Book myBook;
     //JFrame
     private JFrame frame;
@@ -16,6 +21,9 @@ public class BookInfo extends JFrame {
     private javax.swing.JButton View;
     private javax.swing.JLabel Content;
     private javax.swing.JPanel jPanel1;
+
+    private static Object lock = new Object();
+
     public BookInfo(Book b) {
         myBook=b;
         initComponents();
@@ -49,6 +57,11 @@ public class BookInfo extends JFrame {
         Download.setText("DOWNLOAD");
         Download.setBorderPainted(false);
         Download.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Download.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DownloadPerformed(evt);
+            }
+        });;
 
         FindMore.setBackground(new java.awt.Color(51, 204, 255));
         FindMore.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
@@ -56,6 +69,11 @@ public class BookInfo extends JFrame {
         FindMore.setText("FIND MORE");
         FindMore.setBorderPainted(false);
         FindMore.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        FindMore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FindMorePerformed(evt);
+            }
+        });;
 
         View.setBackground(new java.awt.Color(51, 204, 255));
         View.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
@@ -64,6 +82,11 @@ public class BookInfo extends JFrame {
         View.setAlignmentY(0.0F);
         View.setBorderPainted(false);
         View.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        View.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ViewAccountPerformed(evt);
+            }
+        });;
 
         ByTrucPA.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
         ByTrucPA.setForeground(new java.awt.Color(255, 255, 255));
@@ -147,9 +170,44 @@ public class BookInfo extends JFrame {
         pack();
     }
 
+    public void waitForInputs() throws InterruptedException {
+        synchronized (this) {
+            wait();
+        }
+    }
+    private void FindMorePerformed(ActionEvent evt) {
+        cmd="3";
+        synchronized (this) {
+            notifyAll();
+        }
+        this.setVisible(false);
+    }
+
+    private void DownloadPerformed(ActionEvent evt) {
+        cmd="2";
+        synchronized (this) {
+            notifyAll();
+        }
+        this.setVisible(false);
+    }
+
+    private void ViewAccountPerformed(ActionEvent evt) {
+        cmd="1";
+        synchronized (this) {
+            notifyAll();
+        }
+        this.setVisible(false);
+
+    }
+
     public void RunBI(){
         Content.setText("<html>" + myBook.convertBook().replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>") + "</html>");
         frame.setVisible(true);
+        try {
+            this.waitForInputs();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

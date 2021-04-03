@@ -17,11 +17,9 @@ public class Client {
     public Socket getSocket() {
         return socket;
     }
-
     public DataInputStream getInput() {
         return input;
     }
-
     public ObjectInputStream getOIS() {
         return OIS;
     }

@@ -21,9 +21,8 @@ Kết nối: TB thành công
 ->SV trả về 5 thông tin của sách
 ->CLient hiển thị các tính năng khác
 
-
 4.Server nhận menu 1/2/3:
-1.Xem nội dung: SV gửi về 1/0 - có sách đó chưa, địa chỉ chứa cuốn sách nếu là 1
+1.Xem nội dung: SV gửi về 1/0 - có sách đó chưa, nội dung sách
 2.Tải: SV gửi nội dung sách (gửi file PDF), trúc tạo sẵn 5 file PDF <3
 3.Tra cứu thêm: SV nhận 1/2: Kiếm theo theo thể loại/tác giả (search từ db)
 -->Trả về: số cuốn tìm ra N, thông tin mỗi cuốn (Book) - list Book;

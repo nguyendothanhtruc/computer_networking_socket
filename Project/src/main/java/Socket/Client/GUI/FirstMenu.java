@@ -210,7 +210,7 @@ public class FirstMenu extends JFrame {
         this.dispose();
     }
 
-    public void run(Socket socket) {
+    public void run() {
         try {
             new FirstMenu(socket).setVisible(true);
         } catch (IOException e) {

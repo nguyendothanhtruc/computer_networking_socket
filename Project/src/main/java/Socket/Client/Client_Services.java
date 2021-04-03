@@ -1,40 +1,42 @@
 package Socket.Client;
 
 import Socket.Book;
-import Socket.Client.Client;
 import Socket.Client.GUI.*;
+import Socket.Client.GUI.viewBook;
 
 import java.io.DataInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-
 public class Client_Services {
+    //Socket
     private Client client;
+    private DataInputStream input;
+    //Handler var
+    private String flag; //Option direction for menu
+    private String bookName; //Current book executing
 
     Client_Services(Client client) {
         this.client = client;
+        input = client.getInput();
     }
 
     public void SignIn() throws IOException {
         String command = "3";
-        DataInputStream input = client.getInput();
 
         do {
-            FirstMenu firstMenu = new FirstMenu(client.getSocket());
-            firstMenu.run(client.getSocket());
+            new FirstMenu(client.getSocket()).run();
 
             command = input.readUTF();
 
             switch (command) {
                 case "1": {
-                    Login login = new Login(client.getSocket());
-                    login.RunLogin(client.getSocket());
+                    new Login(client.getSocket()).RunLogin();
                     break;
                 }
                 case "2": {
-                    Registration registration = new Registration(client.getSocket());
-                    registration.RunReg(client.getSocket());
+                    new Registration(client.getSocket()).RunReg();
                     break;
                 }
                 default:
@@ -50,6 +52,10 @@ public class Client_Services {
         BookInfo bookInfo = new BookInfo(myBook);
         bookInfo.RunBI();
         OIS.close();
+
+        //Get menuOption
+        flag=bookInfo.cmd;
+        bookName=myBook.name;
     }
 
     public void FindBook() throws IOException, ClassNotFoundException {
@@ -58,9 +64,37 @@ public class Client_Services {
         getBook(client.getOIS());
     }
 
-    public void Run() throws IOException, ClassNotFoundException {
+    public void Menu() throws Exception {
+        switch(flag){
+            case "1"-> ViewBook();
+            case "2"->System.out.println("Download");
+            case "3"->System.out.println("LookUp");
+        }
+    }
+    private void receiveFile(String fileName) throws Exception{
+        int bytes = 0;
+        FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+
+        long size = input.readLong();     // read file size
+        byte[] buffer = new byte[4*1024];
+        while (size > 0 && (bytes = input.read(buffer, 0, (int)Math.min(buffer.length, size))) != -1) {
+            fileOutputStream.write(buffer,0,bytes);
+            size -= bytes;      // read upto file size
+        }
+        fileOutputStream.close();
+    }
+
+    private void ViewBook() throws Exception {
+        //String filename="temp";
+        //receiveFile(filename);
+        //THV ID=5
+        new viewBook(bookName,"D:\\MMT_Socket\\Books\\"+bookName+".txt").RunvB();
+    }
+
+    public void Run() throws Exception {
         SignIn();
         FindBook();
+        Menu();
 
     }
 }
