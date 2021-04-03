@@ -57,7 +57,7 @@ public class viewBook extends JFrame {
         Credit.setText("By Truc & PA");
 
         Book.setColumns(20);
-        Book.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        Book.setFont(new java.awt.Font("iCiel Panton Black", 0, 20)); // NOI18N
         Book.setRows(5);
         ScrollPanel.setViewportView(Book);
 
