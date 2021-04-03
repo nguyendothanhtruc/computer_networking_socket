@@ -25,13 +25,13 @@ public class FirstMenu extends JFrame {
     private javax.swing.JTextField jTextField1;
 
     public FirstMenu(Socket socket) throws IOException {
+        super("Online Library - Truc&PA");
         this.socket = socket;
         output = new DataOutputStream(socket.getOutputStream());
         initComponents();
     }
 
     private void initComponents() throws IOException {
-
         jTextField1 = new javax.swing.JTextField();
         MainPanel = new keeptoo.KGradientPanel();
         OnlineLibrary = new javax.swing.JLabel();

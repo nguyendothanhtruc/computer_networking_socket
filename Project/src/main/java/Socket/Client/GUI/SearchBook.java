@@ -21,6 +21,7 @@ public class SearchBook extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
 
     public SearchBook(Socket socket) throws IOException {
+        super("Online Library - Truc&PA");
         this.socket = socket;
         input = new DataInputStream(socket.getInputStream());
         output = new DataOutputStream(socket.getOutputStream());
@@ -187,7 +188,6 @@ public class SearchBook extends javax.swing.JFrame {
         }
     }
         else  JOptionPane.showMessageDialog(null, "Book not found");
-        output.writeUTF("2"); //Gui qua server chon main-menu
     }
 
     public void RunSB(Socket socket) {

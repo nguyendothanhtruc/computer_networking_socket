@@ -2,7 +2,6 @@ package Socket.Client;
 
 import Socket.Book;
 import Socket.Client.GUI.*;
-import Socket.Client.GUI.viewBook;
 
 import java.io.DataInputStream;
 import java.io.FileOutputStream;
@@ -24,10 +23,8 @@ public class Client_Services {
 
     public void SignIn() throws IOException {
         String command = "3";
-
         do {
             new FirstMenu(client.getSocket()).run();
-
             command = input.readUTF();
 
             switch (command) {
@@ -54,8 +51,9 @@ public class Client_Services {
         //OIS.close();
 
         //Get menuOption
-        flag=bookInfo.cmd;
-        bookName=myBook.name;
+        flag = bookInfo.cmd;
+        client.send(flag);
+        bookName = myBook.name;
     }
 
     public void FindBook() throws IOException, ClassNotFoundException {
@@ -66,35 +64,40 @@ public class Client_Services {
 
     public void Menu() throws Exception {
 
-        switch(flag){
-            case "1"-> ViewBook();
-            case "2"-> Download();
-            case "3"->System.out.println("LookUp");
+        switch (flag) {
+            case "1" -> ViewBook();
+            case "2" -> Download();
+            case "3" -> System.out.println("LookUp");
         }
     }
-    private void receiveFile(String fileName) throws Exception{
+
+    private void receiveFile(String fileName) throws Exception {
         int bytes = 0;
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
 
         long size = input.readLong();     // read file size
         System.out.println(size);
 
-        byte[] buffer = new byte[4*1024];
-        while (size > 0 && (bytes = input.read(buffer, 0, (int)Math.min(buffer.length, size))) != -1) {
-            fileOutputStream.write(buffer,0,bytes);
+        byte[] buffer = new byte[4 * 1024];
+        while (size > 0 && (bytes = input.read(buffer, 0, (int) Math.min(buffer.length, size))) != -1) {
+            fileOutputStream.write(buffer, 0, bytes);
             size -= bytes;      // read upto file size
         }
         fileOutputStream.close();
     }
 
-    private void ViewBook() {
-
-    }
-    private void Download() throws Exception {
-        String filename=bookName;
+    private void ViewBook() throws Exception {
+        String filename = bookName;
         receiveFile("Books\\Client\\" + filename + ".txt");
         //THV ID=5
-        new viewBook(bookName,"Books\\Client\\"+bookName+".txt").RunvB();
+        new viewBook(bookName, "Books\\Client\\" + bookName + ".txt").RunvB();
+    }
+
+    private void Download() throws Exception {
+        String filename = bookName;
+        receiveFile("Books\\Client\\" + filename + ".txt");
+        //THV ID=5
+        new viewBook(bookName, "Books\\Client\\" + bookName + ".txt").RunvB();
     }
 
     public void Run() throws Exception {

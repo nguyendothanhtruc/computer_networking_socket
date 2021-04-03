@@ -26,6 +26,7 @@ public class Login extends JFrame {
     private static Object lock = new Object();
 
     public Login(Socket socket) throws IOException {
+        super("Online Library - Truc&PA");
         this.socket = socket;
         output = new DataOutputStream(socket.getOutputStream());
         input = new DataInputStream(socket.getInputStream());

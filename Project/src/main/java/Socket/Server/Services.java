@@ -118,8 +118,24 @@ public class Services extends Thread {
         }
     }
 
-    public void View() {
+    public void View() throws IOException {
+        int bytes = 0;
 
+        File file = new File("Books\\Server\\"+bookName+".txt");
+        FileInputStream fileInputStream = new FileInputStream(file);
+
+        // send file size
+        out.writeLong(file.length());
+        System.out.println(file.length());
+
+        // break file into chunks
+        byte[] buffer = new byte[4*1024];
+
+        while ((bytes=fileInputStream.read(buffer))!=-1){
+            out.write(buffer,0,bytes);
+            out.flush();
+        }
+        fileInputStream.close();
     }
 
     public void List_books() {

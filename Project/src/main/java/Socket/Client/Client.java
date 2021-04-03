@@ -60,5 +60,12 @@ public class Client {
     }
 
 
+    public void send(String flag) {
+        try {
+            output.writeUTF(flag);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

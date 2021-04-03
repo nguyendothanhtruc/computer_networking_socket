@@ -30,6 +30,7 @@ public class Registration extends JFrame {
     private static Object lock = new Object();
 
     public Registration(Socket socket) throws IOException {
+        super("Online Library - Truc&PA");
         this.socket = socket;
         input = new DataInputStream(socket.getInputStream());
         output = new DataOutputStream(socket.getOutputStream());

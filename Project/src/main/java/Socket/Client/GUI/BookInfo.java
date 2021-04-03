@@ -25,6 +25,7 @@ public class BookInfo extends JFrame {
     private static Object lock = new Object();
 
     public BookInfo(Book b) {
+        super("Online Library - Truc&PA");
         myBook=b;
         initComponents();
         frame=this;

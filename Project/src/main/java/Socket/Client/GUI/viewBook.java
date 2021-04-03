@@ -19,6 +19,7 @@ public class viewBook extends JFrame {
     private javax.swing.JLabel Title;
 
     public viewBook(String bookName, String filepath) throws FileNotFoundException, IOException {
+        super("Online Library - Truc&PA");
         this.bookName=bookName;
         this.filePath=filepath;
         initComponents();
@@ -105,18 +106,11 @@ public class viewBook extends JFrame {
     }
 
     public void RunvB() {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new viewBook(bookName,filePath).setVisible(true);
-
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(viewBook.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(viewBook.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
+        try {
+            new viewBook(bookName,filePath).setVisible(true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
