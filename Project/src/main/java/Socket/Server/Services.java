@@ -2,11 +2,10 @@ package Socket.Server;
 
 import Socket.Book;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ public class Services extends Thread {
     private String username;
     private List<String> Clients;
     final Socket socket;
-
+    private String bookName;
     // Constructor
     public Services(Socket s, List<String> c) throws IOException {
         socket = s;
@@ -109,6 +108,7 @@ public class Services extends Thread {
 
                 if (isFound) {
                     oos.writeObject(found);
+                    bookName = found.name;
                 }
 
             } catch (SQLException | IOException throwable) {
@@ -119,10 +119,12 @@ public class Services extends Thread {
     }
 
     public void View() {
+
     }
 
     public void List_books() {
-        System.out.println("User: " + username + " lists books");
+        System.out.println("List_book");
+        /*System.out.println("User: " + username + " lists books");
 
         String option, search_key;
         DataHandler dataHandler = new DataHandler();
@@ -149,15 +151,31 @@ public class Services extends Thread {
             e.printStackTrace();
             System.out.println("Error in List_books");
         }
-
+*/
     }
 
-    public void Download() {
+    public void Download() throws IOException {
+        int bytes = 0;
+
+        File file = new File("Books\\Server\\"+bookName+".txt");
+        FileInputStream fileInputStream = new FileInputStream(file);
+
+        // send file size
+        out.writeLong(file.length());
+        System.out.println(file.length());
+
+        // break file into chunks
+        byte[] buffer = new byte[4*1024];
+
+        while ((bytes=fileInputStream.read(buffer))!=-1){
+            out.write(buffer,0,bytes);
+            out.flush();
+        }
+        fileInputStream.close();
     }
 
     public void Main_Menu() throws IOException {
         String option = in.readUTF();
-        //String option = "3";
 
         switch (option) {
             case "1" -> View();
@@ -170,7 +188,7 @@ public class Services extends Thread {
         try {
             SignIn_Form();
             Look_up();
-            //Main_Menu();
+            Main_Menu();
         } catch (IOException | SQLException e) {
             e.printStackTrace();
         }

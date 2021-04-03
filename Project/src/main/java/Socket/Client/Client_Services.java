@@ -51,7 +51,7 @@ public class Client_Services {
         Book myBook = (Book) OIS.readObject();
         BookInfo bookInfo = new BookInfo(myBook);
         bookInfo.RunBI();
-        OIS.close();
+        //OIS.close();
 
         //Get menuOption
         flag=bookInfo.cmd;
@@ -65,9 +65,10 @@ public class Client_Services {
     }
 
     public void Menu() throws Exception {
+
         switch(flag){
             case "1"-> ViewBook();
-            case "2"->System.out.println("Download");
+            case "2"-> Download();
             case "3"->System.out.println("LookUp");
         }
     }
@@ -76,6 +77,8 @@ public class Client_Services {
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
 
         long size = input.readLong();     // read file size
+        System.out.println(size);
+
         byte[] buffer = new byte[4*1024];
         while (size > 0 && (bytes = input.read(buffer, 0, (int)Math.min(buffer.length, size))) != -1) {
             fileOutputStream.write(buffer,0,bytes);
@@ -84,11 +87,14 @@ public class Client_Services {
         fileOutputStream.close();
     }
 
-    private void ViewBook() throws Exception {
-        //String filename="temp";
-        //receiveFile(filename);
+    private void ViewBook() {
+
+    }
+    private void Download() throws Exception {
+        String filename=bookName;
+        receiveFile("Books\\Client\\" + filename + ".txt");
         //THV ID=5
-        new viewBook(bookName,"D:\\MMT_Socket\\Books\\"+bookName+".txt").RunvB();
+        new viewBook(bookName,"Books\\Client\\"+bookName+".txt").RunvB();
     }
 
     public void Run() throws Exception {

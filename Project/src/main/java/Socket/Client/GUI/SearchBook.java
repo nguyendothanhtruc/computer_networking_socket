@@ -187,6 +187,7 @@ public class SearchBook extends javax.swing.JFrame {
         }
     }
         else  JOptionPane.showMessageDialog(null, "Book not found");
+        output.writeUTF("2"); //Gui qua server chon main-menu
     }
 
     public void RunSB(Socket socket) {
