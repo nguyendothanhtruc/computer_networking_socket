@@ -4,10 +4,7 @@ import Socket.Book;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Services extends Thread {
@@ -29,7 +26,7 @@ public class Services extends Thread {
         oos = new ObjectOutputStream(out);
     }
 
-    public void Login() throws IOException{
+    private void Login() throws IOException{
         String password;
         Boolean isCorrected = false;
         System.out.println("Client logins: ");
@@ -49,7 +46,7 @@ public class Services extends Thread {
         Clients.add(username);
     }
 
-    public void Register() throws IOException{
+    private void Register() throws IOException{
         String password, confirm;
         Boolean Regis_Success = false;
         System.out.println("Client registers: ");
@@ -76,7 +73,7 @@ public class Services extends Thread {
 
     }
 
-    public void SignIn_Form() throws IOException, SQLException {
+    private void SignIn_Form() throws IOException, SQLException {
         //Receive 1: Login, 2: Register
         String op;
         do {
@@ -90,7 +87,7 @@ public class Services extends Thread {
         } while (!op.equals("1"));
     }
 
-    public void Look_up() throws IOException {
+    private void Look_up() throws IOException {
         DataHandler dataHandler = new DataHandler();
         Boolean isFound = false;
         System.out.println("User: " + username + " looks up books");
@@ -118,8 +115,8 @@ public class Services extends Thread {
         }
     }
 
-    public void View() throws IOException {
-        int bytes = 0;
+    private void View() throws IOException {
+        int bytes;
 
         File file = new File("Books\\Server\\"+bookName+".txt");
         FileInputStream fileInputStream = new FileInputStream(file);
@@ -138,7 +135,7 @@ public class Services extends Thread {
         fileInputStream.close();
     }
 
-    public void List_books() {
+    private void List_books() {
         System.out.println("List_book");
         /*System.out.println("User: " + username + " lists books");
 
@@ -170,8 +167,8 @@ public class Services extends Thread {
 */
     }
 
-    public void Download() throws IOException {
-        int bytes = 0;
+    private void Download() throws IOException {
+        int bytes;
 
         File file = new File("Books\\Server\\"+bookName+".txt");
         FileInputStream fileInputStream = new FileInputStream(file);
@@ -190,7 +187,7 @@ public class Services extends Thread {
         fileInputStream.close();
     }
 
-    public void Main_Menu() throws IOException {
+    private void Main_Menu() throws IOException {
         String option = in.readUTF();
 
         switch (option) {
@@ -200,7 +197,7 @@ public class Services extends Thread {
         }
     }
 
-    public void Menu() {
+    private void Menu() {
         try {
             SignIn_Form();
             Look_up();
