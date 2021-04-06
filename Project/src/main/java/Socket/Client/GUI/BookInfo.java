@@ -72,7 +72,11 @@ public class BookInfo extends JFrame {
         FindMore.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         FindMore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FindMorePerformed(evt);
+                try {
+                    FindMorePerformed(evt);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         ;
@@ -181,27 +185,11 @@ public class BookInfo extends JFrame {
         }
     }
 
-    private void FindMorePerformed(ActionEvent evt) {
+    private void FindMorePerformed(ActionEvent evt) throws InterruptedException {
         cmd = "3";
-
-        JButton Author=new JButton("Author");
-        JButton Type = new JButton("Type");
-
-        JPanel panel = new JPanel();
-        panel.add(new JLabel("Search for books by: "));
-        JOptionPane.showOptionDialog(null,panel,null,JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
-                null, new Object[]{Author, Type}, null);
-
-        Author.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DownloadPerformed(evt);
-            }
-        }
-
         synchronized (this) {
             notifyAll();
         }
-        this.setVisible(false);
     }
 
     private void DownloadPerformed(ActionEvent evt) {
@@ -228,7 +216,8 @@ public class BookInfo extends JFrame {
             this.waitForInputs();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally{
             this.dispose();
         }
     }

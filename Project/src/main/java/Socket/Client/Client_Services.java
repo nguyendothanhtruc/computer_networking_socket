@@ -50,8 +50,7 @@ public class Client_Services {
 
     }
 
-    public void getBook(ObjectInputStream OIS) {
-        try {
+    public void getBook(ObjectInputStream OIS) throws IOException, ClassNotFoundException, InterruptedException {
             Book myBook = null;
             myBook = (Book) OIS.readObject();
             BookInfo bookInfo = new BookInfo(myBook);
@@ -60,15 +59,25 @@ public class Client_Services {
             //Store book data
             flag = bookInfo.cmd; //Function chosen
             client.send(flag);
-            bookName = myBook.name;
 
-        } catch (IOException e) {
-            System.out.println(e.toString());
-            System.out.println("SERVER DIED");
-            client.Disconnect();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+            //Send sort category
+
+            if(flag.equals("3")) {
+                OptionPanel clientOp = new OptionPanel();
+                clientOp.RunOp();
+
+                String category="";
+                category = clientOp.genre;
+                System.out.println(category);
+                client.send(category);
+
+                if (category.equals("1")) client.send(myBook.type);
+                else client.send(myBook.author);
+                clientOp.dispose();
+            }
+            bookName = myBook.name;
+        System.out.println("hehe");
+
 
     }
 
@@ -81,6 +90,10 @@ public class Client_Services {
             System.out.println(io.toString());
             System.out.println("Close processing FindBook");
             client.Disconnect();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
