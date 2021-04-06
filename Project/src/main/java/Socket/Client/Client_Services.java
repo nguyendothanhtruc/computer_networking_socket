@@ -3,10 +3,12 @@ package Socket.Client;
 import Socket.Book;
 import Socket.Client.GUI.*;
 
+import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 public class Client_Services {
     //Socket
@@ -82,12 +84,22 @@ public class Client_Services {
         }
     }
 
-    public void Menu() throws Exception {
+    public void MoreBook(ObjectInputStream OIS) throws IOException, InterruptedException, ClassNotFoundException {
+        ArrayList<Book> bookArrayList = null;
 
+        boolean getList = input.readBoolean();
+
+        if (getList) {
+            bookArrayList = (ArrayList<Book>) OIS.readObject();
+        }
+        new findMoreBooks(client.getSocket(), bookArrayList).Run();
+    }
+
+    public void Menu() throws Exception {
         switch (flag) {
             case "1" -> ViewBook();
             case "2" -> Download();
-            case "3" -> System.out.println("LookUp");
+            case "3" -> MoreBook(client.getOIS());
         }
     }
 
@@ -116,8 +128,7 @@ public class Client_Services {
     private void Download() throws Exception {
         String filename = bookName;
         receiveFile("Books\\Client\\" + filename + ".txt");
-        //THV ID=5
-        new viewBook(bookName, "Books\\Client\\" + bookName + ".txt").RunViewBook();
+        JOptionPane.showMessageDialog(null, "Download successfully");
     }
 
     public void Run() throws Exception {

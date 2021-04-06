@@ -242,16 +242,15 @@ public class Registration extends JFrame {
                 synchronized (this) {
                     notifyAll();
                 }
-                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to register");
             }
         } catch (IOException io) {
-            System.out.println(io.toString());
             System.out.println("Close GUI");
             this.socket.close();
             input.close();
             output.close();
+        }finally {
             this.dispose();
         }
     }

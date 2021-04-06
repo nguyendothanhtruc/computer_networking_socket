@@ -4,11 +4,11 @@ import Socket.Book;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 
 public class BookInfo extends JFrame {
     //return option
     public String cmd;
+    public String genre; //1 - Author & 2 - Type
     //Book
     private Book myBook;
     //JFrame
@@ -25,9 +25,9 @@ public class BookInfo extends JFrame {
 
     public BookInfo(Book b) {
         super("Online Library - Truc&PA");
-        myBook=b;
+        myBook = b;
         initComponents();
-        frame=this;
+        frame = this;
     }
 
     private void initComponents() {
@@ -61,7 +61,8 @@ public class BookInfo extends JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DownloadPerformed(evt);
             }
-        });;
+        });
+        ;
 
         FindMore.setBackground(new java.awt.Color(51, 204, 255));
         FindMore.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
@@ -73,7 +74,8 @@ public class BookInfo extends JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FindMorePerformed(evt);
             }
-        });;
+        });
+        ;
 
         View.setBackground(new java.awt.Color(51, 204, 255));
         View.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
@@ -86,7 +88,8 @@ public class BookInfo extends JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ViewAccountPerformed(evt);
             }
-        });;
+        });
+        ;
 
         ByTrucPA.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
         ByTrucPA.setForeground(new java.awt.Color(255, 255, 255));
@@ -177,8 +180,24 @@ public class BookInfo extends JFrame {
             wait();
         }
     }
+
     private void FindMorePerformed(ActionEvent evt) {
-        cmd="3";
+        cmd = "3";
+
+        JButton Author=new JButton("Author");
+        JButton Type = new JButton("Type");
+
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("Search for books by: "));
+        JOptionPane.showOptionDialog(null,panel,null,JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, new Object[]{Author, Type}, null);
+
+        Author.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DownloadPerformed(evt);
+            }
+        }
+
         synchronized (this) {
             notifyAll();
         }
@@ -186,7 +205,7 @@ public class BookInfo extends JFrame {
     }
 
     private void DownloadPerformed(ActionEvent evt) {
-        cmd="2";
+        cmd = "2";
         synchronized (this) {
             notifyAll();
         }
@@ -194,7 +213,7 @@ public class BookInfo extends JFrame {
     }
 
     private void ViewAccountPerformed(ActionEvent evt) {
-        cmd="1";
+        cmd = "1";
         synchronized (this) {
             notifyAll();
         }
@@ -202,14 +221,15 @@ public class BookInfo extends JFrame {
 
     }
 
-    public void RunBI(){
-        Content.setText("<html>" + myBook.convertBook().replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>") + "</html>");
+    public void RunBI() {
+        Content.setText("<html>" + myBook.convertBook().replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>") + "</html>");
         frame.setVisible(true);
         try {
             this.waitForInputs();
-            this.dispose();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } finally {
+            this.dispose();
         }
     }
 

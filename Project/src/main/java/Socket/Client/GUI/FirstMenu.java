@@ -207,6 +207,8 @@ public class FirstMenu extends JFrame {
             System.out.println("Close GUi");
             socket.close();
             output.close();
+
+        } finally {
             this.dispose();
         }
     }
@@ -216,13 +218,12 @@ public class FirstMenu extends JFrame {
             output.writeUTF("1");
             this.dispose();
         } catch (IOException io) {
-            System.out.println(io.toString());
             System.out.println("Close GUI");
             socket.close();
             output.close();
+        } finally {
             this.dispose();
         }
-
     }
 
     public void run() {

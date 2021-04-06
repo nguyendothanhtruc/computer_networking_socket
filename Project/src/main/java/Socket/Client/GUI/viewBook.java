@@ -2,10 +2,11 @@ package Socket.Client.GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class viewBook extends JFrame {
     //Name
@@ -20,8 +21,8 @@ public class viewBook extends JFrame {
 
     public viewBook(String bookName, String filepath) throws IOException {
         super("Online Library - Truc&PA");
-        this.bookName=bookName;
-        this.filePath=filepath;
+        this.bookName = bookName;
+        this.filePath = filepath;
         initComponents();
 
         //Load book from file
@@ -32,10 +33,11 @@ public class viewBook extends JFrame {
         //Customize
         Book.setWrapStyleWord(true);
         Book.setLineWrap(true); //Lock width
-        Book.setMargin( new Insets(10,10,10,10) );
+        Book.setMargin(new Insets(10, 10, 10, 10));
         Book.requestFocus();
         Book.setEditable(false);
     }
+
     private void initComponents() {
         Panel = new keeptoo.KGradientPanel();
         Title = new javax.swing.JLabel();
@@ -107,9 +109,11 @@ public class viewBook extends JFrame {
 
     public void RunViewBook() {
         try {
-            new viewBook(bookName,filePath).setVisible(true);
+            new viewBook(bookName, filePath).setVisible(true);
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            this.dispose();
         }
     }
 

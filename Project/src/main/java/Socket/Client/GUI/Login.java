@@ -196,18 +196,17 @@ public class Login extends JFrame {
                 synchronized (this) {
                     notifyAll();
                 }
-                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to login");
             }
 
-        } catch(IOException io) {
-            System.out.println(io.toString());
+        } catch (IOException io) {
             System.out.println("Close GUI");
             socket.close();
             input.close();
             output.close();
+        } finally {
             this.dispose();
         }
-        }
+    }
 }

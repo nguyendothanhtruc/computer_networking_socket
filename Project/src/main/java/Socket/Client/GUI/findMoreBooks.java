@@ -1,16 +1,50 @@
 package Socket.Client.GUI;
 
-public class findMoreBooks extends javax.swing.JFrame {
-    public findMoreBooks() {
+import Socket.Book;
+import javax.swing.*;
+import java.awt.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.ArrayList;
+
+public class findMoreBooks extends JFrame {
+    //Socket
+    private JFrame frame=null;
+    private Socket socket = null;
+    private DataOutputStream output = null;
+    private DataInputStream input = null;
+    private ArrayList<Book> bookList =null;
+    //JFrame
+    private javax.swing.JTextField BookPIck;
+    private javax.swing.JLabel ByTrucPA;
+    private keeptoo.KGradientPanel MainPanel;
+    private javax.swing.JLabel Title;
+    private javax.swing.JButton Search;
+    private javax.swing.JTextArea ViewManyInfo;
+    private javax.swing.JScrollPane jScrollPane1;
+
+    public findMoreBooks(Socket socket, ArrayList<Book> bookList) throws IOException {
         super("Online Library - Truc&PA");
+        this.socket=socket;
+        input = new DataInputStream(socket.getInputStream());
+        output = new DataOutputStream(socket.getOutputStream());
+        this.bookList=bookList;
         initComponents();
+
+        ViewManyInfo.setMargin( new Insets(10,10,10,10) );
+        ViewManyInfo.requestFocus();
+        ViewManyInfo.setEditable(false);
+
+        frame=this;
     }
 
     private void initComponents() {
 
         MainPanel = new keeptoo.KGradientPanel();
         Title = new javax.swing.JLabel();
-        View = new javax.swing.JButton();
+        Search = new javax.swing.JButton();
         ByTrucPA = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ViewManyInfo = new javax.swing.JTextArea();
@@ -26,13 +60,22 @@ public class findMoreBooks extends javax.swing.JFrame {
         Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Title.setText("LIBRARY FOUND:");
 
-        View.setBackground(new java.awt.Color(51, 204, 255));
-        View.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
-        View.setForeground(new java.awt.Color(255, 255, 255));
-        View.setText("VIEW");
-        View.setAlignmentY(0.0F);
-        View.setBorderPainted(false);
-        View.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Search.setBackground(new java.awt.Color(51, 204, 255));
+        Search.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
+        Search.setForeground(new java.awt.Color(255, 255, 255));
+        Search.setText("VIEW");
+        Search.setAlignmentY(0.0F);
+        Search.setBorderPainted(false);
+        Search.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    SearchActionPerformed(evt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         ByTrucPA.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
         ByTrucPA.setForeground(new java.awt.Color(255, 255, 255));
@@ -66,7 +109,7 @@ public class findMoreBooks extends javax.swing.JFrame {
                                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(MainPanelLayout.createSequentialGroup()
-                                                .addComponent(View, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(BookPIck)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -80,7 +123,7 @@ public class findMoreBooks extends javax.swing.JFrame {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(View, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                                        .addComponent(Search, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                                         .addComponent(BookPIck))
                                 .addGap(17, 17, 17)
                                 .addComponent(ByTrucPA)
@@ -106,22 +149,77 @@ public class findMoreBooks extends javax.swing.JFrame {
             wait();
         }
     }
+    private void SearchActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
+        try {
+            String searchContent = BookPIck.getText();
 
-    public void Run() {
-        new findMoreBooks().setVisible(true);
-        synchronized (this) {
-            notifyAll();
+            String BookHeader, BookContent = null;
+            String direction_flag = ""; //Get_type
+
+            int pos = searchContent.indexOf(" ");
+            BookHeader = searchContent.substring(0, pos); //Get the F_X part
+
+            BookContent = searchContent.substring(pos + 1); //Get the name/ID part
+
+            if (BookHeader.equals("F_ID")) direction_flag = "1";
+            else if (BookHeader.equals("F_Name")) direction_flag = "2";
+
+            output.writeUTF(direction_flag); //Send the search-option to server
+            output.writeUTF(BookContent);
+
+            Boolean isReturn = input.readBoolean();
+            System.out.println(isReturn);
+
+            if (isReturn) {
+                switch (direction_flag) {
+                    case "1" -> {
+                        JOptionPane.showMessageDialog(null, "Searching by ID");
+                        this.setVisible(false);
+                        synchronized (this) {
+                            notifyAll();
+                        }
+                        this.dispose();
+                    }
+                    case "2" -> {
+                        JOptionPane.showMessageDialog(null, "Searching by Name");
+                        this.setVisible(false);
+                        synchronized (this) {
+                            notifyAll();
+                        }
+                        this.dispose();
+                    }
+                    default -> System.out.println("Error search book");
+                }
+            } else JOptionPane.showMessageDialog(null, "Book not found");
+        }catch (IOException io)
+        {
+            System.out.println(io.toString());
+            System.out.println("Close GUI");
+            socket.close();
+            input.close();
+            output.close();
+            this.dispose();
         }
+    }
+    public void Run() throws InterruptedException {
+        StringBuilder content= new StringBuilder();
+        int NumBook=bookList.size();
+        System.out.println(NumBook);
+
+        for (int i=0;i<NumBook;i++)
+        {
+            content.append(bookList.get(i).convertBook());
+            content.append("\n");
+        }
+
+        ViewManyInfo.setText("<html>" + content.toString().replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>") + "</html>");
+
+        System.out.println("hello");
+        this.setVisible(true);
+        this.waitForInputs();
     }
 
 
-    // Variables declaration - do not modify
-    private javax.swing.JTextField BookPIck;
-    private javax.swing.JLabel ByTrucPA;
-    private keeptoo.KGradientPanel MainPanel;
-    private javax.swing.JLabel Title;
-    private javax.swing.JButton View;
-    private javax.swing.JTextArea ViewManyInfo;
-    private javax.swing.JScrollPane jScrollPane1;
-    // End of variables declaration
+
+
 }

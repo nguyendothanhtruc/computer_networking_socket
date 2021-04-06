@@ -188,13 +188,12 @@ public class SearchBook extends javax.swing.JFrame {
                     default -> System.out.println("Error search book");
                 }
             } else JOptionPane.showMessageDialog(null, "Book not found");
-        }catch (IOException io)
-        {
-            System.out.println(io.toString());
+        } catch (IOException io) {
             System.out.println("Close GUI");
             socket.close();
             input.close();
             output.close();
+        } finally {
             this.dispose();
         }
     }
