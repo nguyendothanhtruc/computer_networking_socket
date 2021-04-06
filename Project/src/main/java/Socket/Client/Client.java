@@ -1,8 +1,6 @@
 package Socket.Client;
 
 
-import Socket.Book;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -17,9 +15,11 @@ public class Client {
     public Socket getSocket() {
         return socket;
     }
+
     public DataInputStream getInput() {
         return input;
     }
+
     public ObjectInputStream getOIS() {
         return OIS;
     }
@@ -28,7 +28,7 @@ public class Client {
     private DataOutputStream output = null;
     private ObjectInputStream OIS = null;
 
-    Client(String address, int port) throws IOException {
+    Client(String address, int port) {
         try {
             socket = new Socket(address, port);
             System.out.println("Connected");
@@ -59,13 +59,15 @@ public class Client {
 
     }
 
-
     public void send(String flag) {
         try {
             output.writeUTF(flag);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException io) {
+            System.out.println(io.toString());
+            System.out.println("Can't send to server");
+            this.Disconnect();
         }
     }
 }
+
 

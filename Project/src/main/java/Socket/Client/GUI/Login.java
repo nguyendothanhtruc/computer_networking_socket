@@ -23,8 +23,6 @@ public class Login extends JFrame {
     private javax.swing.JLabel username;
     private javax.swing.JTextField usernameInput;
 
-    private static Object lock = new Object();
-
     public Login(Socket socket) throws IOException {
         super("Online Library - Truc&PA");
         this.socket = socket;
@@ -173,7 +171,7 @@ public class Login extends JFrame {
         }
     }
 
-    public  void RunLogin() {
+    public void RunLogin() {
         try {
             this.setVisible(true);
             this.waitForInputs();
@@ -183,26 +181,33 @@ public class Login extends JFrame {
     }
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
-        output.writeUTF(usernameInput.getText());
-        output.writeUTF(String.valueOf(jPasswordField1.getPassword()));
-        output.flush();
 
+        try {
+            output.writeUTF(usernameInput.getText());
+            output.writeUTF(String.valueOf(jPasswordField1.getPassword()));
+            output.flush();
 
-        boolean LoginSuccess = false;
-        LoginSuccess = input.readBoolean(); //Receive regis_flag from sv
+            boolean LoginSuccess = false;
+            LoginSuccess = input.readBoolean(); //Receive regis_flag from sv
 
-        if (LoginSuccess) {
-            JOptionPane.showMessageDialog(null, "Login successfully");
-            this.setVisible(false);
-            synchronized (this) {
-                notifyAll();
+            if (LoginSuccess) {
+                JOptionPane.showMessageDialog(null, "Login successfully");
+                this.setVisible(false);
+                synchronized (this) {
+                    notifyAll();
+                }
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to login");
             }
+
+        } catch(IOException io) {
+            System.out.println(io.toString());
+            System.out.println("Close GUI");
+            socket.close();
+            input.close();
+            output.close();
             this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Failed to login");
         }
-
-    }
-
-
+        }
 }

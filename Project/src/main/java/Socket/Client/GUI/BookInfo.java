@@ -22,7 +22,6 @@ public class BookInfo extends JFrame {
     private javax.swing.JLabel Content;
     private javax.swing.JPanel jPanel1;
 
-    private static Object lock = new Object();
 
     public BookInfo(Book b) {
         super("Online Library - Truc&PA");

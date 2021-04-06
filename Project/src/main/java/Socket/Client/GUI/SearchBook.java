@@ -147,47 +147,56 @@ public class SearchBook extends javax.swing.JFrame {
     }
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
-        String searchContent = Insert.getText();
+        try {
+            String searchContent = Insert.getText();
 
-        String BookHeader, BookContent = null;
-        String direction_flag = ""; //Get_type
+            String BookHeader, BookContent = null;
+            String direction_flag = ""; //Get_type
 
-        int pos = searchContent.indexOf(" ");
-        BookHeader = searchContent.substring(0, pos); //Get the F_X part
+            int pos = searchContent.indexOf(" ");
+            BookHeader = searchContent.substring(0, pos); //Get the F_X part
 
-        BookContent = searchContent.substring(pos + 1, searchContent.length()); //Get the name/ID part
+            BookContent = searchContent.substring(pos + 1, searchContent.length()); //Get the name/ID part
 
-        if (BookHeader.equals("F_ID")) direction_flag = "1";
-        else if (BookHeader.equals("F_Name")) direction_flag = "2";
+            if (BookHeader.equals("F_ID")) direction_flag = "1";
+            else if (BookHeader.equals("F_Name")) direction_flag = "2";
 
-        output.writeUTF(direction_flag); //Send the search-option to server
-        output.writeUTF(BookContent);
+            output.writeUTF(direction_flag); //Send the search-option to server
+            output.writeUTF(BookContent);
 
-        Boolean isReturn=input.readBoolean();
-        System.out.println(isReturn);
+            Boolean isReturn = input.readBoolean();
+            System.out.println(isReturn);
 
-        if(isReturn)
-        { switch (direction_flag) {
-            case "1" -> {
-                JOptionPane.showMessageDialog(null, "Searching by ID");
-                this.setVisible(false);
-                synchronized (this) {
-                    notifyAll();
+            if (isReturn) {
+                switch (direction_flag) {
+                    case "1" -> {
+                        JOptionPane.showMessageDialog(null, "Searching by ID");
+                        this.setVisible(false);
+                        synchronized (this) {
+                            notifyAll();
+                        }
+                        this.dispose();
+                    }
+                    case "2" -> {
+                        JOptionPane.showMessageDialog(null, "Searching by Name");
+                        this.setVisible(false);
+                        synchronized (this) {
+                            notifyAll();
+                        }
+                        this.dispose();
+                    }
+                    default -> System.out.println("Error search book");
                 }
-                this.dispose();
-            }
-            case "2" -> {
-                JOptionPane.showMessageDialog(null, "Searching by Name");
-                this.setVisible(false);
-                synchronized (this) {
-                    notifyAll();
-                }
-                this.dispose();
-            }
-            default -> System.out.println("Error search book");
+            } else JOptionPane.showMessageDialog(null, "Book not found");
+        }catch (IOException io)
+        {
+            System.out.println(io.toString());
+            System.out.println("Close GUI");
+            socket.close();
+            input.close();
+            output.close();
+            this.dispose();
         }
-    }
-        else  JOptionPane.showMessageDialog(null, "Book not found");
     }
 
     public void RunSB(Socket socket) {
@@ -196,7 +205,6 @@ public class SearchBook extends javax.swing.JFrame {
             new SearchBook(socket);
             this.setVisible(true);
             this.waitForInputs();
-
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

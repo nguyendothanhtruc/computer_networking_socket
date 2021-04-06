@@ -1,7 +1,6 @@
 package Socket.Client.GUI;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -27,10 +26,9 @@ public class Registration extends JFrame {
     private javax.swing.JLabel jLabel1;
     private keeptoo.KGradientPanel kGradientPanel1;
 
-    private static Object lock = new Object();
-
     public Registration(Socket socket) throws IOException {
         super("Online Library - Truc&PA");
+
         this.socket = socket;
         input = new DataInputStream(socket.getInputStream());
         output = new DataOutputStream(socket.getOutputStream());
@@ -41,7 +39,6 @@ public class Registration extends JFrame {
         try {
             this.setVisible(true);
             this.waitForInputs();
-            this.dispose();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -231,25 +228,32 @@ public class Registration extends JFrame {
     }
 
     private void OKActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
-        output.writeUTF(TextUsername.getText());
-        output.writeUTF(String.valueOf(PasswordHidden.getPassword()));
-        output.writeUTF(String.valueOf(ConfirmHidden.getPassword()));
-        output.flush();
+        try {
+            output.writeUTF(TextUsername.getText());
+            output.writeUTF(String.valueOf(PasswordHidden.getPassword()));
+            output.writeUTF(String.valueOf(ConfirmHidden.getPassword()));
+            output.flush();
 
-        boolean RegisSuccess = false;
-        RegisSuccess = input.readBoolean(); //Receive regis_flag from sv
+            boolean RegisSuccess = false;
+            RegisSuccess = input.readBoolean(); //Receive regis_flag from sv
 
-        if (RegisSuccess) {
-            JOptionPane.showMessageDialog(null, "Register successfully");
-            this.setVisible(false);
-            synchronized (this) {
-                notifyAll();
+            if (RegisSuccess) {
+                JOptionPane.showMessageDialog(null, "Register successfully");
+                synchronized (this) {
+                    notifyAll();
+                }
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to register");
             }
+        } catch (IOException io) {
+            System.out.println(io.toString());
+            System.out.println("Close GUI");
+            this.socket.close();
+            input.close();
+            output.close();
             this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Failed to register");
         }
-
     }
 }
 

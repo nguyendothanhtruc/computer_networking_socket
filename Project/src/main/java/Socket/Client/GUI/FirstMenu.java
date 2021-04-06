@@ -6,7 +6,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-
 public class FirstMenu extends JFrame {
     //Socket
     private static Socket socket = null;
@@ -200,23 +199,35 @@ public class FirstMenu extends JFrame {
     }
 
     private void NewAccountPerformed(java.awt.event.ActionEvent evt) throws IOException {
-        this.setVisible(false);
-        output.writeUTF("2");
-        this.dispose();
+        try {
+            output.writeUTF("2");
+            this.dispose();
+        } catch (IOException io) {
+            System.out.println(io.toString());
+            System.out.println("Close GUi");
+            socket.close();
+            output.close();
+            this.dispose();
+        }
     }
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
-        this.setVisible(false);
-        output.writeUTF("1");
-        this.dispose();
+        try {
+            output.writeUTF("1");
+            this.dispose();
+        } catch (IOException io) {
+            System.out.println(io.toString());
+            System.out.println("Close GUI");
+            socket.close();
+            output.close();
+            this.dispose();
+        }
+
     }
 
     public void run() {
         try {
-
             new FirstMenu(socket).setVisible(true);
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }

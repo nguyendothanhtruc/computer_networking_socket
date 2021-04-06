@@ -18,7 +18,7 @@ public class viewBook extends JFrame {
     private javax.swing.JScrollPane ScrollPanel;
     private javax.swing.JLabel Title;
 
-    public viewBook(String bookName, String filepath) throws FileNotFoundException, IOException {
+    public viewBook(String bookName, String filepath) throws IOException {
         super("Online Library - Truc&PA");
         this.bookName=bookName;
         this.filePath=filepath;
@@ -105,7 +105,7 @@ public class viewBook extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    public void RunvB() {
+    public void RunViewBook() {
         try {
             new viewBook(bookName,filePath).setVisible(true);
         } catch (IOException e) {

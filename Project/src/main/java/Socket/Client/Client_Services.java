@@ -21,45 +21,65 @@ public class Client_Services {
         input = client.getInput();
     }
 
-    public void SignIn() throws IOException {
+    public void SignIn() {
         String command = "3";
-        do {
-            new FirstMenu(client.getSocket()).run();
-            command = input.readUTF();
+        try {
+            do {
+                new FirstMenu(client.getSocket()).run();
+                command = input.readUTF();
 
-            switch (command) {
-                case "1": {
-                    new Login(client.getSocket()).RunLogin();
-                    break;
+                switch (command) {
+                    case "1": {
+                        new Login(client.getSocket()).RunLogin();
+                        break;
+                    }
+                    case "2": {
+                        new Registration(client.getSocket()).RunReg();
+                        break;
+                    }
+                    default:
+                        System.out.println("ERROR in SIGNIN flag");
                 }
-                case "2": {
-                    new Registration(client.getSocket()).RunReg();
-                    break;
-                }
-                default:
-                    System.out.println("ERROR flag");
-            }
-
-        } while (!command.equals("1"));
+            } while (!command.equals("1"));
+        } catch (IOException e) {
+            System.out.println("Close processing SignIn");
+            client.Disconnect();
+        }
 
     }
 
-    public void getBook(ObjectInputStream OIS) throws IOException, ClassNotFoundException {
-        Book myBook = (Book) OIS.readObject();
-        BookInfo bookInfo = new BookInfo(myBook);
-        bookInfo.RunBI();
-        //OIS.close();
+    public void getBook(ObjectInputStream OIS) {
+        try {
+            Book myBook = null;
+            myBook = (Book) OIS.readObject();
+            BookInfo bookInfo = new BookInfo(myBook);
+            bookInfo.RunBI();
 
-        //Get menuOption
-        flag = bookInfo.cmd;
-        client.send(flag);
-        bookName = myBook.name;
+            //Store book data
+            flag = bookInfo.cmd; //Function chosen
+            client.send(flag);
+            bookName = myBook.name;
+
+        } catch (IOException e) {
+            System.out.println(e.toString());
+            System.out.println("SERVER DIED");
+            client.Disconnect();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public void FindBook() throws IOException, ClassNotFoundException {
-        SearchBook searchBook = new SearchBook(client.getSocket());
-        searchBook.RunSB(client.getSocket());
-        getBook(client.getOIS());
+    public void FindBook() {
+        try {
+            SearchBook searchBook = new SearchBook(client.getSocket());
+            searchBook.RunSB(client.getSocket());
+            getBook(client.getOIS());
+        } catch (IOException io) {
+            System.out.println(io.toString());
+            System.out.println("Close processing FindBook");
+            client.Disconnect();
+        }
     }
 
     public void Menu() throws Exception {
@@ -90,20 +110,19 @@ public class Client_Services {
         String filename = bookName;
         receiveFile("Books\\Client\\" + filename + ".txt");
         //THV ID=5
-        new viewBook(bookName, "Books\\Client\\" + bookName + ".txt").RunvB();
+        new viewBook(bookName, "Books\\Client\\" + bookName + ".txt").RunViewBook();
     }
 
     private void Download() throws Exception {
         String filename = bookName;
         receiveFile("Books\\Client\\" + filename + ".txt");
         //THV ID=5
-        new viewBook(bookName, "Books\\Client\\" + bookName + ".txt").RunvB();
+        new viewBook(bookName, "Books\\Client\\" + bookName + ".txt").RunViewBook();
     }
 
     public void Run() throws Exception {
         SignIn();
         FindBook();
         Menu();
-
     }
 }
