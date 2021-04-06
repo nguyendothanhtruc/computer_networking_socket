@@ -5,19 +5,19 @@ import Socket.Book;
 import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Services extends Thread {
     final DataInputStream in; //Take message from client
     final DataOutputStream out; //Print on client terminal
     final ObjectOutputStream oos;
     private String username;
-    private List<String> Clients;
+    private ArrayList<String> Clients;
     final Socket socket;
     private String bookName;
 
     // Constructor
-    public Services(Socket s, List<String> c) throws IOException {
+    public Services(Socket s, ArrayList<String> c) throws IOException {
         socket = s;
         Clients = c;
 
@@ -131,16 +131,14 @@ public class Services extends Thread {
         fileInputStream.close();
     }
 
-    @Deprecated
     private void List_books() {
-        System.out.println("List_book");
-        /*System.out.println("User: " + username + " lists books");
+        System.out.println("User: " + username + " lists books");
 
         String option, search_key;
         DataHandler dataHandler = new DataHandler();
 
         try {
-            List<Book> books = new ArrayList<>();
+            ArrayList<Book> books = new ArrayList<>();
             Boolean Success = false;
 
             while (!Success) {
@@ -161,7 +159,6 @@ public class Services extends Thread {
             e.printStackTrace();
             System.out.println("Error in List_books");
         }
-*/
     }
 
     private void Download() throws IOException {
