@@ -21,8 +21,8 @@ public class Server {
     private boolean Alive;
 
     //Establish a connection between server and clients
-    public Server(int port) throws IOException {
-        server = new ServerSocket(port, 1, InetAddress.getByName("localhost"));
+    public Server(String IP, int port) throws IOException {
+        server = new ServerSocket(port, 1, InetAddress.getByName(IP));
         clients = new ArrayList<>();
         Alive = false;
     }
@@ -35,9 +35,7 @@ public class Server {
             try {
                 socket = server.accept();
 
-                System.out.println("A new client is connected : " + socket);
-
-                System.out.println("Assigning new thread for this client \n");
+                System.out.println("A new client connected : " + socket);
 
                 // create a new thread object
                 Services ClientHandler = new Services(socket, clients);
@@ -48,31 +46,19 @@ public class Server {
             } catch (IOException e) {
                 if (socket != null)
                     socket.close();
-                server.close();
+                if (!server.isClosed()) server.close();
                 System.out.println("Connection closed: " + socket);
                 e.printStackTrace();
             }
         }
-        System.out.println("Dead");
     }
-    public void run()
+    public void Run()
     {
         try {
             if(Alive)
             Connect();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-    public void Disconnect()
-    {
-        if (!server.isClosed()) {
-            try {
-                server.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-
-            }
         }
     }
 }

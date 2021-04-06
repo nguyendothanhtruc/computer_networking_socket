@@ -15,6 +15,7 @@ public class Services extends Thread {
     private List<String> Clients;
     final Socket socket;
     private String bookName;
+
     // Constructor
     public Services(Socket s, List<String> c) throws IOException {
         socket = s;
@@ -26,7 +27,7 @@ public class Services extends Thread {
         oos = new ObjectOutputStream(out);
     }
 
-    private void Login() throws IOException{
+    private void Login() throws IOException {
         String password;
         Boolean isCorrected = false;
         System.out.println("Client logins: ");
@@ -46,7 +47,7 @@ public class Services extends Thread {
         Clients.add(username);
     }
 
-    private void Register() throws IOException{
+    private void Register() throws IOException {
         String password, confirm;
         Boolean Regis_Success = false;
         System.out.println("Client registers: ");
@@ -87,54 +88,50 @@ public class Services extends Thread {
         } while (!op.equals("1"));
     }
 
-    private void Look_up() throws IOException {
+    private void Look_up() throws IOException, SQLException {
         DataHandler dataHandler = new DataHandler();
         Boolean isFound = false;
         System.out.println("User: " + username + " looks up books");
         while (!isFound) {
             //Receive 1: View by ID, 2: by Name
+
             String option = in.readUTF();
             String Search_key = in.readUTF();
 
-            try {
-                Book found = new Book();
+            Book found = new Book();
 
-                isFound = dataHandler.find_Book(option, Search_key, found);
+            isFound = dataHandler.find_Book(option, Search_key, found);
 
-                out.writeBoolean(isFound);
+            out.writeBoolean(isFound);
 
-                if (isFound) {
-                    oos.writeObject(found);
-                    bookName = found.name;
-                }
-
-            } catch (SQLException | IOException throwable) {
-                throwable.printStackTrace();
-                System.out.println("Error in Look-up");
+            if (isFound) {
+                oos.writeObject(found);
+                bookName = found.name;
             }
+
         }
     }
 
     private void View() throws IOException {
         int bytes;
-
-        File file = new File("Books\\Server\\"+bookName+".txt");
+        System.out.println("User: " + username + " views book " + bookName);
+        File file = new File("Books\\Server\\" + bookName + ".txt");
         FileInputStream fileInputStream = new FileInputStream(file);
 
         // send file size
         out.writeLong(file.length());
-        System.out.println(file.length());
 
         // break file into chunks
-        byte[] buffer = new byte[4*1024];
+        byte[] buffer = new byte[4 * 1024];
 
-        while ((bytes=fileInputStream.read(buffer))!=-1){
-            out.write(buffer,0,bytes);
+        while ((bytes = fileInputStream.read(buffer)) != -1) {
+            out.write(buffer, 0, bytes);
             out.flush();
         }
         fileInputStream.close();
     }
 
+    @Deprecated
     private void List_books() {
         System.out.println("List_book");
         /*System.out.println("User: " + username + " lists books");
@@ -168,20 +165,20 @@ public class Services extends Thread {
     }
 
     private void Download() throws IOException {
+        System.out.println("User: " + username + " downloads book " + bookName);
         int bytes;
 
-        File file = new File("Books\\Server\\"+bookName+".txt");
+        File file = new File("Books\\Server\\" + bookName + ".txt");
         FileInputStream fileInputStream = new FileInputStream(file);
 
         // send file size
         out.writeLong(file.length());
-        System.out.println(file.length());
 
         // break file into chunks
-        byte[] buffer = new byte[4*1024];
+        byte[] buffer = new byte[4 * 1024];
 
-        while ((bytes=fileInputStream.read(buffer))!=-1){
-            out.write(buffer,0,bytes);
+        while ((bytes = fileInputStream.read(buffer)) != -1) {
+            out.write(buffer, 0, bytes);
             out.flush();
         }
         fileInputStream.close();
@@ -204,16 +201,16 @@ public class Services extends Thread {
             Main_Menu();
         } catch (IOException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            Clients.remove(username);
+            Disconnect();
         }
 
     }
 
-    @Override
-    public void run() {
-
+    private void Disconnect() {
+        System.out.println("\nClose connection with client: " + socket + "\n");
         try {
-            Menu();
-            System.out.println("Close connection with client: " + socket);
             in.close();
             out.close();
             oos.close();
@@ -221,7 +218,11 @@ public class Services extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public void run() {
+        Menu();
     }
 
 

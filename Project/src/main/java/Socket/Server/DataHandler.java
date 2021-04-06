@@ -12,11 +12,11 @@ import java.util.List;
 public class DataHandler {
     final SQLServerDataSource ds;
 
-   //final String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
-   //final int port = 1433;
+   final String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
+   final int port = 1433;
 
-    final String server_name = "MSI";
-    final int port = 1432;
+    //final String server_name = "MSI";
+    //final int port = 1432;
 
     public DataHandler() {
         ds = new SQLServerDataSource();
