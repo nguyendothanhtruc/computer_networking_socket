@@ -1,4 +1,4 @@
-package Socket.Client.GUI;
+package Socket.Client.GUI.Sign_In_1;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -35,7 +35,7 @@ public class Registration extends JFrame {
         initComponents();
     }
 
-    public void RunReg() throws IOException {
+    public void RunReg() {
         try {
             this.setVisible(true);
             this.waitForInputs();
@@ -247,9 +247,6 @@ public class Registration extends JFrame {
             }
         } catch (IOException io) {
             System.out.println("Close GUI");
-            this.socket.close();
-            input.close();
-            output.close();
         }finally {
             this.dispose();
         }

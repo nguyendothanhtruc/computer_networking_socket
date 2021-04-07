@@ -1,4 +1,4 @@
-package Socket.Client.GUI;
+package Socket.Client.GUI.Sign_In_1;
 
 
 import javax.swing.*;
@@ -6,7 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class FirstMenu extends JFrame {
+public class Option_Login_Register extends JFrame {
     //Socket
     private static Socket socket = null;
     private DataOutputStream output = null;
@@ -23,7 +23,7 @@ public class FirstMenu extends JFrame {
     private javax.swing.JLabel SocketP;
     private javax.swing.JTextField jTextField1;
 
-    public FirstMenu(Socket socket) throws IOException {
+    public Option_Login_Register(Socket socket) throws IOException {
         super("Online Library - Truc&PA");
         this.socket = socket;
         output = new DataOutputStream(socket.getOutputStream());
@@ -201,13 +201,8 @@ public class FirstMenu extends JFrame {
     private void NewAccountPerformed(java.awt.event.ActionEvent evt) throws IOException {
         try {
             output.writeUTF("2");
-            this.dispose();
         } catch (IOException io) {
-            System.out.println(io.toString());
             System.out.println("Close GUi");
-            socket.close();
-            output.close();
-
         } finally {
             this.dispose();
         }
@@ -216,21 +211,14 @@ public class FirstMenu extends JFrame {
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         try {
             output.writeUTF("1");
-            this.dispose();
         } catch (IOException io) {
             System.out.println("Close GUI");
-            socket.close();
-            output.close();
         } finally {
             this.dispose();
         }
     }
 
     public void run() {
-        try {
-            new FirstMenu(socket).setVisible(true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.setVisible(true);
     }
 }

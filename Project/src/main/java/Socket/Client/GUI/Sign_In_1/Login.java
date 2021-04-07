@@ -1,4 +1,4 @@
-package Socket.Client.GUI;
+package Socket.Client.GUI.Sign_In_1;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -202,9 +202,6 @@ public class Login extends JFrame {
 
         } catch (IOException io) {
             System.out.println("Close GUI");
-            socket.close();
-            input.close();
-            output.close();
         } finally {
             this.dispose();
         }

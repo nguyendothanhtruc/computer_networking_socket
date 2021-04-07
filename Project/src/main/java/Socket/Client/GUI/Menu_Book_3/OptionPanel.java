@@ -1,4 +1,4 @@
-package Socket.Client.GUI;
+package Socket.Client.GUI.Menu_Book_3;
 
 import javax.swing.*;
 
@@ -45,7 +45,7 @@ public class OptionPanel extends JFrame {
         AuthorButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    TypeButtonActionPerformed(evt);
+                    AuthorActionPerformed(evt);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -79,7 +79,7 @@ public class OptionPanel extends JFrame {
         TypeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    AuthorButtonActionPerformed(evt);
+                    TypeActionPerformed(evt);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -140,16 +140,16 @@ public class OptionPanel extends JFrame {
         pack();
         setLocationRelativeTo(null);
     }
-    private void TypeButtonActionPerformed(java.awt.event.ActionEvent evt) throws InterruptedException {
-       genre="1";
+    private void AuthorActionPerformed(java.awt.event.ActionEvent evt) throws InterruptedException {
+       genre="2";
         synchronized (this) {
             notifyAll();
         }
         this.setVisible(false);
     }
 
-    private void AuthorButtonActionPerformed(java.awt.event.ActionEvent evt) throws InterruptedException {
-        genre="2";
+    private void TypeActionPerformed(java.awt.event.ActionEvent evt) throws InterruptedException {
+        genre="1";
         synchronized (this) {
             notifyAll();
         }

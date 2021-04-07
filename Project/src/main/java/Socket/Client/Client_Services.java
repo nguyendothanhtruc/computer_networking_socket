@@ -1,7 +1,14 @@
 package Socket.Client;
 
 import Socket.Book;
-import Socket.Client.GUI.*;
+import Socket.Client.GUI.First_Book_2.BookInfo;
+import Socket.Client.GUI.First_Book_2.SearchBook;
+import Socket.Client.GUI.Menu_Book_3.OptionPanel;
+import Socket.Client.GUI.Menu_Book_3.findMoreBooks;
+import Socket.Client.GUI.Menu_Book_3.viewBook;
+import Socket.Client.GUI.Sign_In_1.Login;
+import Socket.Client.GUI.Sign_In_1.Option_Login_Register;
+import Socket.Client.GUI.Sign_In_1.Registration;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -16,18 +23,20 @@ public class Client_Services {
     private DataInputStream input;
     //Handler var
     private String flag; //Option direction for menu
-    private String bookName; //Current book executing
+    private Book firstBook = null; //Current book executing
 
+    //Constructor
     Client_Services(Client client) {
         this.client = client;
         input = client.getInput();
     }
 
+    //Sign_In_1
     public void SignIn() throws IOException {
         String command = "3";
 
         do {
-            new FirstMenu(client.getSocket()).run();
+            new Option_Login_Register(client.getSocket()).run();
             command = input.readUTF();
 
             switch (command) {
@@ -46,34 +55,7 @@ public class Client_Services {
 
     }
 
-    public void getBook(ObjectInputStream OIS) throws IOException, ClassNotFoundException, InterruptedException {
-        Book myBook = null;
-        myBook = (Book) OIS.readObject();
-        BookInfo bookInfo = new BookInfo(myBook);
-        bookInfo.RunBI();
-
-        //Store book data
-        flag = bookInfo.cmd; //Function chosen
-        client.send(flag);
-
-        //Send sort category
-
-        if (flag.equals("3")) {
-            OptionPanel clientOp = new OptionPanel();
-            clientOp.RunOp();
-
-            String category = "";
-            category = clientOp.genre;
-            System.out.println(category);
-            client.send(category);
-
-            if (category.equals("1")) client.send(myBook.type);
-            else client.send(myBook.author);
-            clientOp.dispose();
-        }
-        bookName = myBook.name;
-    }
-
+    //First_Book_2
     public void FindBook() throws InterruptedException, IOException, ClassNotFoundException {
 
         SearchBook searchBook = new SearchBook(client.getSocket());
@@ -81,32 +63,47 @@ public class Client_Services {
         getBook(client.getOIS());
 
     }
+    public void getBook(ObjectInputStream OIS) throws IOException, ClassNotFoundException, InterruptedException {
+        firstBook = (Book) OIS.readObject();
+        BookInfo bookInfo = new BookInfo(firstBook);
+        bookInfo.RunBI();
 
-    public void MoreBook(ObjectInputStream OIS) throws IOException, InterruptedException, ClassNotFoundException {
-        ArrayList<Book> bookArrayList = null;
+        //Send menu-option: 1-View 2-Download 3-FindMore
+        flag = bookInfo.cmd;
+        client.send(flag);
+    }
+    public void StoreBook() throws InterruptedException {
+        //Send sort category
+        OptionPanel clientOp = new OptionPanel();
+        clientOp.RunOp();
 
-        boolean getList = input.readBoolean();
+        //genre: 1-Type 2-Author
+        String category = "";
+        category = clientOp.genre;
+        client.send(category);
 
-        if (getList) {
-            bookArrayList = (ArrayList<Book>) OIS.readObject();
-        }
-        new findMoreBooks(client.getSocket(), bookArrayList).Run();
+        if (category.equals("1")) client.send(firstBook.type);
+        else client.send(firstBook.author);
+        clientOp.dispose();
     }
 
+    //Menu_Book_3
     public void Menu() throws Exception {
+
         switch (flag) {
             case "1" -> ViewBook();
             case "2" -> Download();
-            case "3" -> MoreBook(client.getOIS());
+            case "3" -> {
+                StoreBook();
+                MoreBook(client.getOIS());
+            }
         }
     }
-
     private void receiveFile(String fileName) throws Exception {
         int bytes = 0;
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
 
         long size = input.readLong();     // read file size
-        System.out.println(size);
 
         byte[] buffer = new byte[4 * 1024];
         while (size > 0 && (bytes = input.read(buffer, 0, (int) Math.min(buffer.length, size))) != -1) {
@@ -114,21 +111,29 @@ public class Client_Services {
             size -= bytes;      // read upto file size
         }
         fileOutputStream.close();
-    }
-
+    } //Sub-func
     private void ViewBook() throws Exception {
-        String filename = bookName;
+        String filename = firstBook.name;
         receiveFile("Books\\Client\\" + filename + ".txt");
         //THV ID=5
-        new viewBook(bookName, "Books\\Client\\" + bookName + ".txt").RunViewBook();
+        new viewBook(firstBook.name, "Books\\Client\\" + firstBook.name + ".txt").RunViewBook();
     }
-
     private void Download() throws Exception {
-        String filename = bookName;
+        String filename = firstBook.name;
         receiveFile("Books\\Client\\" + filename + ".txt");
         JOptionPane.showMessageDialog(null, "Download successfully");
     }
+    public void MoreBook(ObjectInputStream OIS) throws IOException, InterruptedException, ClassNotFoundException {
+        ArrayList<Book> bookArrayList = null;
+        //If there exists other books or no
+        boolean getList = input.readBoolean();
+        if (getList) {
+            bookArrayList = (ArrayList<Book>) OIS.readObject();
+        }
+        new findMoreBooks(client.getSocket(), bookArrayList).Run();
+    }
 
+    //Client_main
     public void Run() throws Exception {
         try {
             SignIn();

@@ -1,4 +1,4 @@
-package Socket.Client.GUI;
+package Socket.Client.GUI.First_Book_2;
 
 import javax.swing.*;
 import java.io.DataInputStream;
@@ -165,7 +165,6 @@ public class SearchBook extends javax.swing.JFrame {
             output.writeUTF(BookContent);
 
             Boolean isReturn = input.readBoolean();
-            System.out.println(isReturn);
 
             if (isReturn) {
                 switch (direction_flag) {
@@ -190,9 +189,6 @@ public class SearchBook extends javax.swing.JFrame {
             } else JOptionPane.showMessageDialog(null, "Book not found");
         } catch (IOException io) {
             System.out.println("Close GUI");
-            socket.close();
-            input.close();
-            output.close();
         } finally {
             this.dispose();
         }

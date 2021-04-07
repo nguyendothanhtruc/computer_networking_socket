@@ -1,4 +1,4 @@
-package Socket.Client.GUI;
+package Socket.Client.GUI.Menu_Book_3;
 
 import Socket.Book;
 import javax.swing.*;
@@ -143,6 +143,7 @@ public class findMoreBooks extends JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }
 
     public void waitForInputs() throws InterruptedException {

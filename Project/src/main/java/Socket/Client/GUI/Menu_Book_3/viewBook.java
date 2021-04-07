@@ -1,4 +1,4 @@
-package Socket.Client.GUI;
+package Socket.Client.GUI.Menu_Book_3;
 
 import javax.swing.*;
 import java.awt.*;
@@ -109,9 +109,7 @@ public class viewBook extends JFrame {
 
     public void RunViewBook() {
         try {
-            new viewBook(bookName, filePath).setVisible(true);
-        } catch (IOException e) {
-            e.printStackTrace();
+            this.setVisible(true);
         } finally {
             this.dispose();
         }

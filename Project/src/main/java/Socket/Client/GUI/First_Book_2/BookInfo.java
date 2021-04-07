@@ -1,4 +1,4 @@
-package Socket.Client.GUI;
+package Socket.Client.GUI.First_Book_2;
 
 import Socket.Book;
 
@@ -8,9 +8,8 @@ import java.awt.event.ActionEvent;
 public class BookInfo extends JFrame {
     //return option
     public String cmd;
-    public String genre; //1 - Author & 2 - Type
     //Book
-    private Book myBook;
+    public Book myBook;
     //JFrame
     private JFrame frame;
     private javax.swing.JLabel ByTrucPA;

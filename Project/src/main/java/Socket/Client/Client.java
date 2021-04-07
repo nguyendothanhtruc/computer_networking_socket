@@ -37,11 +37,10 @@ public class Client {
             output = new DataOutputStream(socket.getOutputStream());
             OIS = new ObjectInputStream(socket.getInputStream());
 
-        } catch (UnknownHostException u) {
-            System.out.println(u);
-
-        } catch (IOException i) {
-            System.out.println(i);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -51,10 +50,10 @@ public class Client {
             input.close();
             output.close();
             socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
             System.out.println("Connection closed");
-        } catch (
-                IOException i) {
-            System.out.println(i);
         }
 
     }
@@ -63,7 +62,6 @@ public class Client {
         try {
             output.writeUTF(flag);
         } catch (IOException io) {
-            System.out.println(io.toString());
             System.out.println("Can't send to server");
             this.Disconnect();
         }
