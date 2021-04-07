@@ -181,28 +181,18 @@ public class Services extends Thread {
         fileInputStream.close();
     }
 
-    private void Main_Menu() throws IOException {
+    private void Main_Menu() throws IOException, SQLException {
         String option = in.readUTF();
 
         switch (option) {
             case "1" -> View();
             case "2" -> Download();
-            default -> List_books();
+            default -> {
+                List_books();
+                Look_up();
+                View();
+            }
         }
-    }
-
-    private void Menu() {
-        try {
-            SignIn_Form();
-            Look_up();
-            Main_Menu();
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Clients.remove(username);
-            Disconnect();
-        }
-
     }
 
     private void Disconnect() {
@@ -219,7 +209,16 @@ public class Services extends Thread {
 
     @Override
     public void run() {
-        Menu();
+        try {
+            SignIn_Form();
+            Look_up();
+            Main_Menu();
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Clients.remove(username);
+            Disconnect();
+        }
     }
 
 
