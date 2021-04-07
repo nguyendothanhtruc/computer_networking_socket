@@ -169,7 +169,6 @@ public class findMoreBooks extends JFrame {
             output.writeUTF(BookContent);
 
             Boolean isReturn = input.readBoolean();
-            System.out.println("Give me back");
 
             if (isReturn) {
                 switch (direction_flag) {
