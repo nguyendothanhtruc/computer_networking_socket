@@ -23,78 +23,63 @@ public class Client_Services {
         input = client.getInput();
     }
 
-    public void SignIn() {
+    public void SignIn() throws IOException {
         String command = "3";
-        try {
-            do {
-                new FirstMenu(client.getSocket()).run();
-                command = input.readUTF();
 
-                switch (command) {
-                    case "1": {
-                        new Login(client.getSocket()).RunLogin();
-                        break;
-                    }
-                    case "2": {
-                        new Registration(client.getSocket()).RunReg();
-                        break;
-                    }
-                    default:
-                        System.out.println("ERROR in SIGNIN flag");
+        do {
+            new FirstMenu(client.getSocket()).run();
+            command = input.readUTF();
+
+            switch (command) {
+                case "1": {
+                    new Login(client.getSocket()).RunLogin();
+                    break;
                 }
-            } while (!command.equals("1"));
-        } catch (IOException e) {
-            System.out.println("Close processing SignIn");
-            client.Disconnect();
-        }
+                case "2": {
+                    new Registration(client.getSocket()).RunReg();
+                    break;
+                }
+                default:
+                    System.out.println("ERROR in SIGNIN flag");
+            }
+        } while (!command.equals("1"));
 
     }
 
     public void getBook(ObjectInputStream OIS) throws IOException, ClassNotFoundException, InterruptedException {
-            Book myBook = null;
-            myBook = (Book) OIS.readObject();
-            BookInfo bookInfo = new BookInfo(myBook);
-            bookInfo.RunBI();
+        Book myBook = null;
+        myBook = (Book) OIS.readObject();
+        BookInfo bookInfo = new BookInfo(myBook);
+        bookInfo.RunBI();
 
-            //Store book data
-            flag = bookInfo.cmd; //Function chosen
-            client.send(flag);
+        //Store book data
+        flag = bookInfo.cmd; //Function chosen
+        client.send(flag);
 
-            //Send sort category
+        //Send sort category
 
-            if(flag.equals("3")) {
-                OptionPanel clientOp = new OptionPanel();
-                clientOp.RunOp();
+        if (flag.equals("3")) {
+            OptionPanel clientOp = new OptionPanel();
+            clientOp.RunOp();
 
-                String category="";
-                category = clientOp.genre;
-                System.out.println(category);
-                client.send(category);
+            String category = "";
+            category = clientOp.genre;
+            System.out.println(category);
+            client.send(category);
 
-                if (category.equals("1")) client.send(myBook.type);
-                else client.send(myBook.author);
-                clientOp.dispose();
-            }
-            bookName = myBook.name;
-        System.out.println("hehe");
-
-
+            if (category.equals("1")) client.send(myBook.type);
+            else client.send(myBook.author);
+            clientOp.dispose();
+        }
+        bookName = myBook.name;
     }
 
-    public void FindBook() {
-        try {
-            SearchBook searchBook = new SearchBook(client.getSocket());
-            searchBook.RunSB(client.getSocket());
-            getBook(client.getOIS());
-        } catch (IOException io) {
-            System.out.println(io.toString());
-            System.out.println("Close processing FindBook");
-            client.Disconnect();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    public void FindBook() throws InterruptedException, IOException, ClassNotFoundException {
+
+        SearchBook searchBook = new SearchBook(client.getSocket());
+        searchBook.RunSB(client.getSocket());
+        getBook(client.getOIS());
+
     }
 
     public void MoreBook(ObjectInputStream OIS) throws IOException, InterruptedException, ClassNotFoundException {
@@ -145,8 +130,16 @@ public class Client_Services {
     }
 
     public void Run() throws Exception {
-        SignIn();
-        FindBook();
-        Menu();
+        try {
+            SignIn();
+            FindBook();
+            Menu();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+
+        } finally {
+            System.out.println("Disconnected");
+            client.Disconnect();
+        }
     }
 }

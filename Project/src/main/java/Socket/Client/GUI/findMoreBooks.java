@@ -2,6 +2,7 @@ package Socket.Client.GUI;
 
 import Socket.Book;
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -209,11 +210,11 @@ public class findMoreBooks extends JFrame {
         for (int i=0;i<NumBook;i++)
         {
             content.append(bookList.get(i).convertBook());
-            content.append("\n");
+            content.append("\n\n");
         }
 
-        ViewManyInfo.setText("<html>" + content.toString().replaceAll("<","&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br/>") + "</html>");
-
+        System.out.println(content);
+        ViewManyInfo.setText(content.toString());
         System.out.println("hello");
         this.setVisible(true);
         this.waitForInputs();

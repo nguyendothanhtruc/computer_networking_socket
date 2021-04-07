@@ -138,6 +138,7 @@ public class OptionPanel extends JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }
     private void TypeButtonActionPerformed(java.awt.event.ActionEvent evt) throws InterruptedException {
        genre="1";
