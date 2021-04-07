@@ -63,7 +63,7 @@ public class Client_Services {
         getBook(client.getOIS());
 
     }
-    public void getBook(ObjectInputStream OIS) throws IOException, ClassNotFoundException, InterruptedException {
+    public void getBook(ObjectInputStream OIS) throws IOException, ClassNotFoundException {
         firstBook = (Book) OIS.readObject();
         BookInfo bookInfo = new BookInfo(firstBook);
         bookInfo.RunBI();
@@ -98,7 +98,7 @@ public class Client_Services {
             case "3" -> {
                 StoreBook();
                 MoreBook(client.getOIS());
-                getBook(client.getOIS());
+                firstBook = (Book) client.getOIS().readObject();
                 ViewBook();
             }
         }
