@@ -189,8 +189,6 @@ public class SearchBook extends javax.swing.JFrame {
             } else JOptionPane.showMessageDialog(null, "Book not found");
         } catch (IOException io) {
             System.out.println("Close GUI");
-        } finally {
-            this.dispose();
         }
     }
 

@@ -108,11 +108,8 @@ public class viewBook extends JFrame {
     }
 
     public void RunViewBook() {
-        try {
             this.setVisible(true);
-        } finally {
-            this.dispose();
-        }
+
     }
 
 
