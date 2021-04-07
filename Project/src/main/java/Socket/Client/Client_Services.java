@@ -70,9 +70,10 @@ public class Client_Services {
 
         //Send menu-option: 1-View 2-Download 3-FindMore
         flag = bookInfo.cmd;
-        client.send(flag);
     }
     public void StoreBook() throws InterruptedException {
+        //Send option=3
+        client.send(flag);
         //Send sort category
         OptionPanel clientOp = new OptionPanel();
         clientOp.RunOp();
@@ -84,6 +85,7 @@ public class Client_Services {
 
         if (category.equals("1")) client.send(firstBook.type);
         else client.send(firstBook.author);
+
         clientOp.dispose();
     }
 
@@ -96,6 +98,8 @@ public class Client_Services {
             case "3" -> {
                 StoreBook();
                 MoreBook(client.getOIS());
+                getBook(client.getOIS());
+                ViewBook();
             }
         }
     }
@@ -115,7 +119,6 @@ public class Client_Services {
     private void ViewBook() throws Exception {
         String filename = firstBook.name;
         receiveFile("Books\\Client\\" + filename + ".txt");
-        //THV ID=5
         new viewBook(firstBook.name, "Books\\Client\\" + firstBook.name + ".txt").RunViewBook();
     }
     private void Download() throws Exception {
@@ -125,7 +128,6 @@ public class Client_Services {
     }
     public void MoreBook(ObjectInputStream OIS) throws IOException, InterruptedException, ClassNotFoundException {
         ArrayList<Book> bookArrayList = null;
-        //If there exists other books or no
         boolean getList = input.readBoolean();
         if (getList) {
             bookArrayList = (ArrayList<Book>) OIS.readObject();
@@ -134,7 +136,7 @@ public class Client_Services {
     }
 
     //Client_main
-    public void Run() throws Exception {
+    public void Run() {
         try {
             SignIn();
             FindBook();

@@ -2,7 +2,6 @@ package Socket.Client.GUI.Menu_Book_3;
 
 import Socket.Book;
 import javax.swing.*;
-import javax.swing.text.View;
 import java.awt.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -22,7 +21,7 @@ public class findMoreBooks extends JFrame {
     private javax.swing.JLabel ByTrucPA;
     private keeptoo.KGradientPanel MainPanel;
     private javax.swing.JLabel Title;
-    private javax.swing.JButton Search;
+    private javax.swing.JButton View_Search;
     private javax.swing.JTextArea ViewManyInfo;
     private javax.swing.JScrollPane jScrollPane1;
 
@@ -45,7 +44,7 @@ public class findMoreBooks extends JFrame {
 
         MainPanel = new keeptoo.KGradientPanel();
         Title = new javax.swing.JLabel();
-        Search = new javax.swing.JButton();
+        View_Search = new javax.swing.JButton();
         ByTrucPA = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ViewManyInfo = new javax.swing.JTextArea();
@@ -61,14 +60,14 @@ public class findMoreBooks extends JFrame {
         Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Title.setText("LIBRARY FOUND:");
 
-        Search.setBackground(new java.awt.Color(51, 204, 255));
-        Search.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
-        Search.setForeground(new java.awt.Color(255, 255, 255));
-        Search.setText("VIEW");
-        Search.setAlignmentY(0.0F);
-        Search.setBorderPainted(false);
-        Search.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Search.addActionListener(new java.awt.event.ActionListener() {
+        View_Search.setBackground(new java.awt.Color(51, 204, 255));
+        View_Search.setFont(new java.awt.Font("iCiel Panton Black", 0, 24)); // NOI18N
+        View_Search.setForeground(new java.awt.Color(255, 255, 255));
+        View_Search.setText("VIEW");
+        View_Search.setAlignmentY(0.0F);
+        View_Search.setBorderPainted(false);
+        View_Search.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        View_Search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     SearchActionPerformed(evt);
@@ -110,7 +109,7 @@ public class findMoreBooks extends JFrame {
                                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(MainPanelLayout.createSequentialGroup()
-                                                .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(View_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(BookPIck)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -124,7 +123,7 @@ public class findMoreBooks extends JFrame {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(Search, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                                        .addComponent(View_Search, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                                         .addComponent(BookPIck))
                                 .addGap(17, 17, 17)
                                 .addComponent(ByTrucPA)
@@ -170,7 +169,7 @@ public class findMoreBooks extends JFrame {
             output.writeUTF(BookContent);
 
             Boolean isReturn = input.readBoolean();
-            System.out.println(isReturn);
+            System.out.println("Give me back");
 
             if (isReturn) {
                 switch (direction_flag) {
@@ -206,7 +205,6 @@ public class findMoreBooks extends JFrame {
     public void Run() throws InterruptedException {
         StringBuilder content= new StringBuilder();
         int NumBook=bookList.size();
-        System.out.println(NumBook);
 
         for (int i=0;i<NumBook;i++)
         {
@@ -214,9 +212,8 @@ public class findMoreBooks extends JFrame {
             content.append("\n\n");
         }
 
-        System.out.println(content);
         ViewManyInfo.setText(content.toString());
-        System.out.println("hello");
+
         this.setVisible(true);
         this.waitForInputs();
     }
