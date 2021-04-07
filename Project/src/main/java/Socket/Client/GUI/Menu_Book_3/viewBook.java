@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 public class viewBook extends JFrame {
     //Name
     private String bookName;
-    private String filePath;
     //JFrame
     private javax.swing.JTextArea Book;
     private javax.swing.JLabel Credit;
@@ -22,7 +21,6 @@ public class viewBook extends JFrame {
     public viewBook(String bookName, String filepath) throws IOException {
         super("Online Library - Truc&PA");
         this.bookName = bookName;
-        this.filePath = filepath;
         initComponents();
 
         //Load book from file
@@ -111,7 +109,5 @@ public class viewBook extends JFrame {
             this.setVisible(true);
 
     }
-
-
 }
 
