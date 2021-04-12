@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,14 +29,16 @@ public class Server {
     }
 
     public void Connect() throws IOException {
-        System.out.println("Server started");
+        System.out.println("[" + java.time.LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                + "] Server started");
         System.out.println("Waiting for clients.... \n ");
         while (server.isBound() && !server.isClosed()) {
             Socket socket = null;
             try {
                 socket = server.accept();
 
-                System.out.println("A new client connected : " + socket);
+                System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                        + "] A new client connected : " + socket + "\n");
 
                 // create a new thread object
                 Services ClientHandler = new Services(socket, clients);
@@ -46,7 +50,8 @@ public class Server {
                 if (socket != null)
                     socket.close();
                 if (!server.isClosed()) server.close();
-                System.out.println("Connection closed: " + socket);
+                System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                        + "] Connection closed: " + socket);
                 e.printStackTrace();
             }
         }

@@ -7,16 +7,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 
 public class DataHandler {
     final SQLServerDataSource ds;
 
-  //final String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
-   //final int port = 1433;
+    final String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
+    final int port = 1433;
 
-    final String server_name = "MSI";
-    final int port = 1432;
+    //final String server_name = "MSI";
+    //final int port = 1432;
 
     public DataHandler() {
         ds = new SQLServerDataSource();
@@ -86,15 +89,12 @@ public class DataHandler {
             ResultSet rs;
 
             if (option.equals("1")) {
-
-                System.out.println("by ID");
                 sql = "SELECT * FROM book where id = ?";
                 stmt = connection.prepareStatement(sql);
                 int id = Integer.parseInt(Search_key);
                 stmt.setInt(1, id);
 
             } else {
-                System.out.println("by Name");
                 sql = "SELECT * FROM book where name = ?";
                 stmt = connection.prepareStatement(sql);
                 stmt.setString(1, Search_key);
@@ -102,7 +102,8 @@ public class DataHandler {
 
             rs = stmt.executeQuery();
             if (!rs.next()) {
-                System.out.println("Book not found!");
+                System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                        + "] Book not found!");
                 return false; //Not found
             } else {
                 int ID = rs.getInt("ID");
@@ -118,7 +119,7 @@ public class DataHandler {
         return true;
     }
 
-    public Boolean List_Book(String option, String Search_key, List<Book> books) {
+    public Boolean List_Book(String option, String Search_key, ArrayList<Book> books) {
 
         boolean Success = false;
         try {

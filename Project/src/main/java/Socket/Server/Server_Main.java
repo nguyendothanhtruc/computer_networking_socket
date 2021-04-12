@@ -8,7 +8,7 @@ public class Server_Main
 {
     public static void main(String[] args) throws IOException, InterruptedException {
         //Set up database
-        Server server = new Server("localhost",9999);
+        Server server = new Server("127.0.0.1",9999);
 
         ServerGUI sGUI=new ServerGUI(server);
 
