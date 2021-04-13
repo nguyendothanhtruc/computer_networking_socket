@@ -70,10 +70,9 @@ public class Client_Services {
 
         //Send menu-option: 1-View 2-Download 3-FindMore
         flag = bookInfo.cmd;
+        client.send(flag);
     }
     public void StoreBook() throws InterruptedException {
-        //Send option=3
-        client.send(flag);
         //Send sort category
         OptionPanel clientOp = new OptionPanel();
         clientOp.RunOp();
