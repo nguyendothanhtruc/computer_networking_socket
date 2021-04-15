@@ -15,11 +15,11 @@ import java.util.ArrayList;
 public class DataHandler {
     final SQLServerDataSource ds;
 
-    //final String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
-    //final int port = 1433;
+    final String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
+    final int port = 1433;
 
-    final String server_name = "MSI";
-    final int port = 1432;
+    //final String server_name = "MSI";
+    //final int port = 1432;
 
     public DataHandler() {
         ds = new SQLServerDataSource();
@@ -30,6 +30,17 @@ public class DataHandler {
         ds.setDatabaseName("Online_Library");
     }
 
+    public Boolean isStandardized (String password)
+    {
+        boolean containChar = false, containDigit = false;
+        if (password.length() < 6) return false;
+        char [] pass = password.toCharArray();
+        for (char c : pass)
+            if (Character.isDigit(c)) containChar = true;
+            else if (Character.isAlphabetic(c)) containDigit = true;
+        if (!containChar || !containDigit) return false;
+        return true;
+    }
     public Boolean checkPassword(String u, String p){
 
         try (Connection connection = ds.getConnection()) {
@@ -57,6 +68,12 @@ public class DataHandler {
     public Boolean Register(String u, String p){
 
         try (Connection connection = ds.getConnection()) {
+
+            if (!isStandardized(p))
+            {
+                System.out.println("Password is invalid");
+                return false;
+            }
             PreparedStatement statement;
             String isExisted = "SELECT username FROM account where username = ?";
             statement = connection.prepareStatement(isExisted);

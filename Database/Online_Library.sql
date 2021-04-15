@@ -18,9 +18,9 @@ CREATE TABLE account(
  )
 go
 INSERT INTO account(username,password) VALUES
-(N'anh', N'456'),
-(N'hieu', N'789'),
-(N'truc', N'123')
+(N'anh', N'anh456'),
+(N'hieu', N'hieu789'),
+(N'truc', N'truc123')
 
 INSERT INTO book(ID, name, author, year, type) VALUES
 (1, N'Computer Networking', N'James F. Kurose', 2000, N'Computer Science'),
