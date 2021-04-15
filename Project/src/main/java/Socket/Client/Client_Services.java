@@ -33,7 +33,7 @@ public class Client_Services {
 
     //Sign_In_1
     public void SignIn() throws IOException {
-        String command = "3";
+        String command;
 
         do {
             new Option_Login_Register(client.getSocket()).run();

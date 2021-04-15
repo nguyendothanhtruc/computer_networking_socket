@@ -187,6 +187,7 @@ public class Login extends JFrame {
             output.writeUTF(String.valueOf(jPasswordField1.getPassword()));
             output.flush();
 
+
             boolean LoginSuccess = false;
             LoginSuccess = input.readBoolean(); //Receive regis_flag from sv
 
@@ -196,14 +197,13 @@ public class Login extends JFrame {
                 synchronized (this) {
                     notifyAll();
                 }
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Failed to login");
             }
 
         } catch (IOException io) {
             System.out.println("Close GUI");
-        } finally {
-            this.dispose();
         }
     }
 }
