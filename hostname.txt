@@ -1,0 +1,5 @@
+DESKTOP-IJHRRIK\\SQLEXPRESS
+1433
+sa
+1
+localhost

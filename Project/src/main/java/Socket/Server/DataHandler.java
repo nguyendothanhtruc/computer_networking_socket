@@ -3,6 +3,7 @@ package Socket.Server;
 import Socket.Book;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
+import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,21 +14,39 @@ import java.util.ArrayList;
 
 
 public class DataHandler {
-    final SQLServerDataSource ds;
+    SQLServerDataSource ds;
 
-    // final String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
-    //final int port = 1433;
-
-    final String server_name = "MSI";
-    final int port = 1432;
+    String server_name;
+    int port;
 
     public DataHandler() {
-        ds = new SQLServerDataSource();
-        ds.setUser("sa");
-        ds.setPassword("1");
-        ds.setServerName(server_name);
-        ds.setPortNumber(port);
-        ds.setDatabaseName("Online_Library");
+        try {
+            String Port, username, password;
+
+            FileInputStream fileInputStream = new FileInputStream("hostname.txt");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+
+            server_name = bufferedReader.readLine();
+            Port = bufferedReader.readLine();
+            port = Integer.parseInt(Port);
+            username = bufferedReader.readLine();
+            password = bufferedReader.readLine();
+
+            ds = new SQLServerDataSource();
+            ds.setUser(username);
+            ds.setPassword(password);
+            ds.setServerName(server_name);
+            ds.setPortNumber(port);
+            ds.setDatabaseName("Online_Library");
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error in hostname.txt");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public Boolean isStandardized(String password) {
@@ -37,8 +56,7 @@ public class DataHandler {
         for (char c : pass)
             if (Character.isDigit(c)) containChar = true;
             else if (Character.isAlphabetic(c)) containDigit = true;
-        if (!containChar || !containDigit) return false;
-        return true;
+        return containChar && containDigit;
     }
 
     public Boolean checkPassword(String u, String p) {
@@ -97,7 +115,7 @@ public class DataHandler {
         return true;
     }
 
-    public Boolean find_Book(String option, String Search_key, Book found) throws SQLException {
+    public Boolean find_Book(String option, String Search_key, Book found) {
 
         try (Connection connection = ds.getConnection()) {
             String sql;

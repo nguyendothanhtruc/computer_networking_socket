@@ -5,7 +5,7 @@ import Socket.Client.GUI.IPAddress;
 
 public class Client_main {
     public static void main(String[] args) throws Exception {
-        Client client = null;
+        Client client;
         //First GUI to get IP
         IPAddress getIP = new IPAddress();
         getIP.Run();
