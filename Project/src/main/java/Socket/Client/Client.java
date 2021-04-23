@@ -11,19 +11,6 @@ import java.net.UnknownHostException;
 public class Client {
     // initialize socket and input output streams
     private Socket socket = null;
-
-    public Socket getSocket() {
-        return socket;
-    }
-
-    public DataInputStream getInput() {
-        return input;
-    }
-
-    public ObjectInputStream getOIS() {
-        return OIS;
-    }
-
     private DataInputStream input = null;
     private DataOutputStream output = null;
     private ObjectInputStream OIS = null;
@@ -42,6 +29,18 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public DataInputStream getInput() {
+        return input;
+    }
+
+    public ObjectInputStream getOIS() {
+        return OIS;
     }
 
     public void Disconnect() {

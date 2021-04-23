@@ -1,6 +1,7 @@
 package Socket.Client.GUI.Menu_Book_3;
 
 import Socket.Book;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.DataInputStream;
@@ -11,11 +12,11 @@ import java.util.ArrayList;
 
 public class findMoreBooks extends JFrame {
     //Socket
-    private JFrame frame=null;
+    private JFrame frame = null;
     private Socket socket = null;
     private DataOutputStream output = null;
     private DataInputStream input = null;
-    private ArrayList<Book> bookList =null;
+    private ArrayList<Book> bookList = null;
     //JFrame
     private javax.swing.JTextField BookPIck;
     private javax.swing.JLabel ByTrucPA;
@@ -27,17 +28,17 @@ public class findMoreBooks extends JFrame {
 
     public findMoreBooks(Socket socket, ArrayList<Book> bookList) throws IOException {
         super("Online Library - Truc&PA");
-        this.socket=socket;
+        this.socket = socket;
         input = new DataInputStream(socket.getInputStream());
         output = new DataOutputStream(socket.getOutputStream());
-        this.bookList=bookList;
+        this.bookList = bookList;
         initComponents();
 
-        ViewManyInfo.setMargin( new Insets(10,10,10,10) );
+        ViewManyInfo.setMargin(new Insets(10, 10, 10, 10));
         ViewManyInfo.requestFocus();
         ViewManyInfo.setEditable(false);
 
-        frame=this;
+        frame = this;
     }
 
     private void initComponents() {
@@ -150,6 +151,7 @@ public class findMoreBooks extends JFrame {
             wait();
         }
     }
+
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         try {
             String searchContent = BookPIck.getText();
@@ -191,8 +193,7 @@ public class findMoreBooks extends JFrame {
                     default -> System.out.println("Error search book");
                 }
             } else JOptionPane.showMessageDialog(null, "Book not found");
-        }catch (IOException io)
-        {
+        } catch (IOException io) {
             System.out.println(io.toString());
             System.out.println("Close GUI");
             socket.close();
@@ -201,12 +202,12 @@ public class findMoreBooks extends JFrame {
             this.dispose();
         }
     }
-    public void Run() throws InterruptedException {
-        StringBuilder content= new StringBuilder();
-        int NumBook=bookList.size();
 
-        for (int i=0;i<NumBook;i++)
-        {
+    public void Run() throws InterruptedException {
+        StringBuilder content = new StringBuilder();
+        int NumBook = bookList.size();
+
+        for (int i = 0; i < NumBook; i++) {
             content.append(bookList.get(i).convertBook());
             content.append("\n\n");
         }
@@ -216,8 +217,6 @@ public class findMoreBooks extends JFrame {
         this.setVisible(true);
         this.waitForInputs();
     }
-
-
 
 
 }

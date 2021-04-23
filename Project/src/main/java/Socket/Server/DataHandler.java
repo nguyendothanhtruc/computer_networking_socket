@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class DataHandler {
     final SQLServerDataSource ds;
 
-   // final String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
+    // final String server_name = "DESKTOP-IJHRRIK\\SQLEXPRESS";
     //final int port = 1433;
 
     final String server_name = "MSI";
@@ -30,18 +30,18 @@ public class DataHandler {
         ds.setDatabaseName("Online_Library");
     }
 
-    public Boolean isStandardized (String password)
-    {
+    public Boolean isStandardized(String password) {
         boolean containChar = false, containDigit = false;
         if (password.length() < 6) return false;
-        char [] pass = password.toCharArray();
+        char[] pass = password.toCharArray();
         for (char c : pass)
             if (Character.isDigit(c)) containChar = true;
             else if (Character.isAlphabetic(c)) containDigit = true;
         if (!containChar || !containDigit) return false;
         return true;
     }
-    public Boolean checkPassword(String u, String p){
+
+    public Boolean checkPassword(String u, String p) {
 
         try (Connection connection = ds.getConnection()) {
             String sql = "SELECT password FROM account WHERE username = ?";
@@ -65,12 +65,11 @@ public class DataHandler {
         return false; //Wrong password
     }
 
-    public Boolean Register(String u, String p){
+    public Boolean Register(String u, String p) {
 
         try (Connection connection = ds.getConnection()) {
 
-            if (!isStandardized(p))
-            {
+            if (!isStandardized(p)) {
                 System.out.println("Password is invalid");
                 return false;
             }
@@ -119,7 +118,7 @@ public class DataHandler {
 
             rs = stmt.executeQuery();
             if (!rs.next()) {
-                System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
                         + "] Book not found!");
                 return false; //Not found
             } else {

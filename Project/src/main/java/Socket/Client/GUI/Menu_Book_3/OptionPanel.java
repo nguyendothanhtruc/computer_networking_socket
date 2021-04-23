@@ -3,13 +3,13 @@ package Socket.Client.GUI.Menu_Book_3;
 import javax.swing.*;
 
 public class OptionPanel extends JFrame {
+    public String genre = "";
     private keeptoo.KGradientPanel Hehe;
     private javax.swing.JLabel Title;
     private javax.swing.JButton AuthorButton;
     private javax.swing.JButton TypeButton;
     private javax.swing.JPanel TypePanel;
     private javax.swing.JPanel TypePanel3;
-    public String genre="";
 
     public OptionPanel() {
         super("Online Library - Truc&PA");
@@ -140,8 +140,9 @@ public class OptionPanel extends JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+
     private void AuthorActionPerformed(java.awt.event.ActionEvent evt) throws InterruptedException {
-       genre="2";
+        genre = "2";
         synchronized (this) {
             notifyAll();
         }
@@ -149,7 +150,7 @@ public class OptionPanel extends JFrame {
     }
 
     private void TypeActionPerformed(java.awt.event.ActionEvent evt) throws InterruptedException {
-        genre="1";
+        genre = "1";
         synchronized (this) {
             notifyAll();
         }

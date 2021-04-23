@@ -63,6 +63,7 @@ public class Client_Services {
         getBook(client.getOIS());
 
     }
+
     public void getBook(ObjectInputStream OIS) throws IOException, ClassNotFoundException {
         firstBook = (Book) OIS.readObject();
         BookInfo bookInfo = new BookInfo(firstBook);
@@ -72,6 +73,7 @@ public class Client_Services {
         flag = bookInfo.cmd;
         client.send(flag);
     }
+
     public void StoreBook() throws InterruptedException {
         //Send sort category
         OptionPanel clientOp = new OptionPanel();
@@ -102,6 +104,7 @@ public class Client_Services {
             }
         }
     }
+
     private void receiveFile(String fileName) throws Exception {
         int bytes = 0;
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
@@ -115,16 +118,19 @@ public class Client_Services {
         }
         fileOutputStream.close();
     } //Sub-func
+
     private void ViewBook() throws Exception {
         String filename = firstBook.name;
         receiveFile("Books\\Client\\" + filename + ".txt");
         new viewBook(firstBook.name, "Books\\Client\\" + firstBook.name + ".txt").RunViewBook();
     }
+
     private void Download() throws Exception {
         String filename = firstBook.name;
         receiveFile("Books\\Client\\" + filename + ".txt");
         JOptionPane.showMessageDialog(null, "Download successfully");
     }
+
     public void MoreBook(ObjectInputStream OIS) throws IOException, InterruptedException, ClassNotFoundException {
         ArrayList<Book> bookArrayList = null;
         boolean getList = input.readBoolean();

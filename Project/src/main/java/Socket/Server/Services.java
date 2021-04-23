@@ -5,16 +5,17 @@ import Socket.Book;
 import java.io.*;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.time.*;
 
 public class Services extends Thread {
     final DataInputStream in; //Take message from client
     final DataOutputStream out; //Print on client terminal
     final ObjectOutputStream oos;
+    final Socket socket;
     private String username;
     private ArrayList<String> Clients;
-    final Socket socket;
     private String bookName;
 
     // Constructor
@@ -31,7 +32,7 @@ public class Services extends Thread {
     private void Login() throws IOException {
         String password;
         Boolean isCorrected = false;
-        System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+        System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
                 + "] Client logins");
         while (!isCorrected) {
             // Receive user account
@@ -44,7 +45,7 @@ public class Services extends Thread {
 
             out.writeBoolean(isCorrected);
         }
-        System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+        System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
                 + "] User: " + username + " logins successfully!");
         Clients.add(username);
     }
@@ -52,8 +53,8 @@ public class Services extends Thread {
     private void Register() throws IOException {
         String password, confirm;
         Boolean Regis_Success = false;
-        System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
-                        + "] Client registers ");
+        System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                + "] Client registers ");
 
         DataHandler dataHandler = new DataHandler();
 
@@ -64,17 +65,19 @@ public class Services extends Thread {
             confirm = in.readUTF();
 
             if (!password.equals(confirm)) {
-                System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
-                                + "] Failed to register");
+                System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                        + "] Failed to register");
                 out.writeBoolean(false);
 
             } else {
                 Regis_Success = dataHandler.Register(username, password);
                 out.writeBoolean(Regis_Success); //Gui ve ham regis cua client xu ly
-                if (Regis_Success) System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
-                        + "] User: " + username + " registers successfully!");
-                else System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
-                        + "] Failed to register");
+                if (Regis_Success)
+                    System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                            + "] User: " + username + " registers successfully!");
+                else
+                    System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                            + "] Failed to register");
             }
         }
 
@@ -105,10 +108,12 @@ public class Services extends Thread {
 
             Book found = new Book();
 
-            if (option.equals("1")) System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
-                    + "] User: " + username + " looks up books by ID");
-            else System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
-                    + "] User: " + username + " looks up books by Name");
+            if (option.equals("1"))
+                System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                        + "] User: " + username + " looks up books by ID");
+            else
+                System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                        + "] User: " + username + " looks up books by Name");
 
             isFound = dataHandler.find_Book(option, Search_key, found);
 
@@ -124,7 +129,7 @@ public class Services extends Thread {
 
     private void View() throws IOException {
         int bytes;
-        System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+        System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
                 + "] User: " + username + " views book " + bookName);
 
         File file = new File("Books\\Server\\" + bookName + ".txt");
@@ -156,10 +161,12 @@ public class Services extends Thread {
                 option = in.readUTF();
                 search_key = in.readUTF();
 
-                if (option.equals("2")) System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
-                        + "] User: " + username + " lists books by Author");
-                else System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
-                        + "] User: " + username + " lists books by Type");
+                if (option.equals("2"))
+                    System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                            + "] User: " + username + " lists books by Author");
+                else
+                    System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                            + "] User: " + username + " lists books by Type");
 
                 Success = dataHandler.List_Book(option, search_key, books);
 
@@ -178,7 +185,7 @@ public class Services extends Thread {
     }
 
     private void Download() throws IOException {
-        System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+        System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
                 + "] User: " + username + " downloads book " + bookName);
         int bytes;
 
@@ -213,7 +220,7 @@ public class Services extends Thread {
     }
 
     private void Disconnect() {
-        System.out.println("\n" + "[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+        System.out.println("\n" + "[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
                 + "] Close connection with client: " + socket + "\n");
         try {
             in.close();

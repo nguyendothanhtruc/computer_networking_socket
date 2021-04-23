@@ -215,8 +215,7 @@ public class BookInfo extends JFrame {
             this.waitForInputs();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        finally{
+        } finally {
             this.dispose();
         }
     }

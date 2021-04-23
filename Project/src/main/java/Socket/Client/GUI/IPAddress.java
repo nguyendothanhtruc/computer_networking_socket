@@ -3,13 +3,13 @@ package Socket.Client.GUI;
 import java.awt.event.ActionEvent;
 
 public class IPAddress extends javax.swing.JFrame {
+    public String IP = null;
     private javax.swing.JLabel IPAddress;
     private javax.swing.JTextField InputIP;
     private keeptoo.KGradientPanel MainPanel;
     private javax.swing.JButton Run;
     private javax.swing.JLabel Title;
     private javax.swing.JPanel WhitePanel;
-    public String IP = null;
 
     public IPAddress() {
         initComponents();

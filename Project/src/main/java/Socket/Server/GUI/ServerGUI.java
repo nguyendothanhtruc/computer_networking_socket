@@ -1,16 +1,16 @@
 package Socket.Server.GUI;
 
-import Socket.Server.GUI.OutputJText;
 import Socket.Server.Server;
+
 import javax.swing.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class ServerGUI extends JFrame {
+    private static Object lock = new Object();
     //Server
     private Server server;
-
     //JFrame
     private javax.swing.JButton StartButton;
     private javax.swing.JLabel TrucPA;
@@ -18,8 +18,6 @@ public class ServerGUI extends JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private keeptoo.KGradientPanel kGradientPanel1;
-
-    private static Object lock = new Object();
 
 
     public ServerGUI(Server s) {
@@ -130,7 +128,7 @@ public class ServerGUI extends JFrame {
     private void StartButtonActionPerformed(java.awt.event.ActionEvent evt) {
         server.setAlive(true);
         JOptionPane.showMessageDialog(null, "Server is online");
-       synchronized (this) {
+        synchronized (this) {
             notifyAll();
         }
     }

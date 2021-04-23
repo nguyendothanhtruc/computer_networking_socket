@@ -12,13 +12,8 @@ import java.util.concurrent.Executors;
 
 public class Server {
     final ServerSocket server;
-    private ArrayList<String> clients;
     private final ExecutorService pool = Executors.newFixedThreadPool(3);
-
-    public void setAlive(boolean alive) {
-        Alive = alive;
-    }
-
+    private ArrayList<String> clients;
     private boolean Alive;
 
     //Establish a connection between server and clients
@@ -28,8 +23,12 @@ public class Server {
         Alive = false;
     }
 
+    public void setAlive(boolean alive) {
+        Alive = alive;
+    }
+
     public void Connect() throws IOException {
-        System.out.println("[" + java.time.LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+        System.out.println("[" + java.time.LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
                 + "] Server started");
         System.out.println("Waiting for clients.... \n ");
         while (server.isBound() && !server.isClosed()) {
@@ -37,7 +36,7 @@ public class Server {
             try {
                 socket = server.accept();
 
-                System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
                         + "] A new client connected : " + socket + "\n");
 
                 // create a new thread object
@@ -50,17 +49,17 @@ public class Server {
                 if (socket != null)
                     socket.close();
                 if (!server.isClosed()) server.close();
-                System.out.println("[" + LocalDate.now()  + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
+                System.out.println("[" + LocalDate.now() + " " + LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + ":" + LocalDateTime.now().getSecond()
                         + "] Connection closed: " + socket);
                 e.printStackTrace();
             }
         }
     }
-    public void Run()
-    {
+
+    public void Run() {
         try {
-            if(Alive)
-            Connect();
+            if (Alive)
+                Connect();
         } catch (IOException e) {
             e.printStackTrace();
         }

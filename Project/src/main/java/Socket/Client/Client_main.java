@@ -7,7 +7,7 @@ public class Client_main {
     public static void main(String[] args) throws Exception {
         Client client = null;
         //First GUI to get IP
-        IPAddress getIP= new IPAddress();
+        IPAddress getIP = new IPAddress();
         getIP.Run();
 
         //Create connection

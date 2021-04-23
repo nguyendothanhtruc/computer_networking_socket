@@ -106,7 +106,7 @@ public class viewBook extends JFrame {
     }
 
     public void RunViewBook() {
-            this.setVisible(true);
+        this.setVisible(true);
 
     }
 }
